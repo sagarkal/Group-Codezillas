@@ -1,0 +1,67 @@
+<html>
+<head>
+<title>CodeZilla</title>
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/mystyle.css" rel="stylesheet">
+<script src="js/jquery-2.2.2.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/myjs.js"></script>
+</head>
+
+<body onload=fetchQuestions()>
+	<nav class="navbar navbar-default">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="#" onclick="onlyQuestions('*');">CodeZilla</a>
+			</div>
+			<div class="collapse navbar-collapse"
+				id="bs-example-navbar-collapse-1">
+				<ul class="nav navbar-nav">
+					<li><a href="#" onclick="onlyQuestions('.Java');">Java</a></li>
+					<li><a href="#" onclick="onlyQuestions('.JavaScript');">JavaScript</a></li>
+					<li><a href="#" onclick="onlyQuestions('.Python');">Python</a></li>
+					<li><a href="#" onclick="onlyQuestions('.CSharp');">C#</a></li>
+					<li><a href="#" onclick="onlyQuestions('.CPP');">C++</a></li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<li class="dropdown">
+			          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Take Quiz <span class="caret"></span></a>
+			          <ul class="dropdown-menu">
+						<li><a href="#" onclick="takeQuiz('Java');">Java</a></li>
+						<li><a href="#" onclick="takeQuiz('JavaScript');">JavaScript</a></li>
+						<li><a href="#" onclick="takeQuiz('Python');">Python</a></li>
+						<li><a href="#" onclick="takeQuiz('CSharp');">C#</a></li>
+						<li><a href="#" onclick="takeQuiz('CPP');">C++</a></li>
+			          </ul>
+			        </li>
+					<li><a href="#" id="myprofile"></a></li>
+					<li><a href="login.html">Logout</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<!--  
+	<div id="myModal" class="modal fade" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h2 class="form-signin-heading">Please sign in to continue</h2>
+				</div>
+				<div class="modal-body">
+					<label for="inputEmail" class="sr-only">Email address</label> <input
+						type="email" id="inputEmail" class="form-control"
+						placeholder="Email address" required autofocus><br> <label
+						for="inputPassword" class="sr-only">Password</label> <input
+						type="password" id="inputPassword" class="form-control"
+						placeholder="Password" required
+						onkeypress="return enterKey(event)"> <br>
+					<button class="btn btn-lg btn-primary btn-block" type="button"
+						onclick="checkLogin()">Sign in</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	-->
+	<div class="container" id = "questions"/>
+</body>
+</html>
