@@ -1,0 +1,250 @@
+<html>
+<head>
+<title>CodeZilla</title>
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/mystyle.css" rel="stylesheet">
+<link href="css/mine.css rel="stylesheet">
+<script src="js/jquery-2.2.2.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/myjs.js"></script>
+</head>
+
+<body>
+<form action="home.html">
+<h2>Java Quiz<span class="label label-default"></span></h2>
+<br/>
+<h5><p class="question">1. What is the stored in the object obj in following lines of code?</p>  </h5>  
+box obj;    
+<ul class="answers">                   
+<input type="radio" name="q1" value="b" id="q1b"><label for="q1b">Memory address of allocated memory of object.</label><br/> 
+<input type="radio" name="q1" value="b" id="q1b"><label for="q1b">NULL (CORRECT)</label><br/>            
+<input type="radio" name="q1" value="c" id="q1c"><label for="q1c">Any arbitrary pointer</label><br/>            
+<input type="radio" name="q1" value="d" id="q1d"><label for="q1d">Garbage</label><br/>       
+</ul> 
+
+<p class="question">2. Which of these keywords is used to make a class?</p>        
+
+<ul class="answers">            
+<input type="radio" name="q2" value="a" id="q2a"><label for="q2a">class</label><br/>           
+<input type="radio" name="q2" value="b" id="q2b"><label for="q2b">struct</label><br/>            
+<input type="radio" name="q2" value="c" id="q2c"><label for="q2c">int</label><br/>           
+<input type="radio" name="q2" value="d" id="q2d"><label for="q2d">None of the mentioned</label><br/>       
+</ul>        
+
+<p class="question">3. Which of the following is a valid declaration of an object of class Box?</p>        
+
+<ul class="answers">            
+<input type="radio" name="q3" value="a" id="q3a"><label for="q3a">Box obj = new Box();</label><br/>            
+<input type="radio" name="q3" value="b" id="q3b"><label for="q3b">Box obj = new Box;</label><br/>            
+<input type="radio" name="q3" value="c" id="q3c"><label for="q3c">obj = new Box();</label><br/>           
+<input type="radio" name="q3" value="d" id="q3d"><label for="q3d">new Box obj;</label><br/>       
+</ul>    
+
+<p class="question">4. Which of these operators is used to allocate memory for an object?</p>        
+
+<ul class="answers">           
+<input type="radio" name="q4" value="a" id="q4a"><label for="q4a">malloc</label><br/>            
+<input type="radio" name="q4" value="b" id="q4b"><label for="q4b">alloc</label><br/>            
+<input type="radio" name="q4" value="c" id="q4c"><label for="q4c">new</label><br/>            
+<input type="radio" name="q4" value="d" id="q4d"><label for="q4d">give</label><br/>        
+</ul>   
+
+<p class="question">5. Which of these statement is incorrect?</p>        
+<ul class="answers">            
+<input type="radio" name="q5" value="a" id="q5a"><label for="q5a">Every class must contain a main() method.</label><br/>            
+<input type="radio" name="q5" value="b" id="q5b"><label for="q5b">Applets do not require a main() method at all.</label><br/>            
+<input type="radio" name="q5" value="c" id="q5c"><label for="q5c">There can be only one main() method in a program.</label><br/>           
+<input type="radio" name="q5" value="d" id="q5d"><label for="q5d">main() method must be made public.</label><br/>        
+</ul>    
+
+<p class="question">6. What is the output of this program? </p>        
+ class main_class { <br />
+        public static void main(String args[])<br />
+        {<br />
+            int x = 9;<br />
+            if (x == 9) { <br />
+                int x = 8;<br />
+                System.out.println(x);<br />
+            }<br />
+        } <br />
+    }<br />
+<ul class="answers">            
+<input type="radio" name="q6" value="a" id="q6a"><label for="q6a">9</label><br/>            
+<input type="radio" name="q6" value="b" id="q6b"><label for="q6b">8</label><br/>            
+<input type="radio" name="q6" value="c" id="q6c"><label for="q6c">Compilation error</label><br/>            
+<input type="radio" name="q6" value="d" id="q6d"><label for="q6d">Runtime error</label><br/>        
+</ul>  
+
+<p class="question">7. Which of the following statements is correct?</p>        
+<ul class="answers">            
+<input type="radio" name="q7" value="a" id="q7a"><label for="q7a">Public method is accessible to all other classes in the hierarchy</label><br/>            
+<input type="radio" name="q7" value="b" id="q7b"><label for="q7b">Public method is accessible only to subclasses of its parent class</label><br/>            
+<input type="radio" name="q7" value="c" id="q7c"><label for="q7c">Public method can only be called by object of its class.</label><br/>           
+<input type="radio" name="q7" value="d" id="q7d"><label for="q7d">Public method can be accessed by calling object of the public class.</label><br/>       
+</ul>   
+
+<p class="question">8. What is the output of this program?</p>   
+class box {<br />
+        int width;<br />
+        int height;<br />
+        int length;<br />
+    } <br />
+    class mainclass {<br />
+        public static void main(String args[]) <br />
+        {        <br />
+             box obj = new box();<br />
+             obj.width = 10;<br />
+             obj.height = 2;<br />
+             obj.length = 10;<br />
+             int y = obj.width * obj.height * obj.length; <br />
+             System.out.print(y);<br />
+        } <br />
+    }     <br />
+<ul class="answers">            
+<input type="radio" name="q8" value="a" id="q8a"><label for="q8a">12</label><br/>            
+<input type="radio" name="q8" value="b" id="q8b"><label for="q8b">200</label><br/>            
+<input type="radio" name="q8" value="c" id="q8c"><label for="q8c">400</label><br/>           
+<input type="radio" name="q8" value="d" id="q8d"><label for="q8d">100</label><br/>       
+</ul>   
+
+<p class="question">9. What is the output of this program?</p>     
+class box {<br />
+        int width;<br />
+        int height;<br />
+        int length;<br />
+    } <br />
+    class mainclass {<br />
+        public static void main(String args[]) <br />
+        {        <br />
+            box obj1 = new box();<br />
+            box obj2 = new box();<br />
+            obj1.height = 1;<br />
+            obj1.length = 2;<br />
+            obj1.width = 1;<br />
+            obj2 = obj1;<br />
+            System.out.println(obj2.height);<br />
+        } <br />
+    }   <br />
+<ul class="answers">            
+<input type="radio" name="q9" value="a" id="q9a"><label for="q9a">1</label><br/>            
+<input type="radio" name="q9" value="b" id="q9b"><label for="q9b">2</label><br/>            
+<input type="radio" name="q9" value="c" id="q9c"><label for="q9c">Runtime error</label><br/>           
+<input type="radio" name="q9" value="d" id="q9d"><label for="q9d">Garbage value</label><br/>       
+</ul>   
+
+<p class="question">10. What is the output of this program?</p>     
+class box {<br />
+        int width;<br />
+        int height;<br />
+        int length;<br />
+    } <br />
+    class mainclass {<br />
+        public static void main(String args[]) <br />
+        {        <br />
+            box obj = new box();<br />
+            System.out.println(obj);<br />
+        } <br />
+    }   <br />
+<ul class="answers">            
+<input type="radio" name="q10" value="a" id="q10a"><label for="q10a">0</label><br/>            
+<input type="radio" name="q10" value="b" id="q10b"><label for="q10b">1</label><br/>            
+<input type="radio" name="q10" value="c" id="q10c"><label for="q10c">Runtime error</label><br/>           
+<input type="radio" name="q10" value="d" id="q10d"><label for="q10d">Garbage value</label><br/>       
+</ul>   
+
+<script>
+function check()
+{
+var correctAnswers=0;
+var a1=document.getElementsByName('q1');
+for(i = 0; i < a1.length; i++){
+   if(a1[i].checked){
+        if((a1[i].value)=='b')
+        	correctAnswers++;
+   }
+}
+
+var a2=document.getElementsByName('q2');
+for(i = 0; i < a2.length; i++){
+	   if(a2[i].checked){
+	        if((a2[i].value)=='a')
+	        	correctAnswers++;
+	   }
+	}
+	
+var a3=document.getElementsByName('q3');
+for(i = 0; i < a3.length; i++){
+	   if(a3[i].checked){
+	        if((a3[i].value)=='a')
+	        	correctAnswers++;
+	   }
+	}
+
+var a4=document.getElementsByName('q4');
+for(i = 0; i < a4.length; i++){
+	   if(a4[i].checked){
+	        if((a4[i].value)=='c')
+	        	correctAnswers++;
+	   }
+	}
+
+var a5=document.getElementsByName('q5');
+for(i = 0; i < a5.length; i++){
+	   if(a5[i].checked){
+	        if((a5[i].value)=='a')
+	        	correctAnswers++;
+	   }
+	}
+
+var a6=document.getElementsByName('q6');
+for(i = 0; i < a6.length; i++){
+	   if(a6[i].checked){
+	        if((a6[i].value)=='c')
+	        	correctAnswers++;
+	   }
+	}
+	
+var a7=document.getElementsByName('q7');
+for(i = 0; i < a7.length; i++){
+	   if(a7[i].checked){
+	        if((a7[i].value)=='a')
+	        	correctAnswers++;
+	   }
+	}
+
+var a8=document.getElementsByName('q8');
+for(i = 0; i < a8.length; i++){
+	   if(a8[i].checked){
+	        if((a8[i].value)=='b')
+	        	correctAnswers++;
+	   }
+	}
+
+var a9=document.getElementsByName('q9');
+for(i = 0; i < a9.length; i++){
+	   if(a9[i].checked){
+	        if((a9[i].value)=='a')
+	        	correctAnswers++;
+	   }
+	}
+	
+var a10=document.getElementsByName('q10');
+for(i = 0; i < a10.length; i++){
+	   if(a10[i].checked){
+	        if((a10[i].value)=='d')
+	        	correctAnswers++;
+	   }
+	}
+	
+window.alert("You scored "+correctAnswers);
+console.log(correctAnswers);
+}
+</script>
+
+&nbsp&nbsp&nbsp&nbsp <button type="button" onclick="check()" class="btn btn-primary">Submit</button>
+<button type="submit" class="btn btn-primary">Home</button>
+<br/>
+<br/>
+</form>
+</body>
+</html>

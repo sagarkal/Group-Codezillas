@@ -1,0 +1,386 @@
+<html>
+<head>
+<title>CodeZilla</title>
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/mystyle.css" rel="stylesheet">
+<link href="css/mine.css rel="stylesheet">
+<script src="js/jquery-2.2.2.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/myjs.js"></script>
+</head>
+
+<body>
+<form action="home.html">
+<h2>C++ Quiz<span class="label label-default"></span></h2>
+<br/>
+<h5><p class="question">1.  Where is the derived class is derived from?</p>  </h5>  
+box obj;    
+<ul class="answers">                   
+<input type="radio" name="q1" value="a" id="q1b"><label for="q1b">derived.</label><br/> 
+<input type="radio" name="q1" value="b" id="q1b"><label for="q1b">base</label><br/>            
+<input type="radio" name="q1" value="c" id="q1c"><label for="q1c">both a & b</label><br/>            
+<input type="radio" name="q1" value="d" id="q1d"><label for="q1d">None of the mentioned</label><br/>       
+</ul> 
+
+<p class="question">2. Pick out the correct statement.?</p>        
+
+<ul class="answers">            
+<input type="radio" name="q2" value="a" id="q2a"><label for="q2a">A derived class’s constructor cannot explicitly invokes its base class’s
+constructor.</label><br/>           
+<input type="radio" name="q2" value="b" id="q2b"><label for="q2b">A derived class’s destructor cannot invoke its base class’s destructor. </label><br/>            
+<input type="radio" name="q2" value="c" id="q2c"><label for="q2c">A derived class’s destructor can invoke its base class’s destructor.</label><br/>           
+<input type="radio" name="q2" value="d" id="q2d"><label for="q2d">None of the mentioned</label><br/>       
+</ul>        
+
+<p class="question">3. Which of the following can derived class inherit?</p>        
+
+<ul class="answers">            
+<input type="radio" name="q3" value="a" id="q3a"><label for="q3a">members</label><br/>            
+<input type="radio" name="q3" value="b" id="q3b"><label for="q3b">functions</label><br/>            
+<input type="radio" name="q3" value="c" id="q3c"><label for="q3c">both a & b</label><br/>           
+<input type="radio" name="q3" value="d" id="q3d"><label for="q3d">None of the mentioned</label><br/>       
+</ul>    
+
+<p class="question">4. Which constructor will initialize the base class data member?</p>        
+
+<ul class="answers">           
+<input type="radio" name="q4" value="a" id="q4a"><label for="q4a">derived class</label><br/>            
+<input type="radio" name="q4" value="b" id="q4b"><label for="q4b">base class </label><br/>            
+<input type="radio" name="q4" value="c" id="q4c"><label for="q4c">class</label><br/>            
+<input type="radio" name="q4" value="d" id="q4d"><label for="q4d">None of the mentioned</label><br/>        
+</ul>   
+
+<p class="question">5. Which operator is used to declare the destructor?</p>        
+<ul class="answers">            
+<input type="radio" name="q5" value="a" id="q5a"><label for="q5a">#</label><br/>            
+<input type="radio" name="q5" value="b" id="q5b"><label for="q5b">~ </label><br/>            
+<input type="radio" name="q5" value="c" id="q5c"><label for="q5c">@</label><br/>           
+<input type="radio" name="q5" value="d" id="q5d"><label for="q5d">$</label><br/>        
+</ul>    
+
+<p class="question">6. What is the output of this program? </p>        
+         #include <iostream> <br />
+    using namespace std; <br />
+    class A <br />
+    { <br />
+        public: <br />
+        A(int n ) <br />
+        { <br />
+            cout << n; <br />
+        } <br />
+    }; <br />
+    class B: public A <br />
+    { <br />
+        public: <br />
+        B(int n, double d) <br />
+        : A(n) <br />
+        { <br />
+            cout << d; <br />
+        }     <br />
+    }; <br />
+    class C: public B <br />
+    { <br />
+        public: <br />
+        C(int n, double d, char ch) <br />
+        : B(n, d) <br />
+        { <br />
+            cout \<< ch; <br />
+        } <br />
+    }; <br />
+    int main() <br />
+    { <br />
+        C c(5, 4.3, 'R'); <br />
+        return 0; <br />
+    } <br />
+<ul class="answers">            
+<input type="radio" name="q6" value="a" id="q6a"><label for="q6a">54.3R</label><br/>            
+<input type="radio" name="q6" value="b" id="q6b"><label for="q6b">R4.35</label><br/>            
+<input type="radio" name="q6" value="c" id="q6c"><label for="q6c">4.3R5</label><br/>            
+<input type="radio" name="q6" value="d" id="q6d"><label for="q6d">None of the mentioned</label> <br/>        
+</ul>  
+
+<p class="question">7. What is the output of this program?</p>  
+#include <iostream> <br/>        
+    using namespace std; <br/>        
+    class BaseClass  <br/>        
+    { <br/>        
+        protected: <br/>        
+        int i; <br/>        
+        public: <br/>        
+        BaseClass(int x) <br/>         
+        { <br/>        
+            i = x;<br/>        
+        }<br/>        
+        ~BaseClass() <br/>        
+        {<br/>        
+        }<br/>        
+    };<br/>        
+    class DerivedClass: public BaseClass <br/>         
+    { <br/>        
+        int j; <br/>        
+        public: <br/>        
+        DerivedClass(int x, int y): BaseClass(y) <br/>        
+        { <br/>        
+            j = x; <br/>        
+        } <br/>        
+        ~DerivedClass() <br/>         
+        { <br/>        
+        } <br/>        
+        void show() <br/>        
+        {<br/>        
+            cout << i << " " << j << endl; <br/>        
+        } <br/>        
+    }; <br/>        
+    int main()<br/>        
+    {<br/>        
+        DerivedClass ob(3, 4); <br/>        
+        ob.show(); <br/>        
+        return 0; <br/>        
+    }      <br/>        
+<ul class="answers">            
+<input type="radio" name="q7" value="a" id="q7a"><label for="q7a">3 4</label><br/>            
+<input type="radio" name="q7" value="b" id="q7b"><label for="q7b">4 3 </label><br/>            
+<input type="radio" name="q7" value="c" id="q7c"><label for="q7c">4</label><br/>           
+<input type="radio" name="q7" value="d" id="q7d"><label for="q7d">3</label> <br/>       
+</ul>   
+
+<p class="question">8. What is the output of this program?</p>   
+#include<iostream>  <br/>       
+    using namespace std; <br/>       
+    class X <br/>       
+    {<br/>       
+        int m;<br/>       
+        public:<br/>       
+        X() : m(10)<br/>       
+        {                      <br/>                                        
+        }<br/>       
+        X(int mm): m(mm) <br/>       
+        {<br/>       
+        }<br/>       
+        int getm()<br/>       
+        {<br/>       
+            return m;<br/>       
+        }<br/>       
+    };<br/>       
+    class Y : public X <br/>        
+    {<br/>       
+        int n;<br/>       
+        public:<br/>       
+        Y(int nn) : n(nn) {} <br/>                                                       
+        int getn() { return n; } <br/>       
+    };<br/>       
+    int main()<br/>       
+    {<br/>       
+        Y yobj( 100 ); <br/>       
+        cout << yobj.getm() << " " << yobj.getn() << endl; <br/>       
+    } <br/>       
+<ul class="answers">            
+<input type="radio" name="q8" value="a" id="q8a"><label for="q8a">10 100 </label><br/>            
+<input type="radio" name="q8" value="b" id="q8b"><label for="q8b">100 10</label><br/>            
+<input type="radio" name="q8" value="c" id="q8c"><label for="q8c">10 10</label><br/>           
+<input type="radio" name="q8" value="d" id="q8d"><label for="q8d">100 100</label> <br/>       
+</ul>   
+
+<p class="question">9. What is the output of this program?</p>     
+#include <iostream> <br/>       
+    using namespace std; <br/>       
+    class Base<br/>       
+    { <br/>       
+        public:<br/>       
+        int m;<br/>       
+        Base(int n=0) <br/>       
+        : m(n)<br/>       
+        {<br/>       
+            cout << "Base" << endl; <br/>       
+        } <br/>       
+    }; <br/>       
+    class Derived: public Base <br/>       
+    { <br/>       
+        public: <br/>       
+        double d;<br/>       
+        Derived(double de = 0.0) <br/>       
+        : d(de)<br/>       
+        {<br/>       
+            cout << "Derived" << endl;<br/>       
+        }<br/>       
+    };<br/>       
+    int main()<br/>       
+    {<br/>       
+        cout << "Instantiating Base" << endl; <br/>       
+        Base cBase; <br/>       
+        cout << "Instantiating Derived" << endl; <br/>       
+        Derived cDerived; <br/>       
+        return 0;<br/>       
+    }<br/>       
+<ul class="answers">            
+<input type="radio" name="q9" value="a" id="q9a"><label for="q9a"> Instantiating Base <br/>       
+Base <br/>       
+Instantiating Derived<br/>       
+Base<br/>       
+Derived <br/>       </label><br/>            
+<input type="radio" name="q9" value="b" id="q9b"><label for="q9b">Instantiating Base <br/>       
+Instantiating Derived<br/>       
+Base<br/>       
+Derived <br/>       </label><br/>            
+<input type="radio" name="q9" value="c" id="q9c"><label for="q9c"> Instantiating Base <br/>       
+Base <br/>       
+Instantiating Derived <br/>       
+Base <br/>       </label><br/>           
+<input type="radio" name="q9" value="d" id="q9d"><label for="q9d">None of the mentioned</label> <br/>       
+</ul>   
+
+<p class="question">10. What is the output of this program?</p>     
+#include <iostream> <br/>       
+    using namespace std; <br/>       
+    class Parent <br/>       
+    { <br/>       
+        public: <br/>       
+        Parent (void) <br/>       
+        {     <br/>       
+            cout << "Parent()\n"; <br/>       
+        } <br/>       
+        Parent (int i) <br/>        
+        { <br/>       
+            cout << "Parent("<< i << ")\n"; <br/>       
+        };<br/>       
+        Parent (void) <br/>       
+        { <br/>       
+            cout << "~Parent()\n";<br/>       
+        }; <br/>       
+    };<br/>       
+    class Child1 : public Parent { }; <br/>       
+    class Child2 : public Parent<br/>       
+    { <br/>       
+        public:<br/>       
+        Child2 (void) <br/>       
+        {<br/>       
+            cout << "Child2()\n"; <br/>       
+        }<br/>       
+        Child2 (int i) : Parent (i) <br/>       
+        {<br/>       
+            cout << "Child2(" << i << ")\n"; <br/>       
+        }<br/>       
+        ~Child2 (void)<br/>        
+        {<br/>       
+            cout << "~Child2()\n"; <br/>       
+        }<br/>       
+    };<br/>       
+    int main (void) <br/>       
+    {<br/>       
+        Child1 a;<br/>       
+        Child2 b;<br/>       
+        Child2 c(42);<br/>       
+        return 0;<br/>       
+    }<br/>       
+<ul class="answers">             
+<input type="radio" name="q10" value="a" id="q10a"><label for="q10a">Parent() <br/>       
+Parent()<br/>       
+Child2()<br/>       
+Parent(42)<br/>       
+Child2(42)<br/>       
+~Child2()<br/>       
+~Parent()<br/>       
+~Child2()<br/>       
+~Parent()<br/>       
+~Parent()<br/>       </label><br/>            
+<input type="radio" name="q10" value="b" id="q10b"><label for="q10b">error </label><br/>            
+<input type="radio" name="q10" value="c" id="q10c"><label for="q10c">Runtime error</label><br/>           
+<input type="radio" name="q10" value="d" id="q10d"><label for="q10d">None of the mentioned</label><br/>       
+</ul>   
+
+<script>
+function check()
+{
+var correctAnswers=0;
+var a1=document.getElementsByName('q1');
+for(i = 0; i < a1.length; i++){
+   if(a1[i].checked){
+        if((a1[i].value)=='b')
+        	correctAnswers++;
+   }
+}
+
+var a2=document.getElementsByName('q2');
+for(i = 0; i < a2.length; i++){
+	   if(a2[i].checked){
+	        if((a2[i].value)=='b')
+	        	correctAnswers++;
+	   }
+	}
+	
+var a3=document.getElementsByName('q3');
+for(i = 0; i < a3.length; i++){
+	   if(a3[i].checked){
+	        if((a3[i].value)=='c')
+	        	correctAnswers++;
+	   }
+	}
+
+var a4=document.getElementsByName('q4');
+for(i = 0; i < a4.length; i++){
+	   if(a4[i].checked){
+	        if((a4[i].value)=='b')
+	        	correctAnswers++;
+	   }
+	}
+
+var a5=document.getElementsByName('q5');
+for(i = 0; i < a5.length; i++){
+	   if(a5[i].checked){
+	        if((a5[i].value)=='b')
+	        	correctAnswers++;
+	   }
+	}
+
+var a6=document.getElementsByName('q6');
+for(i = 0; i < a6.length; i++){
+	   if(a6[i].checked){
+	        if((a6[i].value)=='a')
+	        	correctAnswers++;
+	   }
+	}
+	
+var a7=document.getElementsByName('q7');
+for(i = 0; i < a7.length; i++){
+	   if(a7[i].checked){
+	        if((a7[i].value)=='b')
+	        	correctAnswers++;
+	   }
+	}
+
+var a8=document.getElementsByName('q8');
+for(i = 0; i < a8.length; i++){
+	   if(a8[i].checked){
+	        if((a8[i].value)=='a')
+	        	correctAnswers++;
+	   }
+	}
+
+var a9=document.getElementsByName('q9');
+for(i = 0; i < a9.length; i++){
+	   if(a9[i].checked){
+	        if((a9[i].value)=='a')
+	        	correctAnswers++;
+	   }
+	}
+	
+var a10=document.getElementsByName('q10');
+for(i = 0; i < a10.length; i++){
+	   if(a10[i].checked){
+	        if((a10[i].value)=='b')
+	        	correctAnswers++;
+	   }
+	}
+	
+window.alert("You scored "+correctAnswers);
+console.log(correctAnswers);
+}
+</script>
+
+&nbsp&nbsp&nbsp&nbsp <button type="button" onclick="check()" class="btn btn-primary">Submit</button>
+<button type="submit" class="btn btn-primary">Home</button>
+</form>
+</body>
+<br/>
+<br/>
+</html>
