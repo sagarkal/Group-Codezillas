@@ -54,8 +54,8 @@ public class Dao {
 				QuestionBean q = new QuestionBean();
 				q.setId(rSet.getLong(1));
 				q.setQuestion(rSet.getString(2));
-				q.setUpvotes(rSet.getLong(3));
-				q.setDownvotes(rSet.getLong(4));
+				q.setUpvotes(rSet.getInt(3));
+				q.setDownvotes(rSet.getInt(4));
 				q.setTags(rSet.getString(5));
 				q.setUsername(rSet.getString(6));
 				al.add(q);
@@ -164,11 +164,11 @@ public class Dao {
 			rSet = pStmt.executeQuery();
 			if (rSet.next()) {
 				u.setUsername(rSet.getString(1));
-				u.setJava(rSet.getLong(2));
-				u.setCpp(rSet.getLong(3));
-				u.setPython(rSet.getLong(4));
-				u.setCsharp(rSet.getLong(5));
-				u.setJavascript(rSet.getLong(6));
+				u.setJava(rSet.getInt(2));
+				u.setCpp(rSet.getInt(3));
+				u.setPython(rSet.getInt(4));
+				u.setCsharp(rSet.getInt(5));
+				u.setJavascript(rSet.getInt(6));
 				u.setQuiz(rSet.getString(7));
 			}
 

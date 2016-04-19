@@ -12,6 +12,8 @@ $(function() {
 //    });
 });
 
+/* Jquery function to register new users */
+
 function register(){
 	$.get("RegisterServlet", {
 		userName : $('#email').val(),
@@ -19,30 +21,38 @@ function register(){
 	});
 }
 
-var usernameg = "";
+/* Global variable 'usernameg' to store the currently logged in user */
 
-/* Login function for new login page */
+var usernameg = '';
+
+/* New checkLogin function that is written keeping in mind the updated login functionality
+ * that consists of separate web pages for user registration, login and homepage */
 
 function checkLogin() {
+	usernameg = $('#email').val();
     $.get("LoginServlet", {
 	userId : $('#email').val(),
 	password : $('#password').val()
     }, function(response) {
-	if (response == "true") {
-	    // loading main page
+	if (response === "true") {
+	   /* Any code I wrote here to redirect to home page did not work. So I included the redirection to home page
+		in the 'action' section of the form in login.html  */
 		window.location.replace("home.html");
-		usernameg = $('#email').val().split('@')[0];
-	    $('#myprofile').append(usernameg);
 	}
-	else
+	 else
 		{
 		window.alert("Invalid Username/Password");
 		}
+		
     });
 }
 
+/* Fetch all the questions */
+
 function fetchQuestions()
 {
+	$('#myprofile').append(usernameg);
+	console.log("The logged in username is "+usernameg);
 	$.get("MainServlet", {
 		type : "getquestions"
 	    }, function(json) {
@@ -51,9 +61,10 @@ function fetchQuestions()
 	    });
 }
 
-function loadRegister() {
-	window.location.replace("register.html");
-}
+/* Below function is the old implementation of checkLogin() that was intended for 
+ * old home page with pop up window that asked for login credentials */
+
+
 /*
 function checkLogin() {
     $.get("LoginServlet", {
@@ -78,6 +89,15 @@ function checkLogin() {
 }
 */
 
+/* Function to get User ID of the person who gave the answer */
+
+function getUserId()
+{
+	return "skalburg";
+}
+
+/* Function that appends all the relevant questions in the form of a table */
+
 function appendQuestions(json) {
     for (i in json) {
 	console.log(json[i]);
@@ -101,6 +121,7 @@ function appendQuestions(json) {
 				    type : "button",
 				    onclick : "postResponse(this)"
 				}).append('Post')).append('<br><br>'));
+	
 	$('#' + id).append(
 		$('<tr/>').append($('<td/>').addClass("bb").attr({
 		    id : votesqid
@@ -114,7 +135,7 @@ function appendQuestions(json) {
 					+ '</span>')));
 	addVotes(votesqid, json[i].upvotes - json[i].downvotes);
 	addAnswers(json[i].id, json[i].username, json[i].tags);
-//	addReputation(json[i].username, json[i].tags);
+	addReputation(json[i].username, json[i].tags);
     }
 }
 
@@ -135,6 +156,8 @@ function addReputation(username, lang){
     });
 }
 
+/* Function that fetches answers from the database */
+
 function addAnswers(id, username, lang){
     $.get("MainServlet", {
 	type : "getanswers",
@@ -142,22 +165,46 @@ function addAnswers(id, username, lang){
     }, function(json) {
 	console.log(json);
 	    for (i in json) {
-	    	$.get("MainServlet", {
-	    		type : "saveanswer",
-	    		qid : i
-	    	    });
+		$("#tableq" + id).append(
+		$('<tr/>').append($('<td/>').attr('id', "votes" + id + "and"+ json[i].id))
+			.append($('<td/>').append(json[i].answer)).append($('<td/>').addClass("right").append(
+					'<span class="label label-warning">'
+					+ 'Answered by ' + '<a href="#" id='+getUserId()+'>'+	getUserId()+'</a>'
+					+ '</span>')));
+		addVotes("votes"+id+"and"+json[i].id, parseInt(json[i].upvotes) - parseInt(json[i].downvotes));
+		
+	    }
+	    //addReputation(username, lang);
+    });
+}
+
+/* Below function is the old implementation of addAnswers that did not show the username 
+ * of the answer giver on the right-hand side of the screen  */
+
+
+/*
+function addAnswers(id, username, lang){
+    $.get("MainServlet", {
+	type : "getanswers",
+	qid : id
+    }, function(json) {
+	console.log(json);
+	    for (i in json) {
 		$("#tableq" + id).append(
 		$('<tr/>').append($('<td/>').attr('id', "votes" + id + "and"+ json[i].id))
 			.append($('<td/>').append(json[i].answer)));
 		addVotes("votes"+id+"and"+json[i].id, parseInt(json[i].upvotes) - parseInt(json[i].downvotes));
-		$('').append(
+		$('<td/>').addClass("right").append(
 			'<span class="label label-warning">'
-			+ 'Asked by ' + '<a href="#" id='+username+'>'+	username+'</a>'
+			+ 'Answered by ' + '<a href="#" id='+username+'>'+	username+'</a>'
 			+ '</span>');
 	    }
 	    addReputation(username, lang);
     });
 }
+*/
+
+/* Below function posts the answers written and submitted in the textarea */
 
 function postResponse(tag) {
     var txt = $(tag).prev().val();
@@ -177,6 +224,8 @@ function postResponse(tag) {
 	addVotes("votes" +id+"and"+ ansid, 0);
     });
 }
+
+/* Below function adds the graphical icons required for upvotes and downvotes */
 
 function addVotes(id, votes) {
     console.log(id);
@@ -213,7 +262,9 @@ function addVotes(id, votes) {
     $(".glyphicon-triangle-top, .glyphicon-triangle-bottom").attr('onclick',
 	    'updateVotes(this)');
 }
-	
+
+/* Below function updates the votes */
+
 function updateVotes(tag) {
     console.log(tag.className);
     var c = tag.className;
