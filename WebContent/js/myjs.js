@@ -35,13 +35,13 @@ function checkLogin() {
 	password : $('#password').val()
     }, function(response) {
 	if (response === "true") {
-	   /* Any code I wrote here to redirect to home page did not work. So I included the redirection to home page
-		in the 'action' section of the form in login.html  */
-		window.location.replace("home.html");
+		window.location.replace("home.html?hello=" + $('#email').val().split('@')[0]);	
+	//	var url ="home.html";
+		//$("#usernameg").attr("href",url);
 	}
 	 else
 		{
-		window.alert("Invalid Username/Password");
+		window.alert("Invalid Username/Password"+response);
 		}
 		
     });
@@ -49,7 +49,7 @@ function checkLogin() {
 
 /* Fetch all the questions */
 
-function fetchQuestions()
+function fetchQuestions(usernameg)
 {
 	$('#myprofile').append(usernameg);
 	console.log("The logged in username is "+usernameg);
@@ -164,6 +164,15 @@ function updateReputation(language, pointsToAdd) {
 			username : "skalburg@asu.edu",
 			language: language,
 			pointsToAdd: pointsToAdd
+		    }, function(response)
+		    {		    	
+		    	console.log("INSIDE UPDATE REPUTATION RESPONSE!!"+response);
+		    	if(response === "0"){
+		    		window.alert("A quiz cannot be taken more than once!");
+		    	}
+		    	else{
+		    		window.alert("You earned a base reputation of "+response+"!");
+		    	}	
 		    });
 }
 

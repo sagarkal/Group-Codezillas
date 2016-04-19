@@ -17,7 +17,7 @@
 box obj;    
 <ul class="answers">                   
 <input type="radio" name="q1" value="b" id="q1b"><label for="q1b">Memory address of allocated memory of object.</label><br/> 
-<input type="radio" name="q1" value="b" id="q1b"><label for="q1b">NULL (CORRECT)</label><br/>            
+<input type="radio" name="q1" value="b" id="q1b"><label for="q1b">NULL</label><br/>            
 <input type="radio" name="q1" value="c" id="q1c"><label for="q1c">Any arbitrary pointer</label><br/>            
 <input type="radio" name="q1" value="d" id="q1d"><label for="q1d">Garbage</label><br/>       
 </ul> 
@@ -236,13 +236,13 @@ for(i = 0; i < a10.length; i++){
 	   }
 	}
 	
-window.alert("You scored "+correctAnswers);
+//window.alert("You scored "+correctAnswers);
 updateReputation("JAVA", correctAnswers);
 console.log(correctAnswers);
 }
 </script>
 
-&nbsp&nbsp&nbsp&nbsp <button type="button" onclick="check()" class="btn btn-primary">Submit</button>
+&nbsp&nbsp&nbsp&nbsp <button type="button" onclick=check() class="btn btn-primary">Submit</button>
 <button type="submit" class="btn btn-primary">Home</button>
 <br/>
 <br/>

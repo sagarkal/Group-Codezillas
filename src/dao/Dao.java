@@ -178,16 +178,34 @@ public class Dao {
 		return u;
 	}
 	
-	public void updateReputation(String username, String language, int pointsToAdd)
+	public int updateReputation(String username, String language, int pointsToAdd)
 	{
+		int currentReputation = 0;
 		try {
 			pStmt = con
-					.prepareStatement("update users set "+language+"="+pointsToAdd+" where username = ?");
+					.prepareStatement("select "+language+" from users where username = ?");
+			pStmt.setString(1, username);
+			rSet = pStmt.executeQuery();
+			
+			if (rSet.next()) {
+				currentReputation =	rSet.getInt(1);
+			}
+			
+			System.out.println(" In DAO updateReputation.....");
+			System.out.println("Current reputation is "+currentReputation);
+			
+			if(currentReputation == 0)
+			{
+			pStmt = con
+					.prepareStatement("update users set "+language+"="+(currentReputation+pointsToAdd)+" where username = ?");
 			pStmt.setString(1, username);
 			pStmt.executeUpdate();
+			return 1;
+			}
 		}catch (SQLException e) {
 			e.printStackTrace();
 		}
+		return 0;
 	}
 	
 	public void updateUpVote(AnswerBean a)
