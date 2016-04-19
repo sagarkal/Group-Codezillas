@@ -49,9 +49,11 @@ function checkLogin() {
 
 /* Fetch all the questions */
 
-function fetchQuestions(usernameg)
+function fetchQuestions()
 {
-	$('#myprofile').append(usernameg);
+	var url = window.location.search;
+	console.log("URL: " + url.split('=')[1]);
+	$('#myprofile').append(url.split('=')[1]);
 	console.log("The logged in username is "+usernameg);
 	$.get("MainServlet", {
 		type : "getquestions"
