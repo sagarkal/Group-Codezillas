@@ -53,6 +53,15 @@ public class MainServlet extends HttpServlet {
 		    response.setCharacterEncoding("UTF-8");
 		    response.getWriter().write(json);
 		}
+		
+		if(type.equals("updaterep")){
+			String username = (String) request.getParameter("username");
+			String language = (String) request.getParameter("language");
+			int pointsToAdd = Integer.parseInt(request.getParameter("pointsToAdd"));
+			System.out.println("In DAO Updaterep, about to update "+ username + language + pointsToAdd);
+			dao.updateReputation(username, language, pointsToAdd);
+		}
+		
 		if(type.equals("saveanswer")){
 			AnswerBean a = new AnswerBean();
 			a.setUsername((String) request.getParameter("username"));

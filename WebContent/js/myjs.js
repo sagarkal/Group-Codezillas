@@ -156,6 +156,17 @@ function addReputation(username, lang){
     });
 }
 
+/* The below function updates reputation based on the score obtained in a quiz (1 correct answer = 1 reputation point */
+
+function updateReputation(language, pointsToAdd) {
+	 $.get("MainServlet", {
+			type : "updaterep",
+			username : "skalburg@asu.edu",
+			language: language,
+			pointsToAdd: pointsToAdd
+		    });
+}
+
 /* Function that fetches answers from the database */
 
 function addAnswers(id, username, lang){

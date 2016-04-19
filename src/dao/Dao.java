@@ -178,6 +178,18 @@ public class Dao {
 		return u;
 	}
 	
+	public void updateReputation(String username, String language, int pointsToAdd)
+	{
+		try {
+			pStmt = con
+					.prepareStatement("update users set "+language+"="+pointsToAdd+" where username = ?");
+			pStmt.setString(1, username);
+			pStmt.executeUpdate();
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public void updateUpVote(AnswerBean a)
 	{
 		try {
