@@ -188,21 +188,18 @@ function addAnswers(id, username, lang){
 	console.log(json);
 	    for (i in json) {
 		$("#tableq" + id).append(
-		$('<tr/>').append($('<td/>').attr('id', "votes" + id + "and"+ json[i].id))
-			.append($('<td/>').append(json[i].answer)).append($('<td/>').append(
+		$('<tr/>').append($('<td />').attr('id',"votes" + id + "and"+ json[i].id))
+			.append($('<td/>').append(json[i].answer)).attr({align : "left"}).append($('<td/>').append(
 					'<span class="label label-warning">'
 					+ 'Answered By' + '<a href="#" id='+getUserId()+'>'+	getUserId()+'</a>'
 					+ '</span>')))
-							/*.append($('<table/>').attr({
-					    id : id,
-					    width : "100%"
-					}))*/.append(
-							$('<tr/>').append($('<td/>').attr(
+							 .append(
+							$('<tr/>').append($('<td/>')).append($('<td/>').attr(
 								    {
-										    width : "10%",
-											align : 'right'
+										    width : "100%",
+											align : 'left'
 										    }).append($('<button/>').addClass("right").addClass(
-							"btn btn-primary")
+							"btn btn-defautl btn-xs")
 							.attr({
 							    id : "button" + json[i].id,
 							    type : "button"
@@ -290,7 +287,7 @@ function addVotes(id, votes) {
     $('#' + id)
 	    .append(
 		    $('<table/>').attr({
-			    width : "150%"
+			   // width : "150%"
 			})
 			    .append(
 				    $('<tr/>')
@@ -329,6 +326,7 @@ function addVotes(id, votes) {
 
 function updateVotes(tag, id1) {
     console.log(tag.className);
+   // var temp = id1.split('s')[1].
     var c = tag.className;
     var actualid;
     var type;
@@ -338,12 +336,12 @@ function updateVotes(tag, id1) {
 	// type = 'q';
 	 //actualid = id.split('q')[1];
 	r = parseInt($(tag).parent().parent().next().first().first().text()) + 1;
-	$(tag).parent().parent().next().first().first().text(r);
+	$(tag).parent().parent().next().first().first().first().text(r);
 	console.log("Id from upvotes is"+$(tag).parent());
 	$.get("MainServlet", {
 		type : "upvote",
 		up : r,
-		id : id1
+		id : id1.split("votes")[1]
 	    });
     } else {
 	// type = 'a';
@@ -353,7 +351,7 @@ function updateVotes(tag, id1) {
 	$.get("MainServlet", {
 		type : "downvote",
 		down : r,
-		id : getUserId()
+		id : id1.split("votes")[1]
 	    });
     }
     console.log("update votes " + r);
