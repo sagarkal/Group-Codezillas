@@ -189,10 +189,23 @@ function addAnswers(id, username, lang){
 	    for (i in json) {
 		$("#tableq" + id).append(
 		$('<tr/>').append($('<td/>').attr('id', "votes" + id + "and"+ json[i].id))
-			.append($('<td/>').append(json[i].answer)).append($('<td/>').addClass("right").append(
+			.append($('<td/>').append(json[i].answer)).append($('<td/>').append(
 					'<span class="label label-warning">'
-					+ 'Answered by ' + '<a href="#" id='+getUserId()+'>'+	getUserId()+'</a>'
-					+ '</span>')));
+					+ 'Answered By' + '<a href="#" id='+getUserId()+'>'+	getUserId()+'</a>'
+					+ '</span>'))).append('<div/>')
+							.append($('<table/>').attr({
+					    id : id,
+					    width : "100%"
+					})).append($('<tr/>')).append(
+							$('<tr/>').append($('<td/>').append($('<button/>').addClass("left").addClass(
+							"btn btn-primary")
+							.attr({
+							    id : "button" + json[i].id,
+							    type : "button"
+							   //left : "50px"
+							    //onclick : "postResponse(this)"
+							}).append('Feedback')).append('<br><br>')));
+					
 		addVotes("votes"+id+"and"+json[i].id, parseInt(json[i].upvotes) - parseInt(json[i].downvotes));
 		
 	    }
