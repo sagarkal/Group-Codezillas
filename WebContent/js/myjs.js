@@ -199,7 +199,7 @@ function addAnswers(id, username, lang){
 										    width : "100%",
 											align : 'left'
 										    }).append($('<button/>').addClass("right").addClass(
-							"btn btn-defautl btn-xs")
+							"btn btn-default btn-xs")
 							.attr({
 							    id : "button" + json[i].id,
 							    type : "button"
@@ -263,17 +263,15 @@ function postResponse(tag) {
 						+ 'Answered By' + '<a href="#" id='+getUserId()+'>'+	getUserId()+'</a>'
 						+ '</span>')))								
 						.append(
-								$('<tr/>').append($('<td/>').attr(
+								$('<tr/>').append($('<td/>')).append($('<td/>').attr(
 									    {
-											    width : "10%",
-												align : 'right'
+											    width : "0%",
+												align : 'left'
 											    }).append($('<button/>').addClass("right").addClass(
-								"btn btn-primary")
+								"btn btn-default btn-xs")
 								.attr({
 								    id : "button" + ansid,
 								    type : "button"
-								   //left : "50px"
-								    //onclick : "postResponse(this)"
 								}).append('Feedback').append('<br>'))));
 	addVotes("votes" +id+"and"+ ansid, 0);
 	//addAnswers(id, "skalburg", $(tag).prev().val(''));
