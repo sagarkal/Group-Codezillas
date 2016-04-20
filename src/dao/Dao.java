@@ -211,16 +211,16 @@ public class Dao {
 	public void updateUpVote(AnswerBean a)
 	{
 		try {
-			System.out.println("Entered DAO");
+			System.out.println("Entered DAO to update Upvote....................");
 			pStmt = con.prepareStatement("update answers set UPVOTES=?  where id=?");
 			System.out.println("a.upvotes :" + a.getUpvotes() );
-			System.out.println("a.downvotes :" + a.getId());
-			
-			pStmt.setLong(1, a.getUpvotes());
-			pStmt.setLong(2, a.getId());			
+			System.out.println("a.id :" + a.getId());
+
+			pStmt.setInt(1, a.getUpvotes());
+			pStmt.setInt(2, a.getId());			
 			//System.out.println(pStmt.toString());
 			pStmt.executeUpdate();
-			System.out.println("Finished DAO");
+			System.out.println("Finished DAO to update Upvote....................");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -229,11 +229,13 @@ public class Dao {
 	public void updateDownVote(AnswerBean a)
 	{
 		try {
+			System.out.println("Entered DAO to update Downvote....................");
 			pStmt = con.prepareStatement("update answers set downvotes=?  where id=?");
 			pStmt.setLong(2, a.getId());
 			pStmt.setLong(1,a.getDownvotes());
 			
-			pStmt.execute();
+			pStmt.executeUpdate();
+			System.out.println("Finished DAO to update Downvote....................");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

@@ -137,7 +137,7 @@ function appendQuestions(json) {
 					+ '</span>')));
 	addVotes(votesqid, json[i].upvotes - json[i].downvotes);
 	addAnswers(json[i].id, json[i].username, json[i].tags);
-	addReputation(json[i].username, json[i].tags);
+	//addReputation(json[i].username, json[i].tags);
     }
 }
 
@@ -256,11 +256,30 @@ function postResponse(tag) {
 	qid : id
     }, function(response) {
 	var ansid = response;
+	 
+			
+//addVotes("votes"+id+"and"+json[i].id, parseInt(json[i].upvotes) - parseInt(json[i].downvotes));
 	$("#tableq" + id).append(
-		$('<tr/>').append($('<td/>').attr('id', "votes" +id+"and"+ ansid))
-			.append($('<td/>').append(txt)));
-	console.log(txt);
+			$('<tr/>').append($('<td/>').attr('id', "votes" +id+"and"+ ansid))
+				.append($('<td/>').append(txt)).append($('<td/>').append(
+						'<span class="label label-warning">'
+						+ 'Answered By' + '<a href="#" id='+getUserId()+'>'+	getUserId()+'</a>'
+						+ '</span>')))								
+						.append(
+								$('<tr/>').append($('<td/>').attr(
+									    {
+											    width : "10%",
+												align : 'right'
+											    }).append($('<button/>').addClass("right").addClass(
+								"btn btn-primary")
+								.attr({
+								    id : "button" + ansid,
+								    type : "button"
+								   //left : "50px"
+								    //onclick : "postResponse(this)"
+								}).append('Feedback').append('<br>'))));
 	addVotes("votes" +id+"and"+ ansid, 0);
+	//addAnswers(id, "skalburg", $(tag).prev().val(''));
     });
 }
 
@@ -303,12 +322,12 @@ function addVotes(id, votes) {
 									    .addClass(
 										    "glyphicon glyphicon-triangle-bottom")))));
     $(".glyphicon-triangle-top, .glyphicon-triangle-bottom").attr('onclick',
-	    'updateVotes(this)');
+	    'updateVotes(this, id)');
 }
 
 /* Below function updates the votes */
 
-function updateVotes(tag) {
+function updateVotes(tag, id1) {
     console.log(tag.className);
     var c = tag.className;
     var actualid;
@@ -317,14 +336,14 @@ function updateVotes(tag) {
     var up, down;
     if (c.includes('top')) {
 	// type = 'q';
-	// actualid = id.split('q')[1];
+	 //actualid = id.split('q')[1];
 	r = parseInt($(tag).parent().parent().next().first().first().text()) + 1;
 	$(tag).parent().parent().next().first().first().text(r);
 	console.log("Id from upvotes is"+$(tag).parent());
 	$.get("MainServlet", {
 		type : "upvote",
 		up : r,
-		id : $(this).parent().attr('id')
+		id : id1
 	    });
     } else {
 	// type = 'a';
@@ -333,10 +352,12 @@ function updateVotes(tag) {
 	$(tag).parent().parent().prev().first().first().text(r);
 	$.get("MainServlet", {
 		type : "downvote",
-		down : r
+		down : r,
+		id : getUserId()
 	    });
     }
     console.log("update votes " + r);
+    addVotes($(this).parent().attr('id'), r);
 }
 
 function enterKey(e) {

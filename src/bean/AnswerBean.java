@@ -1,14 +1,14 @@
 package bean;
 
 public class AnswerBean {
-	private long id;
+	private int id;
 	private String answer;
 	private int upvotes;
 	private int downvotes;
 	private int questionId;
 	private String username;
 
-	public long getQuestionId() {
+	public int getQuestionId() {
 		return questionId;
 	}
 
@@ -24,7 +24,7 @@ public class AnswerBean {
 		this.username = username;
 	}
 
-	public long getId() {
+	public int getId() {
 		return id;
 	}
 
@@ -40,7 +40,7 @@ public class AnswerBean {
 		this.answer = answer;
 	}
 
-	public long getUpvotes() {
+	public int getUpvotes() {
 		return upvotes;
 	}
 
@@ -48,7 +48,7 @@ public class AnswerBean {
 		this.upvotes = upvotes;
 	}
 
-	public long getDownvotes() {
+	public int getDownvotes() {
 		return downvotes;
 	}
 

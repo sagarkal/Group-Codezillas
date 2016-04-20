@@ -102,7 +102,7 @@ public class MainServlet extends HttpServlet {
 			AnswerBean a = new AnswerBean();
 			int ups = Integer.parseInt(request.getParameter("up"));
 			int id =  Integer.parseInt(request.getParameter("id"));
-			System.out.println("upvotes" + ups);
+			System.out.println("Upvotes" + ups);
 			a.setUpvotes(ups);
 			dao.updateUpVote(a);
 		}
@@ -110,7 +110,9 @@ public class MainServlet extends HttpServlet {
 		if(type.equals("downvote")){
 			AnswerBean a = new AnswerBean();
 			int downs = Integer.parseInt(request.getParameter("down"));
-			a.setUpvotes(downs);
+			int id =  Integer.parseInt(request.getParameter("id"));
+			System.out.println("Downvotes" + downs);
+			a.setDownvotes(downs);
 			dao.updateDownVote(a);
 		}
 	}
