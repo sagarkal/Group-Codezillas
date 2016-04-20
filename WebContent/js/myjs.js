@@ -126,7 +126,7 @@ function appendQuestions(json) {
 	
 	$('#' + id).append(
 		$('<tr/>').append($('<td/>').addClass("bb").attr({
-		    id : votesqid
+		    id : votesqid,
 		})).append($('<td/>').addClass("bb").append('<h2>Q. ' + json[i].question + '</h2>')).append(
 			$('<td/>').addClass("right").append(
 				'<span class="label label-info">'
@@ -192,19 +192,23 @@ function addAnswers(id, username, lang){
 			.append($('<td/>').append(json[i].answer)).append($('<td/>').append(
 					'<span class="label label-warning">'
 					+ 'Answered By' + '<a href="#" id='+getUserId()+'>'+	getUserId()+'</a>'
-					+ '</span>'))).append('<div/>')
-							.append($('<table/>').attr({
+					+ '</span>')))
+							/*.append($('<table/>').attr({
 					    id : id,
 					    width : "100%"
-					})).append($('<tr/>')).append(
-							$('<tr/>').append($('<td/>').append($('<button/>').addClass("left").addClass(
+					}))*/.append(
+							$('<tr/>').append($('<td/>').attr(
+								    {
+										    width : "10%",
+											align : 'right'
+										    }).append($('<button/>').addClass("right").addClass(
 							"btn btn-primary")
 							.attr({
 							    id : "button" + json[i].id,
 							    type : "button"
 							   //left : "50px"
 							    //onclick : "postResponse(this)"
-							}).append('Feedback')).append('<br><br>')));
+							}).append('Feedback').append('<br>'))));
 					
 		addVotes("votes"+id+"and"+json[i].id, parseInt(json[i].upvotes) - parseInt(json[i].downvotes));
 		
@@ -266,13 +270,16 @@ function addVotes(id, votes) {
     console.log(id);
     $('#' + id)
 	    .append(
-		    $('<table/>')
+		    $('<table/>').attr({
+			    width : "150%"
+			})
 			    .append(
 				    $('<tr/>')
 					    .append(
 						    $('<td/>')
 							    .attr(
 								    {
+								  //  width : "2%",
 									align : 'center'
 								    })
 							    .append(
@@ -288,6 +295,7 @@ function addVotes(id, votes) {
 						    $('<td/>')
 							    .attr(
 								    {
+								    	
 									align : 'center'
 								    })
 							    .append(
