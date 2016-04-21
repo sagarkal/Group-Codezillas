@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html>
 <head>
     <meta charset="utf-8">
@@ -6,7 +7,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.2/d3.min.js" charset="utf-8"></script>
     <script src="https://cdn.rawgit.com/novus/nvd3/v1.8.1/build/nv.d3.js"></script>
     <script src="https://github.com/novus/nvd3/blob/master/examples/lib/stream_layers.js"></script>
-
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/mystyle.css" rel="stylesheet">
+<script src="js/jquery-2.2.2.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/myjs.js"></script>
     <style>
         text {
             font: 12px sans-serif;
@@ -44,14 +49,33 @@
 
 <svg id="test2" class="mypiechart"></svg>
 
-
-
 <script>
+var url = window.location.search;
+var username= url.split('=')[1];
+var accuracy;
+var grammar;
+var consise;
+var redundancy;
+
+ $.get("MainServlet", {
+	type : "getFeedback",
+	username : username
+    }, function(json){
+    	console.log(json[0]);
+    	accuracy=json[0]["accuracy"];
+    	grammar = json[0]["grammar"];
+    	consise = json[0]["conciseness"];
+    	redundancy = json[0]["redundancy"];
+    	
+    	console.log(accuracy + " " + grammar + " " + consise + " ", redundancy);
+    
+ 
+ console.log("again:" + accuracy);
     var testdata = [
-        {key: "Redundancy", y: 5},
-        {key: "Grammar", y: 2},
-        {key: "Coniseness", y: 9},
-        {key: "Accuracy", y: 7},
+        {key: "Redundancy", y: redundancy},
+        {key: "Grammar", y: grammar},
+        {key: "Coniseness", y: consise},
+        {key: "Accuracy", y: accuracy},
      //   {key: "Five", y: 4},
      //   {key: "Six", y: 3},
      //   {key: "Seven", y: 0.5}
@@ -97,6 +121,7 @@
         return chart1;
     });
     var chart2;
+    /*
     nv.addGraph(function() {
         var chart2 = nv.models.pieChart()
             .x(function(d) { return d.key })
@@ -120,6 +145,7 @@
             .transition().duration(1200)
             .call(chart2);
         return chart2;
+    }); */
     });
 </script>
 </body>

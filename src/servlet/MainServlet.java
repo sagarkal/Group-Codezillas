@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.catalina.User;
+
 import bean.AnswerBean;
 import bean.QuestionBean;
 import bean.UserBean;
@@ -33,6 +35,17 @@ public class MainServlet extends HttpServlet {
 			String json = new Gson().toJson(al);
 			System.out.println("Exiting Main Servlet after fetching questions....");
 		    response.setContentType("text/json");
+		    response.setCharacterEncoding("UTF-8");
+		    response.getWriter().write(json);
+		}
+		
+		if(type.equals("getFeedback")){
+			ArrayList<UserBean> al = new ArrayList<UserBean>();
+			UserBean u=new UserBean();
+			String username = (String) request.getParameter("username");
+			al = dao.getFeedback(username);
+			String json = new Gson().toJson(al);
+			response.setContentType("text/json");
 		    response.setCharacterEncoding("UTF-8");
 		    response.getWriter().write(json);
 		}

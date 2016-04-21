@@ -35,7 +35,7 @@ function checkLogin() {
 	password : $('#password').val()
     }, function(response) {
 	if (response === "true") {
-		window.location.replace("home.html?hello=" + $('#email').val().split('@')[0]);	
+		window.location.replace("home.html?hello=" + $('#email').val());	
 	//	var url ="home.html";
 		//$("#usernameg").attr("href",url);
 	}
@@ -231,6 +231,12 @@ function updateFeedback(accuracy, conciseness, redundancy, grammar, id)
 		    });
 }
 
+function accessProfile(){
+	var url = window.location.search;
+	var userid = url.split('=')[1];
+	console.log("USER ID IN ACCESS PROFILE"+userid);
+	window.open("donut.html?userid=" + userid);
+}
 /* Below function is the old implementation of addAnswers that did not show the username 
  * of the answer giver on the right-hand side of the screen  */
 

@@ -52,7 +52,7 @@ public class Dao {
 			rSet = pStmt.executeQuery();
 			while (rSet.next()) {
 				QuestionBean q = new QuestionBean();
-				q.setId(rSet.getLong(1));
+				q.setId(rSet.getInt(1));
 				q.setQuestion(rSet.getString(2));
 				q.setUpvotes(rSet.getInt(3));
 				q.setDownvotes(rSet.getInt(4));
@@ -66,6 +66,32 @@ public class Dao {
 			e.printStackTrace();
 		}
 		return al;
+	}
+	
+	public ArrayList<UserBean> getFeedback(String username) {
+		ArrayList<UserBean> ul = new ArrayList<UserBean>();
+		username = username.trim();
+		UserBean u = new UserBean();
+		try {
+			System.out.println("Entered Get Feedback DAO");
+			System.out.println(username);
+			pStmt = con.prepareStatement("select accuracy, conciseness, redundancy, grammar from users where username=?");
+			pStmt.setString(1, username);
+			rSet = pStmt.executeQuery();
+			if (rSet.next()) {	
+				u.setAccuracy(rSet.getInt(1));
+				u.setConciseness(rSet.getInt(2));
+				u.setRedundancy(rSet.getInt(3));
+				u.setGrammar(rSet.getInt(4));		
+				ul.add(u);
+			}
+		System.out.println("------------------------------------------------------------------------------");
+		System.out.println(u.getAccuracy()+" "+u.getConciseness()+" "+u.getRedundancy()+" "+u.getGrammar());
+		System.out.println("------------------------------------------------------------------------------");
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return ul;
 	}
 
 	public ArrayList<AnswerBean> getAnswers(long qid) {
