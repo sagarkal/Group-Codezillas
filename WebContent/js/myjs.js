@@ -72,11 +72,22 @@ function checkLogin() {
 	}
 	else
 	{
-	window.alert("Invalid Username/Password"+response);
+	window.alert("Invalid Username/Password");
 	}
     });
 }
 
+/* Fetch questions when user navigates back to home page within a given session */
+
+function fetchQuestions()
+{
+	$.get("MainServlet", {
+		type : "getquestions"
+	    }, function(json) {
+		console.log(json);
+		appendQuestions(json);
+		});
+}
 
 /* Function to get User ID of the person who gave the answer */
 
@@ -326,7 +337,7 @@ function addVotes(id, votes) {
 									    .addClass(
 										    "glyphicon glyphicon-triangle-bottom")))));
     $(".glyphicon-triangle-top, .glyphicon-triangle-bottom").attr('onclick',
-	    'updateVotes(this,'+ id+')');
+	    'updateVotes(this, id)');
 }
 
 /* Below function updates the votes */

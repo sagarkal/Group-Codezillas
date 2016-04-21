@@ -2,20 +2,64 @@
 <head>
 <title>CodeZilla</title>
 <link href="css/bootstrap.min.css" rel="stylesheet">
-<link href="css/mystyle.css" rel="stylesheet">
-<link href="css/mine.css rel="stylesheet">
 <script src="js/jquery-2.2.2.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/myjs.js"></script>
 </head>
 
 <body>
+
+<style>
+
+p.question {
+    padding-left: 1cm;
+}
+
+p.text {
+padding-left: 1cm;
+}
+
+</style>
+
+<nav class="navbar navbar-default">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="#" onclick="onlyQuestions('*');">CodeZilla</a>
+			</div>
+			<div class="collapse navbar-collapse"
+				id="bs-example-navbar-collapse-1">
+				<ul class="nav navbar-nav">
+					<li><a href="#" onclick="onlyQuestions('.Java');">Java</a></li>
+					<li><a href="#" onclick="onlyQuestions('.JavaScript');">JavaScript</a></li>
+					<li><a href="#" onclick="onlyQuestions('.Python');">Python</a></li>
+					<li><a href="#" onclick="onlyQuestions('.CSharp');">C#</a></li>
+					<li><a href="#" onclick="onlyQuestions('.CPP');">C++</a></li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<li class="dropdown">
+			          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Take Quiz <span class="caret"></span></a>
+			          <ul class="dropdown-menu">
+						<li><a href="Java Quiz.html" onclick="takeQuiz('Java');">Java</a></li>
+						<li><a href="Javascript Quiz.html" onclick="takeQuiz('JavaScript');">JavaScript</a></li>
+						<li><a href="Python Quiz.html" onclick="takeQuiz('Python');">Python</a></li>
+						<li><a href="Csharp Quiz.html" onclick="takeQuiz('CSharp');">C#</a></li>
+						<li><a href="C++ Quiz.html" onclick="takeQuiz('CPP');">C++</a></li>
+			          </ul>
+			        </li>
+					<li><a onclick="accessProfile()" id="myprofile"></a></li>
+					<li><a href="home.html">Logout</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
 <form action="home.html">
-<h2>Java Quiz<span class="label label-default"></span></h2>
+<h2 align="center">Java Quiz<span class="label label-default"></span></h2>
 <br/>
 <h5><p class="question">1. What is the stored in the object obj in following lines of code?</p>  </h5>  
-box obj;    
-<ul class="answers">                   
+<p class="text"> box obj; </p>    
+<ul class="answers"> 
+                    
 <input type="radio" name="q1" value="b" id="q1b"><label for="q1b">Memory address of allocated memory of object.</label><br/> 
 <input type="radio" name="q1" value="b" id="q1b"><label for="q1b">NULL</label><br/>            
 <input type="radio" name="q1" value="c" id="q1c"><label for="q1c">Any arbitrary pointer</label><br/>            
@@ -58,7 +102,7 @@ box obj;
 </ul>    
 
 <p class="question">6. What is the output of this program? </p>        
- class main_class { <br />
+ <p class="text">class main_class { <br />
         public static void main(String args[])<br />
         {<br />
             int x = 9;<br />
@@ -67,7 +111,7 @@ box obj;
                 System.out.println(x);<br />
             }<br />
         } <br />
-    }<br />
+    }<br /> </p>
 <ul class="answers">            
 <input type="radio" name="q6" value="a" id="q6a"><label for="q6a">9</label><br/>            
 <input type="radio" name="q6" value="b" id="q6b"><label for="q6b">8</label><br/>            
@@ -84,7 +128,7 @@ box obj;
 </ul>   
 
 <p class="question">8. What is the output of this program?</p>   
-class box {<br />
+<p class="text">class box {<br />
         int width;<br />
         int height;<br />
         int length;<br />
@@ -99,7 +143,7 @@ class box {<br />
              int y = obj.width * obj.height * obj.length; <br />
              System.out.print(y);<br />
         } <br />
-    }     <br />
+    }     <br /> <p/>
 <ul class="answers">            
 <input type="radio" name="q8" value="a" id="q8a"><label for="q8a">12</label><br/>            
 <input type="radio" name="q8" value="b" id="q8b"><label for="q8b">200</label><br/>            
@@ -108,7 +152,7 @@ class box {<br />
 </ul>   
 
 <p class="question">9. What is the output of this program?</p>     
-class box {<br />
+<p class="text"> class box {<br />
         int width;<br />
         int height;<br />
         int length;<br />
@@ -124,7 +168,7 @@ class box {<br />
             obj2 = obj1;<br />
             System.out.println(obj2.height);<br />
         } <br />
-    }   <br />
+    }   <br /> </p>
 <ul class="answers">            
 <input type="radio" name="q9" value="a" id="q9a"><label for="q9a">1</label><br/>            
 <input type="radio" name="q9" value="b" id="q9b"><label for="q9b">2</label><br/>            
@@ -133,7 +177,7 @@ class box {<br />
 </ul>   
 
 <p class="question">10. What is the output of this program?</p>     
-class box {<br />
+<p class="text">class box {<br />
         int width;<br />
         int height;<br />
         int length;<br />
@@ -144,7 +188,7 @@ class box {<br />
             box obj = new box();<br />
             System.out.println(obj);<br />
         } <br />
-    }   <br />
+    }   <br /> </p>
 <ul class="answers">            
 <input type="radio" name="q10" value="a" id="q10a"><label for="q10a">0</label><br/>            
 <input type="radio" name="q10" value="b" id="q10b"><label for="q10b">1</label><br/>            

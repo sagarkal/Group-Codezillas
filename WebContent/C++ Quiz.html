@@ -2,19 +2,61 @@
 <head>
 <title>CodeZilla</title>
 <link href="css/bootstrap.min.css" rel="stylesheet">
-<link href="css/mystyle.css" rel="stylesheet">
-<link href="css/mine.css rel="stylesheet">
 <script src="js/jquery-2.2.2.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/myjs.js"></script>
 </head>
 
 <body>
+
+<style>
+
+p.question {
+    padding-left: 1cm;
+}
+
+p.text {
+padding-left: 1cm;
+}
+
+</style>
+
+<nav class="navbar navbar-default">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="#" onclick="onlyQuestions('*');">CodeZilla</a>
+			</div>
+			<div class="collapse navbar-collapse"
+				id="bs-example-navbar-collapse-1">
+				<ul class="nav navbar-nav">
+					<li><a href="#" onclick="onlyQuestions('.Java');">Java</a></li>
+					<li><a href="#" onclick="onlyQuestions('.JavaScript');">JavaScript</a></li>
+					<li><a href="#" onclick="onlyQuestions('.Python');">Python</a></li>
+					<li><a href="#" onclick="onlyQuestions('.CSharp');">C#</a></li>
+					<li><a href="#" onclick="onlyQuestions('.CPP');">C++</a></li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<li class="dropdown">
+			          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Take Quiz <span class="caret"></span></a>
+			          <ul class="dropdown-menu">
+						<li><a href="Java Quiz.html" onclick="takeQuiz('Java');">Java</a></li>
+						<li><a href="Javascript Quiz.html" onclick="takeQuiz('JavaScript');">JavaScript</a></li>
+						<li><a href="Python Quiz.html" onclick="takeQuiz('Python');">Python</a></li>
+						<li><a href="Csharp Quiz.html" onclick="takeQuiz('CSharp');">C#</a></li>
+						<li><a href="C++ Quiz.html" onclick="takeQuiz('CPP');">C++</a></li>
+			          </ul>
+			        </li>
+					<li><a onclick="accessProfile()" id="myprofile"></a></li>
+					<li><a href="home.html">Logout</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
 <form action="home.html">
-<h2>C++ Quiz<span class="label label-default"></span></h2>
+<h2 align="center">C++ Quiz<span class="label label-default"></span></h2>
 <br/>
 <h5><p class="question">1.  Where is the derived class is derived from?</p>  </h5>  
-box obj;    
+<p class="text">box obj; </p>   
 <ul class="answers">                   
 <input type="radio" name="q1" value="a" id="q1b"><label for="q1b">derived.</label><br/> 
 <input type="radio" name="q1" value="b" id="q1b"><label for="q1b">base</label><br/>            
@@ -59,7 +101,7 @@ constructor.</label><br/>
 </ul>    
 
 <p class="question">6. What is the output of this program? </p>        
-         #include <iostream> <br />
+       <p class="text">  #include&ltiostream&gt <br />
     using namespace std; <br />
     class A <br />
     { <br />
@@ -91,7 +133,7 @@ constructor.</label><br/>
     { <br />
         C c(5, 4.3, 'R'); <br />
         return 0; <br />
-    } <br />
+    } <br /> </p>
 <ul class="answers">            
 <input type="radio" name="q6" value="a" id="q6a"><label for="q6a">54.3R</label><br/>            
 <input type="radio" name="q6" value="b" id="q6b"><label for="q6b">R4.35</label><br/>            
@@ -100,7 +142,7 @@ constructor.</label><br/>
 </ul>  
 
 <p class="question">7. What is the output of this program?</p>  
-#include <iostream> <br/>        
+<p class="text">#include&ltiostream&gt <br/>        
     using namespace std; <br/>        
     class BaseClass  <br/>        
     { <br/>        
@@ -136,7 +178,7 @@ constructor.</label><br/>
         DerivedClass ob(3, 4); <br/>        
         ob.show(); <br/>        
         return 0; <br/>        
-    }      <br/>        
+    }      <br/>        </p>
 <ul class="answers">            
 <input type="radio" name="q7" value="a" id="q7a"><label for="q7a">3 4</label><br/>            
 <input type="radio" name="q7" value="b" id="q7b"><label for="q7b">4 3 </label><br/>            
@@ -145,7 +187,7 @@ constructor.</label><br/>
 </ul>   
 
 <p class="question">8. What is the output of this program?</p>   
-#include<iostream>  <br/>       
+<p class="text"> #include&ltiostream&gt  <br/>       
     using namespace std; <br/>       
     class X <br/>       
     {<br/>       
@@ -173,7 +215,7 @@ constructor.</label><br/>
     {<br/>       
         Y yobj( 100 ); <br/>       
         cout << yobj.getm() << " " << yobj.getn() << endl; <br/>       
-    } <br/>       
+    } <br/>       </p>
 <ul class="answers">            
 <input type="radio" name="q8" value="a" id="q8a"><label for="q8a">10 100 </label><br/>            
 <input type="radio" name="q8" value="b" id="q8b"><label for="q8b">100 10</label><br/>            
@@ -182,7 +224,7 @@ constructor.</label><br/>
 </ul>   
 
 <p class="question">9. What is the output of this program?</p>     
-#include <iostream> <br/>       
+<p class="text"> #include&ltiostream&gt <br/>       
     using namespace std; <br/>       
     class Base<br/>       
     { <br/>       
@@ -211,7 +253,7 @@ constructor.</label><br/>
         cout << "Instantiating Derived" << endl; <br/>       
         Derived cDerived; <br/>       
         return 0;<br/>       
-    }<br/>       
+    }<br/>       </p>
 <ul class="answers">            
 <input type="radio" name="q9" value="a" id="q9a"><label for="q9a"> Instantiating Base <br/>       
 Base <br/>       
@@ -221,16 +263,16 @@ Derived <br/>       </label><br/>
 <input type="radio" name="q9" value="b" id="q9b"><label for="q9b">Instantiating Base <br/>       
 Instantiating Derived<br/>       
 Base<br/>       
-Derived <br/>       </label><br/>            
+Derived <br/>       </label><br/>       
 <input type="radio" name="q9" value="c" id="q9c"><label for="q9c"> Instantiating Base <br/>       
 Base <br/>       
 Instantiating Derived <br/>       
-Base <br/>       </label><br/>           
+Base <br/>       </label><br/>          
 <input type="radio" name="q9" value="d" id="q9d"><label for="q9d">None of the mentioned</label> <br/>       
 </ul>   
 
 <p class="question">10. What is the output of this program?</p>     
-#include <iostream> <br/>       
+<p class="text"> #include&ltiostream&gt <br/>       
     using namespace std; <br/>       
     class Parent <br/>       
     { <br/>       
@@ -271,7 +313,7 @@ Base <br/>       </label><br/>
         Child2 b;<br/>       
         Child2 c(42);<br/>       
         return 0;<br/>       
-    }<br/>       
+    }<br/>       </p>
 <ul class="answers">             
 <input type="radio" name="q10" value="a" id="q10a"><label for="q10a">Parent() <br/>       
 Parent()<br/>       

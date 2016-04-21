@@ -44,6 +44,37 @@
     </style>
 </head>
 <body class='with-3d-shadow with-transitions'>
+<nav class="navbar navbar-default">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="#" onclick="onlyQuestions('*');">CodeZilla</a>
+			</div>
+			<div class="collapse navbar-collapse"
+				id="bs-example-navbar-collapse-1">
+				<ul class="nav navbar-nav">
+					<li><a href="#" onclick="onlyQuestions('.Java');">Java</a></li>
+					<li><a href="#" onclick="onlyQuestions('.JavaScript');">JavaScript</a></li>
+					<li><a href="#" onclick="onlyQuestions('.Python');">Python</a></li>
+					<li><a href="#" onclick="onlyQuestions('.CSharp');">C#</a></li>
+					<li><a href="#" onclick="onlyQuestions('.CPP');">C++</a></li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<li class="dropdown">
+			          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Take Quiz <span class="caret"></span></a>
+			          <ul class="dropdown-menu">
+						<li><a href="Java Quiz.html" onclick="takeQuiz('Java');">Java</a></li>
+						<li><a href="Javascript Quiz.html" onclick="takeQuiz('JavaScript');">JavaScript</a></li>
+						<li><a href="Python Quiz.html" onclick="takeQuiz('Python');">Python</a></li>
+						<li><a href="Csharp Quiz.html" onclick="takeQuiz('CSharp');">C#</a></li>
+						<li><a href="C++ Quiz.html" onclick="takeQuiz('CPP');">C++</a></li>
+			          </ul>
+			        </li>
+					<li><a onclick="accessProfile()" id="myprofile"></a></li>
+					<li><a href="home.html">Logout</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
 
 <svg id="test1" class="mypiechart"></svg>
 
