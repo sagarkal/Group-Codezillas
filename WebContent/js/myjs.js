@@ -25,9 +25,9 @@ function register(){
 
 var usernameg = '';
 
-/* New checkLogin function that is written keeping in mind the updated login functionality
- * that consists of separate web pages for user registration, login and homepage */
+/* New checkLogin function that will no longer be used */
 
+/*
 function checkLogin() {
 	usernameg = $('#email').val();
     $.get("LoginServlet", {
@@ -46,28 +46,11 @@ function checkLogin() {
 		
     });
 }
-
-/* Fetch all the questions */
-
-function fetchQuestions()
-{
-	var url = window.location.search;
-	console.log("URL: " + url.split('=')[1]);
-	$('#myprofile').append(url.split('=')[1]);
-	console.log("The logged in username is "+usernameg);
-	$.get("MainServlet", {
-		type : "getquestions"
-	    }, function(json) {
-		console.log("Login servlet wala "+json);
-		appendQuestions(json);
-	    });
-}
+*/
 
 /* Below function is the old implementation of checkLogin() that was intended for 
  * old home page with pop up window that asked for login credentials */
 
-
-/*
 function checkLogin() {
     $.get("LoginServlet", {
 	userId : $('#inputEmail').val(),
@@ -75,7 +58,7 @@ function checkLogin() {
     }, function(response) {
 	if (response == "true") {
 	    $('#myModal').modal("hide");
-	    usernameg = $('#inputEmail').val().split('@')[0];
+	    usernameg = $('#inputEmail').val();
 	    $('#myprofile').append(usernameg);
 
 	    // loading main page
@@ -87,9 +70,13 @@ function checkLogin() {
 	    });
 
 	}
+	else
+	{
+	window.alert("Invalid Username/Password"+response);
+	}
     });
 }
-*/
+
 
 /* Function to get User ID of the person who gave the answer */
 
@@ -232,8 +219,7 @@ function updateFeedback(accuracy, conciseness, redundancy, grammar, id)
 }
 
 function accessProfile(){
-	var url = window.location.search;
-	var userid = url.split('=')[1];
+	var userid = $('#myprofile').text();
 	console.log("USER ID IN ACCESS PROFILE"+userid);
 	window.open("donut.html?userid=" + userid);
 }
