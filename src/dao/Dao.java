@@ -231,12 +231,53 @@ public class Dao {
 		try {
 			System.out.println("Entered DAO to update Downvote....................");
 			pStmt = con.prepareStatement("update answers set downvotes=?  where id=?");
-			pStmt.setLong(2, a.getId());
-			pStmt.setLong(1,a.getDownvotes());
+			pStmt.setInt(2, a.getId());
+			pStmt.setInt(1,a.getDownvotes());
 			
 			pStmt.executeUpdate();
 			System.out.println("Finished DAO to update Downvote....................");
 		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void updateFeedback(int accuracy, int conciseness, int redundancy, int grammar, int id)
+	{
+		String username = "";
+		int oldAccuracy = 0 , oldConciseness = 0, oldRedundancy = 0, oldGrammar = 0;
+		try{
+			System.out.println("Entered UpdateFeedback DAO................");
+			System.out.println(accuracy+" "+conciseness+" "+redundancy+" "+grammar);
+			
+			pStmt = con.prepareStatement("select username from answers where id="+id);
+			rSet = pStmt.executeQuery();
+			
+			if (rSet.next()) {
+				username =	rSet.getString(1);
+			}
+			username=username.trim();
+			System.out.println("Extracted username from answers table!! It is "+ username);
+			
+			pStmt = con.prepareStatement("select accuracy, conciseness, redundancy, grammar from users where username=?");
+			pStmt.setString(1, username);
+			rSet = pStmt.executeQuery();
+			
+			if (rSet.next()) {
+				oldAccuracy =	rSet.getInt(1);
+				oldConciseness = rSet.getInt(2);
+				oldRedundancy = rSet.getInt(3);
+				oldGrammar = rSet.getInt(4);
+			}
+			
+			pStmt = con.prepareStatement("update users set accuracy="+(oldAccuracy+accuracy)+", conciseness="+(oldConciseness+conciseness)+", "
+					+ "redundancy="+(redundancy+oldRedundancy)+", grammar="+(oldGrammar+grammar)+"  where username=?");
+			//pStmt.setInt(1, accuracy);
+			//pStmt.setInt(2, conciseness);
+			//pStmt.setInt(3, redundancy);
+			//pStmt.setInt(4, grammar);
+			pStmt.setString(1, username);
+			pStmt.executeUpdate();
+		}catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}

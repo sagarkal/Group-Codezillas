@@ -185,7 +185,7 @@ function addAnswers(id, username, lang){
 	type : "getanswers",
 	qid : id
     }, function(json) {
-	console.log(json);
+	
 	    for (i in json) {
 		$("#tableq" + id).append(
 		$('<tr/>').append($('<td />').attr('id',"votes" + id + "and"+ json[i].id))
@@ -202,16 +202,33 @@ function addAnswers(id, username, lang){
 							"btn btn-default btn-xs")
 							.attr({
 							    id : "button" + json[i].id,
-							    type : "button"
+							    type : "button",
 							   //left : "50px"
-							    //onclick : "postResponse(this)"
+							    onclick : "openWindowForFeedback("+json[i].id+")",
 							}).append('Feedback').append('<br>'))));
-					
+		console.log("EXPECTING QUESTION ID: "+id+" FOR ANSWER ID: "+json[i].id);
 		addVotes("votes"+id+"and"+json[i].id, parseInt(json[i].upvotes) - parseInt(json[i].downvotes));
 		
 	    }
 	    //addReputation(username, lang);
     });
+}
+
+function openWindowForFeedback(id) {
+    window.open("feedback.html?id=" + id);
+}
+
+
+function updateFeedback(accuracy, conciseness, redundancy, grammar, id)
+{
+	 $.get("MainServlet", {
+			type : "feedback",
+			accuracy : accuracy, 
+			conciseness : conciseness,
+			redundancy : redundancy,
+			grammar : grammar,
+			id : id
+		    });
 }
 
 /* Below function is the old implementation of addAnswers that did not show the username 
@@ -281,7 +298,7 @@ function postResponse(tag) {
 /* Below function adds the graphical icons required for upvotes and downvotes */
 
 function addVotes(id, votes) {
-    console.log(id);
+    console.log("INSIDE ADD VOTES ID: "+this);
     $('#' + id)
 	    .append(
 		    $('<table/>').attr({
@@ -317,7 +334,7 @@ function addVotes(id, votes) {
 									    .addClass(
 										    "glyphicon glyphicon-triangle-bottom")))));
     $(".glyphicon-triangle-top, .glyphicon-triangle-bottom").attr('onclick',
-	    'updateVotes(this, id)');
+	    'updateVotes(this,'+ id+')');
 }
 
 /* Below function updates the votes */
@@ -330,6 +347,7 @@ function updateVotes(tag, id1) {
     var type;
     var r = 0;
     var up, down;
+    console.log("Splitting on votes: "+ id1.split("votes")[1]);
     if (c.includes('top')) {
 	// type = 'q';
 	 //actualid = id.split('q')[1];

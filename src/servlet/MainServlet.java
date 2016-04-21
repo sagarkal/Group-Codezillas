@@ -115,6 +115,15 @@ public class MainServlet extends HttpServlet {
 			a.setDownvotes(downs);
 			dao.updateDownVote(a);
 		}
+		
+		if(type.equals("feedback")){
+			int accuracy = Integer.parseInt(request.getParameter("accuracy"));
+			int conciseness = Integer.parseInt(request.getParameter("conciseness"));
+			int redundancy = Integer.parseInt(request.getParameter("redundancy"));
+			int grammar = Integer.parseInt(request.getParameter("grammar"));
+			int id = Integer.parseInt(request.getParameter("id"));
+			dao.updateFeedback(accuracy, conciseness, redundancy, grammar, id);
+		}
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
