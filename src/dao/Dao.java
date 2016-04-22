@@ -121,7 +121,7 @@ public class Dao {
 	public void saveUser(UserBean u)
 	{
 		try{
-			pStmt = con.prepareStatement("insert into users values(?,?,?,?,?,?,?,?)");
+			pStmt = con.prepareStatement("insert into users values(?,?,?,?,?,?,?,?,?,?,?,?)");
 			pStmt.setString(1, u.getUsername());
 			pStmt.setInt(2, 0);
 			pStmt.setInt(3, 0);
@@ -130,6 +130,10 @@ public class Dao {
 			pStmt.setInt(6, 0);
 			pStmt.setInt(7, 0);
 			pStmt.setString(8, u.getPassword());
+			pStmt.setInt(9, 0);
+			pStmt.setInt(10, 0);
+			pStmt.setInt(11, 0);
+			pStmt.setInt(12, 0);
 			pStmt.executeQuery();
 		}catch (SQLException e) {
 			e.printStackTrace();
@@ -202,6 +206,29 @@ public class Dao {
 			e.printStackTrace();
 		}
 		return u;
+	}
+	
+	public ArrayList<UserBean> getReputationForProfile(String username)
+	{
+		ArrayList<UserBean> ul = new ArrayList();
+		UserBean u = new UserBean();
+		try {
+			pStmt = con
+					.prepareStatement("select java, javascript, cpp, python, csharp from users where username = ?");
+			pStmt.setString(1, username);
+			rSet = pStmt.executeQuery();
+			if (rSet.next()) {
+				u.setJava(rSet.getInt(1));
+				u.setCpp(rSet.getInt(3));
+				u.setPython(rSet.getInt(4));
+				u.setCsharp(rSet.getInt(5));
+				u.setJavascript(rSet.getInt(2));
+				ul.add(u);
+			}
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return ul;
 	}
 	
 	public int updateReputation(String username, String language, int pointsToAdd)

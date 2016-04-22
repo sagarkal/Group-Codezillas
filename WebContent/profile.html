@@ -15,10 +15,61 @@
   <script src="js/jquery-2.2.2.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
   <script src="js/myjs.js"></script>
+  
+  <link href="https://cdn.rawgit.com/novus/nvd3/v1.8.1/build/nv.d3.css" rel="stylesheet" type="text/css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.2/d3.min.js" charset="utf-8"></script>
+    <script src="https://cdn.rawgit.com/novus/nvd3/v1.8.1/build/nv.d3.js"></script>
+    <script src="https://github.com/novus/nvd3/blob/master/examples/lib/stream_layers.js"></script>
 
 </head>
 
-<body>
+<style>
+        text {
+            font: 12px sans-serif;
+        }
+        svg {
+            display: block;
+            float: left;
+        }
+        #test2 {
+            height: 350px !important;
+            width: 350px !important;
+        }
+        #test1 {
+            height: 350px !important;
+            width: 350px !important;
+        }
+        html, body {
+            margin: 0px;
+            padding: 0px;
+            height: 100%;
+            width: 100%;
+        }
+        .nvd3.nv-pie.nv-chart-donut2 .nv-pie-title {
+            fill: rgba(70, 107, 168, 0.78);
+        }
+        .nvd3.nv-pie.nv-chart-donut1 .nv-pie-title {
+            opacity: 0.4;
+            fill: rgba(224, 116, 76, 0.91);
+        }
+    </style>
+
+<script>
+function loadHome()
+{
+	var url = window.location.href;
+	var username = url.split("=")[1];
+	window.location.replace("home.html?user=" + username);
+}
+
+function setUser(){
+	var url = window.location.href;
+	var username = url.split("=")[1];
+	$('#myprofile').append(username);
+}
+</script>
+
+<body onload="setUser()">
   <nav class="navbar navbar-default">
 		<div class="container-fluid">
 			<div class="navbar-header">
@@ -72,14 +123,141 @@
       </section>
       
       <section id="reputation" class="hidden">
+		<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+		<div id="myDiv" style="width: 480px; height: 400px;"><!-- Plotly chart will be drawn inside this DIV --></div>
+  <script>
+  var url = window.location.search;
+  var username= url.split('=')[1];
+  $.get("MainServlet", {
+		type : "getrepforprofile",
+		username : username
+	    }, function(json){
+	    	console.log(json[0]);
+	    	java=json[0]["java"];
+	    	javascript = json[0]["javascript"];
+	    	csharp = json[0]["csharp"];
+	    	python = json[0]["python"];
+	    	cpp = json[0]["cpp"];
+	    	//console.log(accuracy + " " + grammar + " " + consise + " ", redundancy);
+	    	
+    <!-- JAVASCRIPT CODE GOES HERE -->
+    var data = [{
+  type: 'bar',
+  x: [java, javascript, python , csharp, cpp],
+  y: ['Java', 'Javascript', 'Python','C#','C++'],
+  orientation: 'h'
+}];
 
+Plotly.newPlot('myDiv', data);
+	    });
+  </script>
       </section>
       
       <section id="feedback" class="hidden">
           
-        <ul id="friendslist" class="clearfix">
+        <svg id="test1" class="mypiechart"></svg>
 
-        </ul>
+<svg id="test2" class="mypiechart"></svg>
+
+<script>
+var url = window.location.search;
+var username= url.split('=')[1];
+var accuracy;
+var grammar;
+var consise;
+var redundancy;
+
+ $.get("MainServlet", {
+	type : "getFeedback",
+	username : username
+    }, function(json){
+    	console.log(json[0]);
+    	accuracy=json[0]["accuracy"];
+    	grammar = json[0]["grammar"];
+    	consise = json[0]["conciseness"];
+    	redundancy = json[0]["redundancy"];
+    	
+    	console.log(accuracy + " " + grammar + " " + consise + " ", redundancy);
+    
+ 
+ console.log("again:" + accuracy);
+    var testdata = [
+        {key: "Redundancy", y: redundancy},
+        {key: "Grammar", y: grammar},
+        {key: "Conciseness", y: consise},
+        {key: "Accuracy", y: accuracy},
+     //   {key: "Five", y: 4},
+     //   {key: "Six", y: 3},
+     //   {key: "Seven", y: 0.5}
+    ];
+    var height = 350;
+    var width = 350;
+    var chart1;
+    nv.addGraph(function() {
+        var chart1 = nv.models.pieChart()
+            .x(function(d) { return d.key })
+            .y(function(d) { return d.y })
+            .donut(true)
+            .width(width)
+            .height(height)
+            .padAngle(.08)
+            .cornerRadius(5)
+            .id('donut1'); // allow custom CSS for this one svg
+        chart1.title("Feedback Received");
+        chart1.pie.donutLabelsOutside(true).donut(true);
+        d3.select("#test1")
+            .datum(testdata)
+            .transition().duration(1200)
+            .call(chart1);
+        // LISTEN TO WINDOW RESIZE
+        // nv.utils.windowResize(chart1.update);
+        // LISTEN TO CLICK EVENTS ON SLICES OF THE PIE/DONUT
+        // chart.pie.dispatch.on('elementClick', function() {
+        //     code...
+        // });
+        // chart.pie.dispatch.on('chartClick', function() {
+        //     code...
+        // });
+        // LISTEN TO DOUBLECLICK EVENTS ON SLICES OF THE PIE/DONUT
+        // chart.pie.dispatch.on('elementDblClick', function() {
+        //     code...
+        // });
+        // LISTEN TO THE renderEnd EVENT OF THE PIE/DONUT
+        // chart.pie.dispatch.on('renderEnd', function() {
+        //     code...
+        // });
+        // OTHER EVENTS DISPATCHED BY THE PIE INCLUDE: elementMouseover, elementMouseout, elementMousemove
+        // @see nv.models.pie
+        return chart1;
+    });
+    var chart2;
+    /*
+    nv.addGraph(function() {
+        var chart2 = nv.models.pieChart()
+            .x(function(d) { return d.key })
+            .y(function(d) { return d.y })
+            //.labelThreshold(.08)
+            //.showLabels(false)
+            .color(d3.scale.category20().range().slice(10))
+            .width(width)
+            .height(height)
+            .donut(true)
+            .id('donut2')
+            .titleOffset(-30)
+            .title("Feedback");
+        // MAKES IT HALF CIRCLE
+        chart2.pie
+            .startAngle(function(d) { return d.startAngle/2 -Math.PI/2 })
+            .endAngle(function(d) { return d.endAngle/2 -Math.PI/2 });
+        d3.select("#test2")
+            //.datum(historicalBarChart)
+            .datum(testdata)
+            .transition().duration(1200)
+            .call(chart2);
+        return chart2;
+    }); */
+    });
+</script>
       </section>
 
     </div><!-- @end #content -->

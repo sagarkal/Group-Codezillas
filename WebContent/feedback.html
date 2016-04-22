@@ -9,6 +9,15 @@
 <script src="js/myjs.js"></script>
 </head>
 
+<script>
+function loadHome()
+{
+	var url = window.location.href;
+	var username = url.split("=")[1];
+	window.location.replace("home.html?user=" + username);
+}
+</script>
+
 <body>
 <nav class="navbar navbar-default">
 		<div class="container-fluid">

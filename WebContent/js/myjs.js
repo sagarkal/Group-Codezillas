@@ -18,6 +18,8 @@ function register(){
 	$.get("RegisterServlet", {
 		userName : $('#email').val(),
 		password : $('#password').val()
+	},function(){
+		window.location.replace("login.html");
 	});
 }
 
@@ -236,7 +238,7 @@ function updateFeedback(accuracy, conciseness, redundancy, grammar, id)
 function accessProfile(){
 	var userid = $('#myprofile').text();
 	console.log("USER ID IN ACCESS PROFILE"+userid);
-	window.open("donut.html?userid=" + userid);
+	window.location.replace("profile.html?userid=" + userid);
 }
 /* Below function is the old implementation of addAnswers that did not show the username 
  * of the answer giver on the right-hand side of the screen  */
@@ -278,13 +280,14 @@ function postResponse(tag) {
     }, function(response) {
 	var ansid = response;
 	 
+	var username = $('#myprofile').text().split("@")[0];
 			
 //addVotes("votes"+id+"and"+json[i].id, parseInt(json[i].upvotes) - parseInt(json[i].downvotes));
 	$("#tableq" + id).append(
 			$('<tr/>').append($('<td/>').attr('id', "votes" +id+"and"+ ansid))
 				.append($('<td/>').append(txt)).append($('<td/>').append(
 						'<span class="label label-warning">'
-						+ 'Answered By' + '<a href="#" id='+getUserId()+'>'+	getUserId()+'</a>'
+						+ 'Answered By' + '<a href="#" id='+username+'>'+	username+'</a>'
 						+ '</span>')))								
 						.append(
 								$('<tr/>').append($('<td/>')).append($('<td/>').attr(

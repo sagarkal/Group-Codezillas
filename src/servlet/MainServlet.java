@@ -68,6 +68,16 @@ public class MainServlet extends HttpServlet {
 		    response.getWriter().write(json);
 		}
 		
+		if(type.equals("getrepforprofile")){
+			String username = (String) request.getParameter("username");
+			ArrayList<UserBean> ul = new ArrayList<UserBean>();
+			ul = dao.getReputationForProfile(username);
+			String json = new Gson().toJson(ul);
+		    response.setContentType("text/json");
+		    response.setCharacterEncoding("UTF-8");
+		    response.getWriter().write(json);
+		}
+		
 		if(type.equals("updaterep")){
 			String username = (String) request.getParameter("username");
 			String language = (String) request.getParameter("language");
