@@ -81,6 +81,9 @@ function checkLogin() {
 
 function fetchQuestions()
 {
+	var url = window.location.href;
+	var username = url.split("=")[1];
+	$('#myprofile').append(username);
 	$.get("MainServlet", {
 		type : "getquestions"
 	    }, function(json) {
@@ -88,6 +91,7 @@ function fetchQuestions()
 		appendQuestions(json);
 		});
 }
+
 
 /* Function to get User ID of the person who gave the answer */
 

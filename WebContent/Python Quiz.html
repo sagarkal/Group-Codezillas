@@ -7,7 +7,22 @@
 <script src="js/myjs.js"></script>
 </head>
 
-<body>
+<script>
+function loadHome()
+{
+	var url = window.location.href;
+	var username = url.split("=")[1];
+	window.location.replace("home.html?user=" + username);
+}
+
+function setUser(){
+	var url = window.location.href;
+	var username = url.split("=")[1];
+	$('#myprofile').append(username);
+}
+</script>
+
+<body onload="setUser()">
 
 <style>
 
@@ -47,7 +62,7 @@ padding-left: 1cm;
 			          </ul>
 			        </li>
 					<li><a onclick="accessProfile()" id="myprofile"></a></li>
-					<li><a href="home.html">Logout</a></li>
+					<li><a href="login.html">Logout</a></li>
 				</ul>
 			</div>
 		</div>
@@ -238,7 +253,7 @@ console.log(correctAnswers);
 </script>
 
 &nbsp&nbsp&nbsp&nbsp <button type="button" onclick="check()" class="btn btn-primary">Submit</button>
-<button type="submit" class="btn btn-primary">Home</button>
+<button type="button" onclick= "loadHome()" class="btn btn-primary">Home</button>
 </form>
 </body>
 <br />
