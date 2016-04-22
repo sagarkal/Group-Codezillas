@@ -67,6 +67,25 @@ function setUser(){
 	var username = url.split("=")[1];
 	$('#myprofile').append(username);
 }
+
+function getUser(){
+	 var url = window.location.href;
+	var username = url.split("=")[1].split("@")[0];
+	return username;
+}
+
+function getEmail(){
+	 var url = window.location.href;
+	var username = url.split("=")[1];
+	return username;
+}
+
+function getNameFromURL(){
+	 var url = window.location.href;
+	var username = url.split("=")[1].split("@")[0];
+	return username;
+}
+
 </script>
 
 <body onload="setUser()">
@@ -104,8 +123,8 @@ function setUser(){
   <div id="w">
     <div id="content" class="clearfix">
       <div id="userphoto"><img src="images/avatar.png" alt="default avatar"></div>
-      <h1>User Profile</h1>
-
+      <h1><label id="demo"></label></h1>
+<script>document.getElementById("demo").innerHTML = getUser(); </script>
       <nav id="profiletabs">
         <ul class="clearfix">
           <li><a href="#bio" class="sel">Bio</a></li>
@@ -116,12 +135,16 @@ function setUser(){
       </nav>
       
       <section id="bio">
-        <p class="setting"><span>E-mail Address <img src="images/edit.png" alt="*Edit*"></span> lolno@gmail.com</p>
+        <p class="setting"><span>E-mail Address <img src="images/edit.png" alt="*Edit*"></span><label id="email"></label> </p>
         
-        <p class="setting"><span>Name <img src="images/edit.png" alt="*Edit*"></span> English(US)</p>
+        
+        <p class="setting"><span>Name <img src="images/edit.png" alt="*Edit*"></span> <label id="usernamefromurl"></label></p>
 
       </section>
-      
+      <script>document.getElementById("email").innerHTML = getEmail();
+      document.getElementById("usernamefromurl").innerHTML = getNameFromURL();
+
+      </script>
       <section id="reputation" class="hidden">
 		<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 		<div id="myDiv" style="width: 480px; height: 400px;"><!-- Plotly chart will be drawn inside this DIV --></div>
