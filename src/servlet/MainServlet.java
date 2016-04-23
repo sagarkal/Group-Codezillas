@@ -30,15 +30,13 @@ public class MainServlet extends HttpServlet {
 		String type = (String) request.getParameter("type");
 		Dao dao = new Dao();
 		if(type.equals("getquestions")){
-			System.out.println("Entered Main Servlet to fetch questions....");
 			ArrayList<QuestionBean> al = dao.getQuestions();
 			String json = new Gson().toJson(al);
-			System.out.println("Exiting Main Servlet after fetching questions....");
 		    response.setContentType("text/json");
 		    response.setCharacterEncoding("UTF-8");
 		    response.getWriter().write(json);
 		}
-		
+
 		if(type.equals("getFeedback")){
 			ArrayList<UserBean> al = new ArrayList<UserBean>();
 			UserBean u=new UserBean();
@@ -49,16 +47,16 @@ public class MainServlet extends HttpServlet {
 		    response.setCharacterEncoding("UTF-8");
 		    response.getWriter().write(json);
 		}
-		
+
 		if(type.equals("getanswers")){
-			long qid = Long.parseLong(request.getParameter("qid"));
+			int qid = Integer.parseInt(request.getParameter("qid"));
 			ArrayList<AnswerBean> al = dao.getAnswers(qid);
 			String json = new Gson().toJson(al);
 		    response.setContentType("text/json");
 		    response.setCharacterEncoding("UTF-8");
 		    response.getWriter().write(json);
 		}
-		
+
 		if(type.equals("getrep")){
 			String username = (String) request.getParameter("username");
 			UserBean u = dao.getReputation(username);
@@ -67,7 +65,7 @@ public class MainServlet extends HttpServlet {
 		    response.setCharacterEncoding("UTF-8");
 		    response.getWriter().write(json);
 		}
-		
+
 		if(type.equals("getrepforprofile")){
 			String username = (String) request.getParameter("username");
 			ArrayList<UserBean> ul = new ArrayList<UserBean>();
@@ -77,7 +75,7 @@ public class MainServlet extends HttpServlet {
 		    response.setCharacterEncoding("UTF-8");
 		    response.getWriter().write(json);
 		}
-		
+
 		if(type.equals("updaterep")){
 			String username = (String) request.getParameter("username");
 			String language = (String) request.getParameter("language");
@@ -89,7 +87,7 @@ public class MainServlet extends HttpServlet {
 			response.setContentType("text/plain");
 		    response.setCharacterEncoding("UTF-8");
 		    response.getWriter().write(String.valueOf(pointsToAdd));
-		    
+
 		    System.out.println("---------------------------------------------");
 		    System.out.println("Points to be added in updateReputation: "+pointsToAdd);
 		    System.out.println("Response object: "+response.toString());
@@ -105,7 +103,7 @@ public class MainServlet extends HttpServlet {
 			    System.out.println("---------------------------------------------");
 			}
 		}
-		
+
 		if(type.equals("saveanswer")){
 			AnswerBean a = new AnswerBean();
 			a.setUsername((String) request.getParameter("username"));
@@ -113,32 +111,43 @@ public class MainServlet extends HttpServlet {
 			a.setUpvotes(0);
 			a.setDownvotes(0);
 			a.setQuestionId(Integer.parseInt(request.getParameter("qid")));
-			long aid  = dao.saveAnswer(a);
+			int aid  = dao.saveAnswer(a);
 			String json = new Gson().toJson(aid);
 		    response.setContentType("text/json");
 		    response.setCharacterEncoding("UTF-8");
 		    response.getWriter().write(json);
+		}
 
+		if(type.equals("savequestion")){
+			QuestionBean a = new QuestionBean();
+			a.setUsername((String) request.getParameter("username"));
+			a.setQuestion((String) request.getParameter("question"));
+			a.setTags((String) request.getParameter("tag"));
+			a.setUpvotes(0);
+			a.setDownvotes(0);
+			a.setId(Integer.parseInt(request.getParameter("qid")));
+			dao.saveQuestion(a);
+			ArrayList<QuestionBean> al = dao.getQuestions();
+			String json = new Gson().toJson(al);
+		    response.setContentType("text/json");
+		    response.setCharacterEncoding("UTF-8");
+		    response.getWriter().write(json);
 		}
-		
+
 		if(type.equals("upvote")){
-			AnswerBean a = new AnswerBean();
 			int ups = Integer.parseInt(request.getParameter("up"));
-			int id =  Integer.parseInt(request.getParameter("id"));
-			System.out.println("Upvotes" + ups);
-			a.setUpvotes(ups);
-			dao.updateUpVote(a);
+			String id =  (String) request.getParameter("id");
+			dao.updateUpVote(id);
 		}
-		
+
 		if(type.equals("downvote")){
 			AnswerBean a = new AnswerBean();
 			int downs = Integer.parseInt(request.getParameter("down"));
-			int id =  Integer.parseInt(request.getParameter("id"));
-			System.out.println("Downvotes" + downs);
+			String id =  (String) request.getParameter("id");
 			a.setDownvotes(downs);
-			dao.updateDownVote(a);
+			dao.updateDownVote(id);
 		}
-		
+
 		if(type.equals("feedback")){
 			int accuracy = Integer.parseInt(request.getParameter("accuracy"));
 			int conciseness = Integer.parseInt(request.getParameter("conciseness"));
@@ -148,7 +157,7 @@ public class MainServlet extends HttpServlet {
 			dao.updateFeedback(accuracy, conciseness, redundancy, grammar, id);
 		}
 	}
-	
+
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	}
 

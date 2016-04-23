@@ -1,25 +1,24 @@
 <html>
 <head>
 <title>CodeZilla</title>
-<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/bootstrap.css" rel="stylesheet">
 <link href="css/mystyle.css" rel="stylesheet">
 <script src="js/jquery-2.2.2.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
+<script src="js/bootstrap.js"></script>
 <script src="js/myjs.js"></script>
 </head>
 
 <script>
-function loadQuiz(quizPage)
-{
-	window.location.replace(quizPage+"?user=" + $('#myprofile').text());
-}
+    function loadQuiz(quizPage) {
+	window.location.replace(quizPage + "?user=" + $('#myprofile').text());
+    }
 </script>
 
-<body onload="fetchQuestions()">
+<body>
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">
 			<div class="navbar-header">
-				<a class="navbar-brand" href="#" onclick= "loadHome()">CodeZilla</a>
+				<a class="navbar-brand" href="#" onclick="loadHome()">CodeZilla</a>
 			</div>
 			<div class="collapse navbar-collapse"
 				id="bs-example-navbar-collapse-1">
@@ -31,49 +30,43 @@ function loadQuiz(quizPage)
 					<li><a href="#" onclick="onlyQuestions('.CPP');">C++</a></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
-					<li class="dropdown">
-			          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Take Quiz <span class="caret"></span></a>
-			           <ul class="dropdown-menu">
-						<li><a onclick="loadQuiz('Java Quiz.html')">Java</a></li>
-						<li><a onclick="loadQuiz('Javascript Quiz.html')">JavaScript</a></li>
-						<li><a onclick="loadQuiz('Python Quiz.html')">Python</a></li>
-						<li><a onclick="loadQuiz('Csharp Quiz.html')">C#</a></li>
-						<li><a onclick="loadQuiz('C++ Quiz.html')">C++</a></li>
-			           </ul>
-			        </li>
+					<li class="dropdown"><a href="#" class="dropdown-toggle"
+						data-toggle="dropdown" role="button" aria-haspopup="true"
+						aria-expanded="false">Take Quiz <span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a onclick="loadQuiz('Java Quiz.html')">Java</a></li>
+							<li><a onclick="loadQuiz('Javascript Quiz.html')">JavaScript</a></li>
+							<li><a onclick="loadQuiz('Python Quiz.html')">Python</a></li>
+							<li><a onclick="loadQuiz('Csharp Quiz.html')">C#</a></li>
+							<li><a onclick="loadQuiz('C++ Quiz.html')">C++</a></li>
+						</ul></li>
 					<li><a onclick="accessProfile()" id="myprofile"></a></li>
 					<li><a href="login.html">Logout</a></li>
 				</ul>
 			</div>
 		</div>
 	</nav>
-	
-<!--  
-	<div id="myModal" class="modal fade" role="dialog">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h2 class="form-signin-heading">Please sign in to continue</h2>
-				</div>
-				<div class="modal-body">
-					<label for="inputEmail" class="sr-only">Email address</label> <input
-						type="email" id="inputEmail" class="form-control"
-						placeholder="Email address" required autofocus><br> <label
-						for="inputPassword" class="sr-only">Password</label> <input
-						type="password" id="inputPassword" class="form-control"
-						placeholder="Password" required
-						onkeypress="return enterKey(event)"> <br>
-					<button class="btn btn-primary" type="button"
-						onclick="checkLogin()">Sign in</button>
-						
-						<a href="register.html"  class="btn btn-primary" >Register</a>
-					
-				</div>
-			</div>
-		</div>
+
+	<div class="container" id="questions">
+		<table cellpadding="2" cellspacing="2">
+			<tr>
+				<td><textarea id="postedQuestion" rows="2" cols="50"
+						placeholder="Type your question here.."></textarea></td>
+				<td><select id="newTag">
+						<option value="Java">Java</option>
+						<option value="JavaScript">JavaScript</option>
+						<option value="Python">Python</option>
+						<option value="Csharp">C#</option>
+						<option value="Cpp">C++</option>
+				</select></td>
+			</tr>
+			<tr>
+				<td>
+					<button class="btn btn-block btn-md btn-success btn-post"
+						id="postQuestion" type="button" onclick="postQuestion()">Post</button>
+				</td>
+			</tr>
+		</table>
 	</div>
-	-->	
-	
-	<div class="container" id = "questions"/>
 </body>
 </html>

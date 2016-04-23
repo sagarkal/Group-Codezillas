@@ -57,7 +57,7 @@ public class Dao {
 				q.setUpvotes(rSet.getInt(3));
 				q.setDownvotes(rSet.getInt(4));
 				q.setTags(rSet.getString(5));
-				q.setUsername(rSet.getString(6));
+				q.setUsername(rSet.getString(6).split("@")[0]);
 				al.add(q);
 				System.out.println("Exited Questions DAO");
 			}
@@ -67,7 +67,7 @@ public class Dao {
 		}
 		return al;
 	}
-	
+
 	public ArrayList<UserBean> getFeedback(String username) {
 		ArrayList<UserBean> ul = new ArrayList<UserBean>();
 		username = username.trim();
@@ -78,11 +78,11 @@ public class Dao {
 			pStmt = con.prepareStatement("select accuracy, conciseness, redundancy, grammar from users where username=?");
 			pStmt.setString(1, username);
 			rSet = pStmt.executeQuery();
-			if (rSet.next()) {	
+			if (rSet.next()) {
 				u.setAccuracy(rSet.getInt(1));
 				u.setConciseness(rSet.getInt(2));
 				u.setRedundancy(rSet.getInt(3));
-				u.setGrammar(rSet.getInt(4));		
+				u.setGrammar(rSet.getInt(4));
 				ul.add(u);
 			}
 		System.out.println("------------------------------------------------------------------------------");
@@ -94,12 +94,12 @@ public class Dao {
 		return ul;
 	}
 
-	public ArrayList<AnswerBean> getAnswers(long qid) {
+	public ArrayList<AnswerBean> getAnswers(int qid) {
 		ArrayList<AnswerBean> al = new ArrayList();
 		try {
 			pStmt = con
 					.prepareStatement("select * from answers where questionid = ?");
-			pStmt.setLong(1, qid);
+			pStmt.setInt(1, qid);
 			rSet = pStmt.executeQuery();
 			while (rSet.next()) {
 				AnswerBean a = new AnswerBean();
@@ -107,7 +107,7 @@ public class Dao {
 				a.setAnswer(rSet.getString(2));
 				a.setUpvotes(rSet.getInt(3));
 				a.setDownvotes(rSet.getInt(4));
-				a.setUsername(rSet.getString(5));
+				a.setUsername(rSet.getString(5).split("@")[0]);
 				a.setQuestionId(rSet.getInt(6));
 				al.add(a);
 			}
@@ -139,35 +139,53 @@ public class Dao {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public boolean userLogin(LoginBean user) {
-		try {
-		pStmt = con.prepareStatement("select password from users where username = ?");
-		pStmt.setString(1, user.getUserId());
-		rSet = pStmt.executeQuery();
-		if (rSet.next())
-			{
-			System.out.println("In DAO...");
-			System.out.println(rSet.getString(1));
-			if (rSet.getString(1).equals(user.getPassword()))
-			{
-				System.out.println("Returning true from DAO...");
-				return true;
-			}
-			}
-		}catch (SQLException e) {
-		e.printStackTrace();
-		}
-		return false;
+		return true;
+//		try {
+//		pStmt = con.prepareStatement("select password from users where username = ?");
+//		pStmt.setString(1, user.getUserId());
+//		rSet = pStmt.executeQuery();
+//		if (rSet.next())
+//			{
+//			System.out.println("In DAO...");
+//			System.out.println(rSet.getString(1));
+//			if (rSet.getString(1).equals(user.getPassword()))
+//			{
+//				System.out.println("Returning true from DAO...");
+//				return true;
+//			}
+//			}
+//		}catch (SQLException e) {
+//		e.printStackTrace();
+//		}
+//		return false;
 	}
 
-	public long saveAnswer(AnswerBean a) {
-		long aid = 0;
+	public boolean saveQuestion(QuestionBean a) {
+		try {
+			pStmt = con
+					.prepareStatement("insert into questions values(?,?,?,?,?,?)");
+			pStmt.setInt(1,a.getId());
+			pStmt.setString(2, a.getQuestion());
+			pStmt.setInt(3, a.getUpvotes());
+			pStmt.setInt(4, a.getDownvotes());
+			pStmt.setString(5, a.getTags());
+			pStmt.setString(6, a.getUsername());
+			pStmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return true;
+	}
+
+	public int saveAnswer(AnswerBean a) {
+		int aid = 0;
 		try {
 			pStmt = con.prepareStatement("select max(id) from answers");
 			rSet = pStmt.executeQuery();
 			if (rSet.next()) {
-				aid = rSet.getLong(1) + 1;
+				aid = rSet.getInt(1) + 1;
 			}
 
 			pStmt = con
@@ -193,7 +211,7 @@ public class Dao {
 			pStmt.setString(1, username);
 			rSet = pStmt.executeQuery();
 			if (rSet.next()) {
-				u.setUsername(rSet.getString(1));
+				u.setUsername(rSet.getString(1).split("@")[0]);
 				u.setJava(rSet.getInt(2));
 				u.setCpp(rSet.getInt(3));
 				u.setPython(rSet.getInt(4));
@@ -207,7 +225,7 @@ public class Dao {
 		}
 		return u;
 	}
-	
+
 	public ArrayList<UserBean> getReputationForProfile(String username)
 	{
 		ArrayList<UserBean> ul = new ArrayList();
@@ -230,7 +248,7 @@ public class Dao {
 		}
 		return ul;
 	}
-	
+
 	public int updateReputation(String username, String language, int pointsToAdd)
 	{
 		int currentReputation = 0;
@@ -239,14 +257,14 @@ public class Dao {
 					.prepareStatement("select "+language+" from users where username = ?");
 			pStmt.setString(1, username);
 			rSet = pStmt.executeQuery();
-			
+
 			if (rSet.next()) {
 				currentReputation =	rSet.getInt(1);
 			}
-			
+
 			System.out.println(" In DAO updateReputation.....");
 			System.out.println("Current reputation is "+currentReputation);
-			
+
 			if(currentReputation == 0)
 			{
 			pStmt = con
@@ -260,40 +278,73 @@ public class Dao {
 		}
 		return 0;
 	}
-	
-	public void updateUpVote(AnswerBean a)
-	{
-		try {
-			System.out.println("Entered DAO to update Upvote....................");
-			pStmt = con.prepareStatement("update answers set UPVOTES=?  where id=?");
-			System.out.println("a.upvotes :" + a.getUpvotes() );
-			System.out.println("a.id :" + a.getId());
 
-			pStmt.setInt(1, a.getUpvotes());
-			pStmt.setInt(2, a.getId());			
-			//System.out.println(pStmt.toString());
-			pStmt.executeUpdate();
-			System.out.println("Finished DAO to update Upvote....................");
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	public void updateDownVote(AnswerBean a)
+	public void updateUpVote(String sid)
 	{
 		try {
-			System.out.println("Entered DAO to update Downvote....................");
-			pStmt = con.prepareStatement("update answers set downvotes=?  where id=?");
-			pStmt.setInt(2, a.getId());
-			pStmt.setInt(1,a.getDownvotes());
-			
+			int id =0;
+			int up = 0;
+			if (sid.contains("and")){
+				id = Integer.parseInt(sid.split("and")[1]);
+				pStmt = con.prepareStatement("select upvotes from answers where id="+id);
+				rSet = pStmt.executeQuery();
+				if (rSet.next()) {
+					up =	rSet.getInt(1) + 1;
+				}
+				pStmt = con.prepareStatement("update answers set UPVOTES=?  where id=?");
+
+			} else {
+				id = Integer.parseInt(sid);
+				pStmt = con.prepareStatement("select upvotes from questions where id="+id);
+				rSet = pStmt.executeQuery();
+				if (rSet.next()) {
+					up =	rSet.getInt(1) + 1;
+				}
+				pStmt = con.prepareStatement("update questions set UPVOTES=?  where id=?");
+			}
+
+			pStmt.setInt(1, up);
+			pStmt.setInt(2, id);
 			pStmt.executeUpdate();
-			System.out.println("Finished DAO to update Downvote....................");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
+	public void updateDownVote(String sid)
+	{
+		try {
+			int id =0;
+			int down = 0;
+			if (sid.contains("and")){
+				id = Integer.parseInt(sid.split("and")[1]);
+				pStmt = con.prepareStatement("select downvotes from answers where id="+id);
+				rSet = pStmt.executeQuery();
+				if (rSet.next()) {
+					down =	rSet.getInt(1) + 1;
+				}
+				System.out.println(down);
+				pStmt = con.prepareStatement("update answers set DOWNVOTES=?  where id=?");
+
+			} else {
+				id = Integer.parseInt(sid);
+				pStmt = con.prepareStatement("select downvotes from questions where id="+id);
+				rSet = pStmt.executeQuery();
+				if (rSet.next()) {
+					down =	rSet.getInt(1) + 1;
+				}
+				System.out.println(down);
+				pStmt = con.prepareStatement("update questions set DOWNVOTES=?  where id=?");
+			}
+
+			pStmt.setInt(2, id);
+			pStmt.setInt(1, down);
+			pStmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
 	public void updateFeedback(int accuracy, int conciseness, int redundancy, int grammar, int id)
 	{
 		String username = "";
@@ -301,27 +352,27 @@ public class Dao {
 		try{
 			System.out.println("Entered UpdateFeedback DAO................");
 			System.out.println(accuracy+" "+conciseness+" "+redundancy+" "+grammar);
-			
+
 			pStmt = con.prepareStatement("select username from answers where id="+id);
 			rSet = pStmt.executeQuery();
-			
+
 			if (rSet.next()) {
 				username =	rSet.getString(1);
 			}
 			username=username.trim();
 			System.out.println("Extracted username from answers table!! It is "+ username);
-			
+
 			pStmt = con.prepareStatement("select accuracy, conciseness, redundancy, grammar from users where username=?");
 			pStmt.setString(1, username);
 			rSet = pStmt.executeQuery();
-			
+
 			if (rSet.next()) {
 				oldAccuracy =	rSet.getInt(1);
 				oldConciseness = rSet.getInt(2);
 				oldRedundancy = rSet.getInt(3);
 				oldGrammar = rSet.getInt(4);
 			}
-			
+
 			pStmt = con.prepareStatement("update users set accuracy="+(oldAccuracy+accuracy)+", conciseness="+(oldConciseness+conciseness)+", "
 					+ "redundancy="+(redundancy+oldRedundancy)+", grammar="+(oldGrammar+grammar)+"  where username=?");
 			//pStmt.setInt(1, accuracy);
@@ -334,5 +385,5 @@ public class Dao {
 			e.printStackTrace();
 		}
 	}
-	
+
 }

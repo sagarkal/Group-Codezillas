@@ -18,9 +18,13 @@ public class LoginServlet extends javax.servlet.http.HttpServlet implements
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	}
+
+	protected void doPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 	    String result="false";
-		String userId = (String) request.getParameter("userId");
-		String password = (String) request.getParameter("password");
+		String userId = (String) request.getParameter("inputEmail");
+		String password = (String) request.getParameter("inputPassword");
 		System.out.println("In Login Servlet....");
 		System.out.println("Entered user name is "+ userId);
 		System.out.println("Entered password is "+password);
@@ -29,18 +33,7 @@ public class LoginServlet extends javax.servlet.http.HttpServlet implements
 		lBean.setUserId(userId);
 		lBean.setPassword(password);
 		if(dao.userLogin(lBean))
-			result = "true";
-	    response.setContentType("text/plain");  // Set content type of the response so that jQuery knows what it can expect.
-	    response.setCharacterEncoding("UTF-8"); // You want world domination, huh?
-	    response.getWriter().write(result);// Write response body.
-	    System.out.println("content type inside login:" + response.getContentType() +" " + response.getStatus() + response.toString());
-	
-	    ///////////////////////////
-	 
-	}
-
-	protected void doPost(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+			response.sendRedirect("home.html?usernameg="+userId.split("@")[0]);
 	}
 
 }
