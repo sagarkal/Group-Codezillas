@@ -245,6 +245,7 @@ function postResponse(tag) {
 								    type : "button"
 								}).append('Feedback').append('<br>'))));
 	addVotes("votes" +id+"and"+ ansid, 0);
+	addReputation(username, $(tag).parent().attr('class'));
     });
 }
 
