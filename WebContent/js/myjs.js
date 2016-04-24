@@ -1,7 +1,7 @@
 $(function() {
 	var url = window.location.href;
 	var username = url.split("=")[1];
-	$('#myprofile').text(username);
+	//$('#myprofile').text(username);
     $.get("MainServlet", {
 	type : "getquestions"
     }, function(json) {

@@ -62,6 +62,16 @@ function loadHome()
 	window.location.replace("home.html?user=" + username);
 }
 
+function loadQuiz(quizPage) {
+	window.location.replace(quizPage + "?user=" + $('#myprofile').text());
+}
+    
+function setUser(){
+	var url = window.location.href;
+	var username = url.split("=")[1];
+	$('#myprofile').append(username);
+}
+
 function getUserName()
 {
 	var url = window.location.href;
@@ -93,7 +103,7 @@ function getUserFirstAndLastName(){
 
 </script>
 
-<body>
+<body onload = "setUser()">
   <nav class="navbar navbar-default">
 		<div class="container-fluid">
 			<div class="navbar-header">
@@ -101,24 +111,17 @@ function getUserFirstAndLastName(){
 			</div>
 			<div class="collapse navbar-collapse"
 				id="bs-example-navbar-collapse-1">
-				<ul class="nav navbar-nav">
-					<li><a href="#" onclick="onlyQuestions('.Java');">Java</a></li>
-					<li><a href="#" onclick="onlyQuestions('.JavaScript');">JavaScript</a></li>
-					<li><a href="#" onclick="onlyQuestions('.Python');">Python</a></li>
-					<li><a href="#" onclick="onlyQuestions('.CSharp');">C#</a></li>
-					<li><a href="#" onclick="onlyQuestions('.CPP');">C++</a></li>
-				</ul>
 				<ul class="nav navbar-nav navbar-right">
-					<li class="dropdown">
-			          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Take Quiz <span class="caret"></span></a>
-			          <ul class="dropdown-menu">
-						<li><a href="Java Quiz.html" onclick="takeQuiz('Java');">Java</a></li>
-						<li><a href="Javascript Quiz.html" onclick="takeQuiz('JavaScript');">JavaScript</a></li>
-						<li><a href="Python Quiz.html" onclick="takeQuiz('Python');">Python</a></li>
-						<li><a href="Csharp Quiz.html" onclick="takeQuiz('CSharp');">C#</a></li>
-						<li><a href="C++ Quiz.html" onclick="takeQuiz('CPP');">C++</a></li>
-			          </ul>
-			        </li>
+					<li class="dropdown"><a href="#" class="dropdown-toggle"
+						data-toggle="dropdown" role="button" aria-haspopup="true"
+						aria-expanded="false">Take Quiz <span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a onclick="loadQuiz('Java Quiz.html')">Java</a></li>
+							<li><a onclick="loadQuiz('Javascript Quiz.html')">JavaScript</a></li>
+							<li><a onclick="loadQuiz('Python Quiz.html')">Python</a></li>
+							<li><a onclick="loadQuiz('Csharp Quiz.html')">C#</a></li>
+							<li><a onclick="loadQuiz('C++ Quiz.html')">C++</a></li>
+						</ul></li>
 					<li><a id="myprofile"></a></li>
 					<li><a href="login.html">Logout</a></li>
 				</ul>

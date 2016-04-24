@@ -9,12 +9,18 @@
 </head>
 
 <script>
+
+function setUser(){
+	var url = window.location.href;
+	var username = url.split("=")[1];
+	$('#myprofile').append(username);
+}
     function loadQuiz(quizPage) {
 	window.location.replace(quizPage + "?user=" + $('#myprofile').text());
     }
 </script>
 
-<body>
+<body onload="setUser()">
 <form>
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">
