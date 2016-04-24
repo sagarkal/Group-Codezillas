@@ -78,10 +78,9 @@ function setUser(){
 	</div>
 	
 	<div class="container">
-  <h2 align = "center">Feedback form</h2>
    
   <!-- Trigger the modal with a button -->
-  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>
+
  
   <!-- Modal -->
   <div class="modal fade" id="myModal" role="dialog">
@@ -265,10 +264,11 @@ for(i = 0; i < a4.length; i++){
    }
 }
 
-
 var url = window.location.href;
 var id = url.split('#')[1]; 	
+var oldUrl = url.split('#')[0];
 console.log("Accuracy: "+accuracy+" Conciseness: "+conciseness+" Redundancy: "+redundancy+" Grammar "+ grammar);
+location.assign(oldUrl);
 updateFeedback(accuracy, conciseness, redundancy, grammar, id);
 
 }
