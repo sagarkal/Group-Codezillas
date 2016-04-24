@@ -9,6 +9,13 @@
 <script src="js/myjs.js"></script>
 
 </head>
+
+<script>
+function loadRegisterPage(){
+	window.location.replace("register.html");
+}
+</script>
+
 <body>
 
     <div class="container">
@@ -20,7 +27,7 @@
         <label for="inputPassword" class="sr-only">Password</label>
         <input type="password" id="inputPassword" name="inputPassword" class="form-control" placeholder="Password" required>
         <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
+        <button onclick="loadRegisterPage()" class="btn btn-lg btn-primary btn-block">Register</button>
       </form>
 
     </div>

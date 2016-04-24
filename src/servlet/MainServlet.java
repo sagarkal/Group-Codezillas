@@ -36,7 +36,16 @@ public class MainServlet extends HttpServlet {
 		    response.setCharacterEncoding("UTF-8");
 		    response.getWriter().write(json);
 		}
-
+		
+		if(type.equals("getUserDetails")){
+			String username = (String) request.getParameter("username");
+			UserBean u = dao.getUserDetails(username);
+			String json = new Gson().toJson(u);
+		    response.setContentType("text/json");
+		    response.setCharacterEncoding("UTF-8");
+		    response.getWriter().write(json);
+		}
+		
 		if(type.equals("getFeedback")){
 			ArrayList<UserBean> al = new ArrayList<UserBean>();
 			UserBean u=new UserBean();
@@ -80,7 +89,6 @@ public class MainServlet extends HttpServlet {
 			String username = (String) request.getParameter("username");
 			String language = (String) request.getParameter("language");
 			int pointsToAdd = Integer.parseInt(request.getParameter("pointsToAdd"));
-			System.out.println("In Mainservlet Updaterep, about to update "+ username + language + pointsToAdd);
 			int updateSuccess = dao.updateReputation(username, language, pointsToAdd);
 			if(updateSuccess == 1)
 			{
@@ -88,19 +96,12 @@ public class MainServlet extends HttpServlet {
 		    response.setCharacterEncoding("UTF-8");
 		    response.getWriter().write(String.valueOf(pointsToAdd));
 
-		    System.out.println("---------------------------------------------");
-		    System.out.println("Points to be added in updateReputation: "+pointsToAdd);
-		    System.out.println("Response object: "+response.toString());
-		    System.out.println("---------------------------------------------");
 			}
 			else
 			{
 				response.setContentType("text/plain");
 			    response.setCharacterEncoding("UTF-8");
 			    response.getWriter().write(String.valueOf(0));
-			    System.out.println("---------------------------------------------");
-			    System.out.println("Response object: "+response.toString());
-			    System.out.println("---------------------------------------------");
 			}
 		}
 

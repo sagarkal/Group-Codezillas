@@ -1,6 +1,7 @@
 package servlet;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
@@ -25,7 +26,6 @@ public class LoginServlet extends javax.servlet.http.HttpServlet implements
 	    String result="false";
 		String userId = (String) request.getParameter("inputEmail");
 		String password = (String) request.getParameter("inputPassword");
-		System.out.println("In Login Servlet....");
 		System.out.println("Entered user name is "+ userId);
 		System.out.println("Entered password is "+password);
 		Dao dao = new Dao();

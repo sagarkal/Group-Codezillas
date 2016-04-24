@@ -19,7 +19,7 @@
   <link href="https://cdn.rawgit.com/novus/nvd3/v1.8.1/build/nv.d3.css" rel="stylesheet" type="text/css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.2/d3.min.js" charset="utf-8"></script>
     <script src="https://cdn.rawgit.com/novus/nvd3/v1.8.1/build/nv.d3.js"></script>
-    <script src="https://github.com/novus/nvd3/blob/master/examples/lib/stream_layers.js"></script>
+   
 
 </head>
 
@@ -62,33 +62,38 @@ function loadHome()
 	window.location.replace("home.html?user=" + username);
 }
 
-function setUser(){
+function getUserName()
+{
 	var url = window.location.href;
 	var username = url.split("=")[1];
-	$('#myprofile').append(username);
-}
-
-function getUser(){
-	 var url = window.location.href;
-	var username = url.split("=")[1].split("@")[0];
 	return username;
 }
-
+	
 function getEmail(){
-	 var url = window.location.href;
+	var url = window.location.href;
 	var username = url.split("=")[1];
-	return username;
+	getUserFirstAndLastName();
+	return username+"@asu.edu";
 }
 
-function getNameFromURL(){
+function getUserFirstAndLastName(){
 	 var url = window.location.href;
-	var username = url.split("=")[1].split("@")[0];
-	return username;
+	 var username = url.split("=")[1].split("@")[0];
+	 username+="@asu.edu";
+	 var fullName = "";
+		$.get("MainServlet", {
+				type : "getUserDetails",
+				username : username
+		}, function(json){
+			document.getElementById("usernamefromurl").innerHTML = json["firstName"]+" "+json["lastName"];
+			document.getElementById("aboutme").innerHTML = json["aboutme"];
+		}
+		);
 }
 
 </script>
 
-<body onload="setUser()">
+<body>
   <nav class="navbar navbar-default">
 		<div class="container-fluid">
 			<div class="navbar-header">
@@ -114,7 +119,7 @@ function getNameFromURL(){
 						<li><a href="C++ Quiz.html" onclick="takeQuiz('CPP');">C++</a></li>
 			          </ul>
 			        </li>
-					<li><a onclick="accessProfile()" id="myprofile"></a></li>
+					<li><a id="myprofile"></a></li>
 					<li><a href="login.html">Logout</a></li>
 				</ul>
 			</div>
@@ -124,7 +129,7 @@ function getNameFromURL(){
     <div id="content" class="clearfix">
       <div id="userphoto"><img src="images/avatar.png" alt="default avatar"></div>
       <h1><label id="demo"></label></h1>
-<script>document.getElementById("demo").innerHTML = getUser(); </script>
+<script>document.getElementById("demo").innerHTML = getUserName(); </script>
       <nav id="profiletabs">
         <ul class="clearfix">
           <li><a href="#bio" class="sel">Bio</a></li>
@@ -135,14 +140,16 @@ function getNameFromURL(){
       </nav>
       
       <section id="bio">
-        <p class="setting"><span>E-mail Address <img src="images/edit.png" alt="*Edit*"></span><label id="email"></label> </p>
+        <p class="setting"><span>E-mail Address</span><label id="email"></label> </p>
         
         
-        <p class="setting"><span>Name <img src="images/edit.png" alt="*Edit*"></span> <label id="usernamefromurl"></label></p>
+        <p class="setting"><span>Name </span> <label id="usernamefromurl"></label></p>
+        
+        <p class="setting"><span>About me </span> <label id="aboutme"></label></p>
 
       </section>
       <script>document.getElementById("email").innerHTML = getEmail();
-      document.getElementById("usernamefromurl").innerHTML = getNameFromURL();
+      //document.getElementById("usernamefromurl").innerHTML = getUserFirstAndLastName();
 
       </script>
       <section id="reputation" class="hidden">
@@ -151,6 +158,7 @@ function getNameFromURL(){
   <script>
   var url = window.location.search;
   var username= url.split('=')[1];
+  username+="@asu.edu";
   $.get("MainServlet", {
 		type : "getrepforprofile",
 		username : username
@@ -185,6 +193,7 @@ Plotly.newPlot('myDiv', data);
 <script>
 var url = window.location.search;
 var username= url.split('=')[1];
+username+="@asu.edu";
 var accuracy;
 var grammar;
 var consise;

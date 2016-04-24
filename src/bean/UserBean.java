@@ -2,6 +2,8 @@ package bean;
 
 public class UserBean {
 	private String username;
+	private String firstName;
+	private String lastName;
 	private int java;
 	private int javascript;
 	private int python;
@@ -13,6 +15,26 @@ public class UserBean {
 	private int conciseness;
 	private int redundancy;
 	private int grammar;
+	private String aboutme;
+	
+	public String getAboutme() {
+		return aboutme;
+	}
+	public void setAboutme(String aboutme) {
+		this.aboutme = aboutme;
+	}
+	public String getFirstName() {
+		return firstName;
+	}
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+	public String getLastName() {
+		return lastName;
+	}
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
 	
 	public int getAccuracy() {
 		return accuracy;

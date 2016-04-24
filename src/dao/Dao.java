@@ -1,18 +1,4 @@
-/*
- * Copyright 2012 Wipro Technologies All Rights Reserved
- *
- *Customer specific copyright notice     : Pizza 2 Home.
- *
- * File Name			:	LoginDao.java
- *
- * Short Description	:	Used to perform login operation on database.
- *
- * Version Number	:	1.0.0
- *
- * Created Date		:	15 may 2012
- *
- * Modification History	:	Kulvir,15-MAY-2012
- */
+
 
 package dao;
 
@@ -47,7 +33,6 @@ public class Dao {
 	public ArrayList<QuestionBean> getQuestions() {
 		ArrayList<QuestionBean> al = new ArrayList();
 		try {
-			System.out.println("Entered Questions DAO");
 			pStmt = con.prepareStatement("select * from questions");
 			rSet = pStmt.executeQuery();
 			while (rSet.next()) {
@@ -59,13 +44,31 @@ public class Dao {
 				q.setTags(rSet.getString(5));
 				q.setUsername(rSet.getString(6).split("@")[0]);
 				al.add(q);
-				System.out.println("Exited Questions DAO");
 			}
-
+			rSet.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return al;
+	}
+	
+	public UserBean getUserDetails(String username)
+	{
+		UserBean u = new UserBean();
+		try{
+			pStmt = con.prepareStatement("select firstname, lastname, username, aboutme from users where username=?");
+			pStmt.setString(1, username);
+			rSet = pStmt.executeQuery();
+			if (rSet.next()){
+				u.setFirstName(rSet.getString(1));
+				u.setLastName(rSet.getString(2));
+				u.setUsername(rSet.getString(3));
+				u.setAboutme(rSet.getString(4));
+			}
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return u;
 	}
 
 	public ArrayList<UserBean> getFeedback(String username) {
@@ -85,9 +88,7 @@ public class Dao {
 				u.setGrammar(rSet.getInt(4));
 				ul.add(u);
 			}
-		System.out.println("------------------------------------------------------------------------------");
-		System.out.println(u.getAccuracy()+" "+u.getConciseness()+" "+u.getRedundancy()+" "+u.getGrammar());
-		System.out.println("------------------------------------------------------------------------------");
+			rSet.close();
 		}catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -111,7 +112,7 @@ public class Dao {
 				a.setQuestionId(rSet.getInt(6));
 				al.add(a);
 			}
-
+			rSet.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -121,7 +122,7 @@ public class Dao {
 	public void saveUser(UserBean u)
 	{
 		try{
-			pStmt = con.prepareStatement("insert into users values(?,?,?,?,?,?,?,?,?,?,?,?)");
+			pStmt = con.prepareStatement("insert into users values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 			pStmt.setString(1, u.getUsername());
 			pStmt.setInt(2, 0);
 			pStmt.setInt(3, 0);
@@ -134,6 +135,9 @@ public class Dao {
 			pStmt.setInt(10, 0);
 			pStmt.setInt(11, 0);
 			pStmt.setInt(12, 0);
+			pStmt.setString(13, u.getFirstName());
+			pStmt.setString(14, u.getLastName());
+			pStmt.setString(15, u.getAboutme());
 			pStmt.executeQuery();
 		}catch (SQLException e) {
 			e.printStackTrace();
@@ -141,25 +145,22 @@ public class Dao {
 	}
 
 	public boolean userLogin(LoginBean user) {
-		return true;
-//		try {
-//		pStmt = con.prepareStatement("select password from users where username = ?");
-//		pStmt.setString(1, user.getUserId());
-//		rSet = pStmt.executeQuery();
-//		if (rSet.next())
-//			{
-//			System.out.println("In DAO...");
-//			System.out.println(rSet.getString(1));
-//			if (rSet.getString(1).equals(user.getPassword()))
-//			{
-//				System.out.println("Returning true from DAO...");
-//				return true;
-//			}
-//			}
-//		}catch (SQLException e) {
-//		e.printStackTrace();
-//		}
-//		return false;
+		try {
+		pStmt = con.prepareStatement("select password from users where username = ?");
+		pStmt.setString(1, user.getUserId());
+		rSet = pStmt.executeQuery();
+		if (rSet.next())
+			{
+			if (rSet.getString(1).equals(user.getPassword()))
+			{
+				return true;
+			}
+			}
+		rSet.close();
+		}catch (SQLException e) {
+		e.printStackTrace();
+		}
+		return false;
 	}
 
 	public boolean saveQuestion(QuestionBean a) {
@@ -197,6 +198,7 @@ public class Dao {
 			pStmt.setString(5, a.getUsername());
 			pStmt.setInt(6, (int) a.getQuestionId());
 			pStmt.executeUpdate();
+			rSet.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -219,7 +221,7 @@ public class Dao {
 				u.setJavascript(rSet.getInt(6));
 				u.setQuiz(rSet.getString(7));
 			}
-
+			rSet.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -243,6 +245,7 @@ public class Dao {
 				u.setJavascript(rSet.getInt(2));
 				ul.add(u);
 			}
+			rSet.close();
 		}catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -273,6 +276,7 @@ public class Dao {
 			pStmt.executeUpdate();
 			return 1;
 			}
+			rSet.close();
 		}catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -306,6 +310,7 @@ public class Dao {
 			pStmt.setInt(1, up);
 			pStmt.setInt(2, id);
 			pStmt.executeUpdate();
+			rSet.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -340,6 +345,7 @@ public class Dao {
 			pStmt.setInt(2, id);
 			pStmt.setInt(1, down);
 			pStmt.executeUpdate();
+			rSet.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -381,6 +387,7 @@ public class Dao {
 			//pStmt.setInt(4, grammar);
 			pStmt.setString(1, username);
 			pStmt.executeUpdate();
+			rSet.close();
 		}catch (SQLException e) {
 			e.printStackTrace();
 		}

@@ -18,16 +18,23 @@ import dao.Dao;
 public class RegisterServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String userName = (String) request.getParameter("userName");
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String userName = (String) request.getParameter("email");
 		String password = (String) request.getParameter("password");
+		String firstName = (String) request.getParameter("fname");
+		String lastName = (String) request.getParameter("lname");
+		String aboutme = (String) request.getParameter("aboutme");
 		System.out.println("Username passed is "+ userName);
 		System.out.println("Password is "+ password);
 		Dao dao = new Dao();
 		UserBean u=new UserBean();
 		u.setUsername(userName);
 		u.setPassword(password);
+		u.setFirstName(firstName);
+		u.setLastName(lastName);
+		u.setAboutme(aboutme);
 		dao.saveUser(u);
+		response.sendRedirect("login.html");
 	}
 
 	/**

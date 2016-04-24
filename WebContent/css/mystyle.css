@@ -1,41 +1,10 @@
 .btn-post {
 	width: 15%
 }
-
 .right {
-	text-align: right
+	text-align:right
 }
-
-.bb {
-	border-bottom: solid 1px black;
-}
-
-/* cellpadding */
-th, td {
-	padding: 5px;
-}
-
-/* cellspacing */
-table {
-	border-collapse: separate;
-	border-spacing: 5px;
-} /* cellspacing="5" */
-table {
-	border-collapse: collapse;
-	border-spacing: 0;
-} /* cellspacing="0" */
-
-/* valign */
-th, td {
-	/*vertical-align: top;*/
-	align : left;
-}
-
-.tdcenter {
-text-align: center
-}
-
- /* align (center) */
-table {
-	margin: 0 auto;
-}
+  .bb
+        {
+            border-bottom: solid 1px black;
+        }

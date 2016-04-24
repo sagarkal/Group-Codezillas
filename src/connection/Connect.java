@@ -1,19 +1,3 @@
-/*
- * Copyright 2012 Wipro Technologies All Rights Reserved
- *
- * Customer specific copyright notice     : Pizza 2 Home.
- *
- * File Name			:	Connect.java
- *
- * Short Description	:	Establish connection to the database
- *
- * Version Number	:	1.0.0
- *
- * Created Date		:	15 may 2012
- *
- * Modification History	:	Kulvir,20-MAY-2012
- */
-
 
 package connection;
 
