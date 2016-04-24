@@ -356,9 +356,6 @@ public class Dao {
 		String username = "";
 		int oldAccuracy = 0 , oldConciseness = 0, oldRedundancy = 0, oldGrammar = 0;
 		try{
-			System.out.println("Entered UpdateFeedback DAO................");
-			System.out.println(accuracy+" "+conciseness+" "+redundancy+" "+grammar);
-
 			pStmt = con.prepareStatement("select username from answers where id="+id);
 			rSet = pStmt.executeQuery();
 
@@ -366,7 +363,7 @@ public class Dao {
 				username =	rSet.getString(1);
 			}
 			username=username.trim();
-			System.out.println("Extracted username from answers table!! It is "+ username);
+			username += "@asu.edu";
 
 			pStmt = con.prepareStatement("select accuracy, conciseness, redundancy, grammar from users where username=?");
 			pStmt.setString(1, username);
@@ -381,10 +378,6 @@ public class Dao {
 
 			pStmt = con.prepareStatement("update users set accuracy="+(oldAccuracy+accuracy)+", conciseness="+(oldConciseness+conciseness)+", "
 					+ "redundancy="+(redundancy+oldRedundancy)+", grammar="+(oldGrammar+grammar)+"  where username=?");
-			//pStmt.setInt(1, accuracy);
-			//pStmt.setInt(2, conciseness);
-			//pStmt.setInt(3, redundancy);
-			//pStmt.setInt(4, grammar);
 			pStmt.setString(1, username);
 			pStmt.executeUpdate();
 			rSet.close();

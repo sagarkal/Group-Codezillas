@@ -163,7 +163,9 @@ function addAnswers(id, username, lang){
 	    for (i in json) {
 		$("#tableq" + id).append(
 		$('<tr/>').append($('<td />').attr('id',"votes" + id + "and"+ json[i].id))
-			.append($('<td/>').append(json[i].answer)).attr({align : "left"}).append($('<td/>').append(
+			.append($('<td/>').attr({
+				width : "60%"
+			}).append(json[i].answer)).attr({align : "left"}).append($('<td/>').append(
 					'<span class="label label-warning">'
 					+ 'Answered By' + '<a href="#" id='+json[i].username+'a' + json[i].id+'>'+	json[i].username+'</a>'
 					+ '</span>')))
@@ -172,13 +174,15 @@ function addAnswers(id, username, lang){
 								    {
 										    width : "100%",
 											align : 'left'
-										    }).append($('<button/>').addClass("bb").addClass("right").addClass(
+										    }). append($('<button/>').addClass("bb").addClass("right").addClass(
 							"btn btn-default btn-xs")
-							.attr({
-							    id : "button" + json[i].id,
+							.attr({							
+							    id : json[i].username,
 							    type : "button",
+							    'data-toggle' : 'modal',
+								'data-target': '#myModal',
 							   //left : "50px"
-							    onclick : "openWindowForFeedback("+json[i].id+")",
+								onclick : "userIdForFeedback("+json[i].id+")"
 							}).append('Feedback').append('<br>'))));
 		addVotes("votes"+id+"and"+json[i].id, parseInt(json[i].upvotes) - parseInt(json[i].downvotes));
 		addReputation(json[i].username+'a' + json[i].id, lang);
@@ -188,9 +192,14 @@ function addAnswers(id, username, lang){
     });
 }
 
-function openWindowForFeedback(id) {
-    window.open("feedback.html?id=" + id);
+function userIdForFeedback(id)
+{
+	window.location.hash = id;
 }
+
+//function openWindowForFeedback(id) {
+//    window.open("feedback.html?id=" + id);
+//}
 
 
 function updateFeedback(accuracy, conciseness, redundancy, grammar, id)
@@ -229,7 +238,9 @@ function postResponse(tag) {
 //addVotes("votes"+id+"and"+json[i].id, parseInt(json[i].upvotes) - parseInt(json[i].downvotes));
 	$("#tableq" + id).append(
 			$('<tr/>').append($('<td/>').attr('id', "votes" +id+"and"+ ansid))
-				.append($('<td/>').append(txt)).append($('<td/>').append(
+				.append($('<td/>').attr({
+					width : "60%"
+				}).append(txt)).append($('<td/>').append(
 						'<span class="label label-warning">'
 						+ 'Answered By' + '<a href="#" id='+username+'>'+	username+'</a>'
 						+ '</span>')))
