@@ -58,7 +58,7 @@
 function loadHome()
 {
 	var url = window.location.href;
-	var username = url.split("=")[1];
+	var username = url.split("=")[1].split('#')[0];
 	window.location.replace("home.html?user=" + username);
 }
 
@@ -68,7 +68,7 @@ function loadQuiz(quizPage) {
     
 function setUser(){
 	var url = window.location.href;
-	var username = url.split("=")[1];
+	var username = url.split("=")[1].split('#')[0];
 	$('#myprofile').append(username);
 	hideComments();
 }
@@ -76,20 +76,20 @@ function setUser(){
 function getUserName()
 {
 	var url = window.location.href;
-	var username = url.split("=")[1];
+	var username = url.split("=")[1].split('#')[0];
 	return username;
 }
 	
 function getEmail(){
 	var url = window.location.href;
-	var username = url.split("=")[1];
+	var username = url.split("=")[1].split('#')[0];
 	getUserFirstAndLastName();
 	return username+"@asu.edu";
 }
 
 function getUserFirstAndLastName(){
 	 var url = window.location.href;
-	 var username = url.split("=")[1].split("@")[0];
+	 var username = url.split("=")[1].split("@")[0].split('#')[0];
 	 username+="@asu.edu";
 	 var fullName = "";
 		$.get("MainServlet", {
@@ -168,7 +168,7 @@ function getUserFirstAndLastName(){
   <script>
   document.getElementById("comments").style.visibility = "hidden";
   var url = window.location.search;
-  var username= url.split('=')[1];
+  var username= url.split('=')[1].split('#')[0];
   username+="@asu.edu";
   $.get("MainServlet", {
 		type : "getrepforprofile",
@@ -203,7 +203,7 @@ Plotly.newPlot('myDiv', data);
 <script>
 document.getElementById("comments").style.visibility = "hidden";
 var url = window.location.search;
-var username= url.split('=')[1];
+var username= url.split('=')[1].split('#')[0];
 username+="@asu.edu";
 var accuracy;
 var grammar;
@@ -295,7 +295,7 @@ $(function(){
 <script>
 document.getElementById("comments").style.visibility = "visible";
 var url = window.location.search;
-var username= url.split('=')[1];
+var username= url.split('=')[1].split('#')[0];
 username+="@asu.edu";
 
 $.get("MainServlet", {

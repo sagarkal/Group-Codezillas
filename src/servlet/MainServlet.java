@@ -76,6 +76,16 @@ public class MainServlet extends HttpServlet {
 		    response.setCharacterEncoding("UTF-8");
 		    response.getWriter().write(json);
 		}
+		
+		if(type.equals("getrepfortopfive")){
+			ArrayList<UserBean> ul = new ArrayList<UserBean>();
+			ul = dao.getReputationForTopFiveUsers();
+			String json = new Gson().toJson(ul);
+			System.out.println("IN MAIN SERVLET getrepfortopfive: "+json.toString());
+		    response.setContentType("text/json");
+		    response.setCharacterEncoding("UTF-8");
+		    response.getWriter().write(json);
+		}
 
 		if(type.equals("getrep")){
 			String username = (String) request.getParameter("username");

@@ -1,6 +1,6 @@
 $(function() {
 	var url = window.location.href;
-	var username = url.split("=")[1];
+	var username = url.split("=")[1].split('#')[0];
 	//$('#myprofile').text(username);
     $.get("MainServlet", {
 	type : "getquestions"
@@ -27,6 +27,7 @@ function getNewQid(){
     });
     return Math.max.apply(Math,a)+1;
 }
+
 function postQuestion()
 {
     alert($('#newTag').val());
@@ -56,7 +57,7 @@ function removeOld(){
 function getUserId()
 {
 	var url = window.location.href;
-	return url.split("=")[1];
+	return url.split("=")[1].split('#')[0];
 }
 
 /* Function that appends all the relevant questions in the form of a table */
@@ -126,7 +127,7 @@ function addReputation(username, lang){
 	    rep = json.cpp;
 	    break;
 	}
-
+	console.log("IN GETREPUTATION: "+$('#'+username).parent().text());
     $('#'+username).parent().append('<br><br><span class="label label-warning">' + lang + ': ' + rep + '</span>');
 	console.log("aaaaaaaaaaaaaaaaaaaaaaa");
 	console.log(json);
@@ -159,7 +160,6 @@ function addAnswers(id, username, lang){
 	type : "getanswers",
 	qid : id
     }, function(json) {
-
     	for (i in json) {
     		$("#tableq" + id).append(
     		$('<tr/>').append($('<td />').attr('id',"votes" + id + "and"+ json[i].id))
@@ -186,13 +186,82 @@ function addAnswers(id, username, lang){
     							}).append('Feedback').append('<br>'))));
     		addVotes("votes"+id+"and"+json[i].id, parseInt(json[i].upvotes) - parseInt(json[i].downvotes));
     		addReputation(json[i].username+'a' + json[i].id, lang);
-
-
-
 	    }
-
     });
 }
+
+function postResponse(tag) {
+    var txt = $(tag).prev().val();
+    $(tag).prev().val('');
+    var id = $(tag).attr('id').split("button")[1];
+    $.get("MainServlet", {
+	type : "saveanswer",
+	username : getUserId(),
+	answer : txt,
+	qid : id
+    }, function(response) {
+	var ansid = response;
+	var username = $('#myprofile').text();
+	$("#tableq" + id).append(
+			$('<tr/>').append($('<td/>').attr('id', "votes" +id+"and"+ ansid))
+				.append($('<td/>').attr({
+					width : "60%"
+				}).append(txt)).append($('<td/>').append(
+						'<span class="label label-warning">'
+						+ 'Answered By' + '<a href="#" id='+username+'>'+username+'</a>'
+						
+						+ '</span>')))
+						.append(
+								$('<tr/>').append($('<td/>')).append($('<td/>').attr(
+									    {
+											    width : "0%",
+												align : 'left'
+											    }).append($('<button/>').addClass("right").addClass(
+								"btn btn-default btn-xs")
+								.attr({
+								    id : "button" + ansid,
+								    type : "button",
+								    'data-toggle' : 'modal',
+	    							'data-target': '#myModal',
+	    							onclick : "userIdForFeedback("+ansid+")"
+								}).append('Feedback').append('<br>'))));
+	addVotes("votes" +id+"and"+ ansid, 0);
+	addReputationForNewAnswer(username, $(tag).parent().attr('class'));
+    });
+}
+
+function addReputationForNewAnswer(username, lang){
+    console.log("language " +lang);
+    $.get("MainServlet", {
+	type : "getrep",
+	username : username
+    }, function(json) {
+
+	switch(lang.toLowerCase()) {
+	case "java" :
+	    rep = json.java;
+	    break;
+	case "javascript" :
+	    rep = json.javascript;
+	    break;
+	case "python" :
+	    rep = json.python;
+	    break;
+	case "csharp" :
+	    rep = json.csharp;
+	    break;
+	case "cpp" :
+	    rep = json.cpp;
+	    break;
+	}
+	var temp = $('#'+username).parent();
+	console.log("IN GETREPUTATION FOR POST ANSWER: "+$('#'+username).children());
+    $('#'+username).parent().prevObject.append('<br><br><span class="label label-warning">' + lang + ': ' + rep + '</span>');
+	console.log("aaaaaaaaaaaaaaaaaaaaaaa");
+	console.log(json);
+    });
+}
+
 
 function loadAnothersProfile(otherUsername){
 	window.location.replace("othersProfile.html?user=" + otherUsername);
@@ -202,11 +271,6 @@ function userIdForFeedback(id)
 {
 	window.location.hash = id;
 }
-
-//function openWindowForFeedback(id) {
-//    window.open("feedback.html?id=" + id);
-//}
-
 
 function updateFeedback(accuracy, conciseness, redundancy, grammar, id, comments)
 {
@@ -226,46 +290,6 @@ function accessProfile(){
 	window.location.replace("profile.html?userid=" + userid);
 }
 
-/* Below function posts the answers written and submitted in the textarea */
-
-function postResponse(tag) {
-    var txt = $(tag).prev().val();
-    $(tag).prev().val('');
-    var id = $(tag).attr('id').split("button")[1];
-    $.get("MainServlet", {
-	type : "saveanswer",
-	username : getUserId(),
-	answer : txt,
-	qid : id
-    }, function(response) {
-	var ansid = response;
-
-	var username = $('#myprofile').text();
-
-//addVotes("votes"+id+"and"+json[i].id, parseInt(json[i].upvotes) - parseInt(json[i].downvotes));
-	$("#tableq" + id).append(
-			$('<tr/>').append($('<td/>').attr('id', "votes" +id+"and"+ ansid))
-				.append($('<td/>').attr({
-					width : "60%"
-				}).append(txt)).append($('<td/>').append(
-						'<span class="label label-warning">'
-						+ 'Answered By' + '<a href="#" id='+username+'>'+	username+'</a>'
-						+ '</span>')))
-						.append(
-								$('<tr/>').append($('<td/>')).append($('<td/>').attr(
-									    {
-											    width : "0%",
-												align : 'left'
-											    }).append($('<button/>').addClass("right").addClass(
-								"btn btn-default btn-xs")
-								.attr({
-								    id : "button" + ansid,
-								    type : "button"
-								}).append('Feedback').append('<br>'))));
-	addVotes("votes" +id+"and"+ ansid, 0);
-	addReputation(username, $(tag).parent().attr('class'));
-    });
-}
 
 /* Below function adds the graphical icons required for upvotes and downvotes */
 

@@ -10,6 +10,21 @@
 
 <script>
 
+function postQuestion()
+{
+    alert($('#newTag').val());
+	$.get("MainServlet", {
+		type : "savequestion",
+		username : getUserId(),
+		question : $('#postedQuestion').val(),
+		tag : $('#newTag').val(),
+		qid : getNewQid()
+	    }, function(json) {
+		removeOld();
+		appendQuestions(json);
+	});
+}
+
 function setUser(){
 	var url = window.location.href;
 	var username = url.split("=")[1];
@@ -17,6 +32,10 @@ function setUser(){
 }
     function loadQuiz(quizPage) {
 	window.location.replace(quizPage + "?user=" + $('#myprofile').text());
+    }
+    
+    function loadLeader(page){
+    	window.location.replace(page + "?user=" + $('#myprofile').text());
     }
 </script>
 
@@ -46,7 +65,10 @@ function setUser(){
 							<li><a onclick="loadQuiz('Python Quiz.html')">Python</a></li>
 							<li><a onclick="loadQuiz('Csharp Quiz.html')">C#</a></li>
 							<li><a onclick="loadQuiz('C++ Quiz.html')">C++</a></li>
-						</ul></li>
+							
+						</ul>
+						</li>
+					<li><a onclick="loadLeader('leaderboard.html')">Leaderboard</a></li>	
 					<li><a onclick="accessProfile()" id="myprofile"></a></li>
 					<li><a href="login.html">Logout</a></li>
 				</ul>

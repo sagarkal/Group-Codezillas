@@ -230,6 +230,36 @@ public class Dao {
 		return u;
 	}
 
+	public ArrayList<UserBean> getReputationForTopFiveUsers()
+	{
+		ArrayList<UserBean> ul = new ArrayList<UserBean>();
+		try {
+			pStmt = con
+					.prepareStatement("select username, java, cpp, python, csharp, javascript from users");
+			rSet = pStmt.executeQuery();
+			while (rSet.next()) {
+				UserBean u = new UserBean();
+				u.setUsername(rSet.getString(1));
+				u.setJava(rSet.getInt(2));
+				u.setCpp(rSet.getInt(3));
+				u.setPython(rSet.getInt(4));
+				u.setCsharp(rSet.getInt(5));
+				u.setJavascript(rSet.getInt(6));
+				//System.out.println("Username: "+u.getUsername()+" Java: "+u.getJava()+" CPP: "+u.getCpp()+" Python: "+
+				//u.getPython()+" CSharp: "+u.getCsharp()+" Javascript: "+u.getJavascript());
+				ul.add(u);
+			}
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		for(UserBean u : ul){
+		System.out.println("Username: "+u.getUsername()+" Java: "+u.getJava()+" CPP: "+u.getCpp()+" Python: "+
+				u.getPython()+" CSharp: "+u.getCsharp()+" Javascript: "+u.getJavascript());
+		}
+		return ul;
+	}
+	
 	public ArrayList<UserBean> getReputationForProfile(String username)
 	{
 		ArrayList<UserBean> ul = new ArrayList();
