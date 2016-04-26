@@ -10,7 +10,7 @@
 
 <script>
 
-function postQuestion()
+function postQuestion1()
 {
     alert($('#newTag').val());
 	$.get("MainServlet", {
@@ -37,6 +37,13 @@ function setUser(){
     function loadLeader(page){
     	window.location.replace(page + "?user=" + $('#myprofile').text());
     }
+    
+    function loadHome()
+    {
+    	var url = window.location.href;
+    	var username = url.split("=")[1].split('#')[0];
+    	window.location.replace("home.html?user=" + username);
+    }
 </script>
 
 <body onload="setUser()">
@@ -49,11 +56,11 @@ function setUser(){
 			<div class="collapse navbar-collapse"
 				id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav">
-					<li><a href="#" onclick="onlyQuestions('.Java');">Java</a></li>
-					<li><a href="#" onclick="onlyQuestions('.JavaScript');">JavaScript</a></li>
-					<li><a href="#" onclick="onlyQuestions('.Python');">Python</a></li>
-					<li><a href="#" onclick="onlyQuestions('.CSharp');">C#</a></li>
-					<li><a href="#" onclick="onlyQuestions('.CPP');">C++</a></li>
+					<li><a onclick="onlyQuestions('.Java');">Java</a></li>
+					<li><a onclick="onlyQuestions('.JavaScript');">JavaScript</a></li>
+					<li><a onclick="onlyQuestions('.Python');">Python</a></li>
+					<li><a onclick="onlyQuestions('.CSharp');">C#</a></li>
+					<li><a onclick="onlyQuestions('.CPP');">C++</a></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
@@ -92,7 +99,7 @@ function setUser(){
 			<tr>
 				<td>
 					<button class="btn btn-block btn-md btn-success btn-post"
-						id="postQuestion" type="button" onclick="postQuestion()">Post</button>
+						id="postQuestion" type="button" onclick="postQuestion1()">Post</button>
 				</td>
 			</tr>
 		</table>

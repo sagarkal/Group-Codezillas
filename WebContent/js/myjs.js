@@ -28,20 +28,7 @@ function getNewQid(){
     return Math.max.apply(Math,a)+1;
 }
 
-function postQuestion()
-{
-    alert($('#newTag').val());
-	$.get("MainServlet", {
-		type : "savequestion",
-		username : getUserId(),
-		question : $('#postedQuestion').val(),
-		tag : $('#newTag').val(),
-		qid : getNewQid()
-	    }, function(json) {
-		removeOld();
-		appendQuestions(json);
-	});
-}
+
 
 function removeOld(){
     $("#questions").children().each(function( index ) {
