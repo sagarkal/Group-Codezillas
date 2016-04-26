@@ -139,7 +139,7 @@ function getUserFirstAndLastName(){
           <li><a href="#bio" class="sel">Bio</a></li>
           <li><a href="#reputation">Reputation</a></li>
           <li><a href="#feedback">Feedback</a></li>
-		  <li><a href="#textcomments">Text comments</a>
+		  <!--   <li><a href="#textcomments">Text comments</a> -->
         </ul>
         <div class="container" id="comments" align="center">
       </nav>
@@ -157,7 +157,7 @@ function getUserFirstAndLastName(){
       </section>
       <script>
       function hideComments(){
-          document.getElementById("comments").style.visibility = "visible";
+          document.getElementById("comments").style.visibility = "hidden";
       }
 
       </script>
@@ -166,7 +166,7 @@ function getUserFirstAndLastName(){
 		<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 		<div id="myDiv" style="width: 480px; height: 400px;"><!-- Plotly chart will be drawn inside this DIV --></div>
   <script>
-  document.getElementById("comments").style.visibility = "visible";
+  document.getElementById("comments").style.visibility = "hidden";
   var url = window.location.search;
   var username= url.split('=')[1];
   username+="@asu.edu";
@@ -201,7 +201,7 @@ Plotly.newPlot('myDiv', data);
 <svg id="test2" class="mypiechart"></svg>
 
 <script>
-document.getElementById("comments").style.visibility = "visible";
+document.getElementById("comments").style.visibility = "hidden";
 var url = window.location.search;
 var username= url.split('=')[1];
 username+="@asu.edu";
@@ -259,45 +259,7 @@ var redundancy;
 </script>
       </section>
 
- <section id="textcomments" class="hidden" onload=>
-
-<br />
-<div class="container" id="commentcontainer" style="width: 480px; height: 400px; align: left;">
-  <div class="row" >
-      <div class="panel panel-default">
-        <div class="panel-heading" >
-          <h4 >
-            Feedback comments on your answers 
-          </h4>
-        </div>
-        <table class="table table-fixed" id="tablec">
-        </table>
-</div>
-
-
-<script>
-document.getElementById("comments").style.visibility = "visible";
-var url = window.location.search;
-var username= url.split('=')[1];
-username+="@asu.edu";
-
-$.get("MainServlet", {
-	type : "getFeedbackComments",
-	username : username
-    }, function(json){
-    	for (i in json){
-    		/* document.getElementById("comments").innerHTML = json[i]["comments"]; */
-    				$('#tablec').append($('<tr/>').append($('<td />').append(json[i]["comments"])));   	
-    		
-    	}
-    });
-</script>
-
-</section>
     </div><!-- @end #content -->
-    
-   
-    
   </div><!-- @end #w -->
 <script type="text/javascript">
 $(function(){
@@ -316,7 +278,39 @@ $(function(){
   });
 });
 </script>
+<!--  
+<section id="textcomments" class="hidden" onload=>
+<!-- 
+<div class="container">
+  <div class="row">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4>
+            Feedback comments on your answers 
+          </h4>
+        </div>
+</div>
+-->
 
+<script>
+document.getElementById("comments").style.visibility = "visible";
+var url = window.location.search;
+var username= url.split('=')[1];
+username+="@asu.edu";
+
+$.get("MainServlet", {
+	type : "getFeedbackComments",
+	username : username
+    }, function(json){
+    	for (i in json){
+    		/* document.getElementById("comments").innerHTML = json[i]["comments"]; */
+    				$('#comments').append($('<table/>').append($('<tr/>').append($('<td/>').append(json[i]["comments"]))));   	
+    		
+    	}
+    });
+</script>
+
+</section>
 
 </body>
 </html>

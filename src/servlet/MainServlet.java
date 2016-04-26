@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.catalina.User;
 
 import bean.AnswerBean;
+import bean.CommentBean;
 import bean.QuestionBean;
 import bean.UserBean;
 
@@ -56,7 +57,17 @@ public class MainServlet extends HttpServlet {
 		    response.setCharacterEncoding("UTF-8");
 		    response.getWriter().write(json);
 		}
-
+		
+		if(type.equals("getFeedbackComments")){
+			ArrayList<CommentBean> cl = new ArrayList<CommentBean>();
+			String username = (String) request.getParameter("username");
+			cl = dao.getFeedbackComments(username);
+			String json = new Gson().toJson(cl);
+			response.setContentType("text/json");
+		    response.setCharacterEncoding("UTF-8");
+		    response.getWriter().write(json);
+		}
+		
 		if(type.equals("getanswers")){
 			int qid = Integer.parseInt(request.getParameter("qid"));
 			ArrayList<AnswerBean> al = dao.getAnswers(qid);
@@ -155,7 +166,8 @@ public class MainServlet extends HttpServlet {
 			int redundancy = Integer.parseInt(request.getParameter("redundancy"));
 			int grammar = Integer.parseInt(request.getParameter("grammar"));
 			int id = Integer.parseInt(request.getParameter("id"));
-			dao.updateFeedback(accuracy, conciseness, redundancy, grammar, id);
+			String comments = (String) request.getParameter("comments");
+			dao.updateFeedback(accuracy, conciseness, redundancy, grammar, id, comments);
 		}
 	}
 

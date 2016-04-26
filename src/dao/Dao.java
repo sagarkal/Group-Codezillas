@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import bean.AnswerBean;
+import bean.CommentBean;
 import bean.LoginBean;
 import bean.QuestionBean;
 import bean.UserBean;
@@ -76,7 +77,6 @@ public class Dao {
 		username = username.trim();
 		UserBean u = new UserBean();
 		try {
-			System.out.println("Entered Get Feedback DAO");
 			System.out.println(username);
 			pStmt = con.prepareStatement("select accuracy, conciseness, redundancy, grammar from users where username=?");
 			pStmt.setString(1, username);
@@ -94,6 +94,8 @@ public class Dao {
 		}
 		return ul;
 	}
+	
+	
 
 	public ArrayList<AnswerBean> getAnswers(int qid) {
 		ArrayList<AnswerBean> al = new ArrayList();
@@ -351,7 +353,7 @@ public class Dao {
 		}
 	}
 
-	public void updateFeedback(int accuracy, int conciseness, int redundancy, int grammar, int id)
+	public void updateFeedback(int accuracy, int conciseness, int redundancy, int grammar, int id, String comments)
 	{
 		String username = "";
 		int oldAccuracy = 0 , oldConciseness = 0, oldRedundancy = 0, oldGrammar = 0;
@@ -380,10 +382,38 @@ public class Dao {
 					+ "redundancy="+(redundancy+oldRedundancy)+", grammar="+(oldGrammar+grammar)+"  where username=?");
 			pStmt.setString(1, username);
 			pStmt.executeUpdate();
+			
+			pStmt = con.prepareStatement("insert into comments values(?,?,?)");
+			pStmt.setInt(1, id);
+			pStmt.setString(2, username);
+			pStmt.setString(3, comments);
+			pStmt.executeQuery();
 			rSet.close();
 		}catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
-
+	
+	public ArrayList<CommentBean> getFeedbackComments(String username){
+		username = username.trim();
+		ArrayList<CommentBean> cl = new ArrayList<CommentBean>();
+		System.out.println("Entered getFeedbackComments DAO...............");
+		try{
+			pStmt = con.prepareStatement("select * from comments where username=?");
+			pStmt.setString(1, username);
+			rSet = pStmt.executeQuery();
+			
+			while (rSet.next()){
+				CommentBean c = new CommentBean();
+				c.setAnswerid(rSet.getInt(1));
+				c.setUsername(rSet.getString(2));
+				c.setComments(rSet.getString(3));
+				System.out.println(c.getAnswerid()+ " "+c.getUsername()+" "+c.getComments());
+				cl.add(c);
+			}
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return cl;
+	}
 }

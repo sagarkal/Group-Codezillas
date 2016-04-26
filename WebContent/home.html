@@ -6,7 +6,6 @@
 <script src="js/jquery-2.2.2.min.js"></script>
 <script src="js/bootstrap.js"></script>
 <script src="js/myjs.js"></script>
-
 </head>
 
 <script>
@@ -110,44 +109,48 @@ padding-left: 1cm;
 <br/>
 <h5><p class="question">1. Accuracy?</p>  </h5>  
 <ul class="answers">                   
-<input type="radio" name="q1" value="a" id="q1b"><label for="q1b">1</label><br/> 
-<input type="radio" name="q1" value="b" id="q1b"><label for="q1b">2</label><br/>            
-<input type="radio" name="q1" value="c" id="q1c"><label for="q1c">3</label><br/>            
-<input type="radio" name="q1" value="d" id="q1d"><label for="q1d">4</label><br/>
+<input type="radio" name="q1" value="a" id="q1b"><label for="q1b">1</label> &nbsp; &nbsp; &nbsp; 
+<input type="radio" name="q1" value="b" id="q1b"><label for="q1b">2</label> &nbsp; &nbsp; &nbsp;         
+<input type="radio" name="q1" value="c" id="q1c"><label for="q1c">3</label> &nbsp; &nbsp; &nbsp;         
+<input type="radio" name="q1" value="d" id="q1d"><label for="q1d">4</label> &nbsp; &nbsp; &nbsp;
 <input type="radio" name="q1" value="e" id="q1e"><label for="q1e">5</label><br/>           
 </ul> 
 
 <p class="question">2. Conciseness?</p>        
 
 <ul class="answers">            
-<input type="radio" name="q2" value="a" id="q2a"><label for="q2a">1</label><br/>           
-<input type="radio" name="q2" value="b" id="q2b"><label for="q2b">2</label><br/>            
-<input type="radio" name="q2" value="c" id="q2c"><label for="q2c">3</label><br/>           
-<input type="radio" name="q2" value="d" id="q2d"><label for="q2d">4</label><br/>  
+<input type="radio" name="q2" value="a" id="q2a"><label for="q2a">1</label> &nbsp; &nbsp; &nbsp;        
+<input type="radio" name="q2" value="b" id="q2b"><label for="q2b">2</label> &nbsp; &nbsp; &nbsp;           
+<input type="radio" name="q2" value="c" id="q2c"><label for="q2c">3</label> &nbsp; &nbsp; &nbsp;          
+<input type="radio" name="q2" value="d" id="q2d"><label for="q2d">4</label> &nbsp; &nbsp; &nbsp; 
 <input type="radio" name="q2" value="e" id="q2e"><label for="q2e">5</label><br/>        
 </ul>   
 
 <p class="question">3. Redundancy?</p>        
 
 <ul class="answers">            
-<input type="radio" name="q3" value="a" id="q3a"><label for="q3a">1</label><br/>            
-<input type="radio" name="q3" value="b" id="q3b"><label for="q3b">2</label><br/>            
-<input type="radio" name="q3" value="c" id="q3c"><label for="q3c">3</label><br/>           
-<input type="radio" name="q3" value="d" id="q3d"><label for="q3d">4</label><br/>
+<input type="radio" name="q3" value="a" id="q3a"><label for="q3a">1</label> &nbsp; &nbsp; &nbsp;          
+<input type="radio" name="q3" value="b" id="q3b"><label for="q3b">2</label> &nbsp; &nbsp; &nbsp;           
+<input type="radio" name="q3" value="c" id="q3c"><label for="q3c">3</label> &nbsp; &nbsp; &nbsp;          
+<input type="radio" name="q3" value="d" id="q3d"><label for="q3d">4</label> &nbsp; &nbsp; &nbsp;
 <input type="radio" name="q3" value="e" id="q3e"><label for="q3e">5</label><br/>       
 </ul>  
 
 <p class="question">4. Grammar?</p>        
 
 <ul class="answers">           
-<input type="radio" name="q4" value="a" id="q4a"><label for="q4a">1</label><br/>            
-<input type="radio" name="q4" value="b" id="q4b"><label for="q4b">2</label><br/>            
-<input type="radio" name="q4" value="c" id="q4c"><label for="q4c">3</label><br/>            
-<input type="radio" name="q4" value="d" id="q4d"><label for="q4d">4</label><br/>      
+<input type="radio" name="q4" value="a" id="q4a"><label for="q4a">1</label> &nbsp; &nbsp; &nbsp;           
+<input type="radio" name="q4" value="b" id="q4b"><label for="q4b">2</label> &nbsp; &nbsp; &nbsp;           
+<input type="radio" name="q4" value="c" id="q4c"><label for="q4c">3</label> &nbsp; &nbsp; &nbsp;           
+<input type="radio" name="q4" value="d" id="q4d"><label for="q4d">4</label> &nbsp; &nbsp; &nbsp;    
 <input type="radio" name="q4" value="e" id="q4e"><label for="q4e">5</label><br/>  
 </ul>  
 
+<ul class="answers">
+<textarea name="q5" value="a" id="q5" rows="3" cols="70" placeholder="Enter specific comments if any..."></textarea><br/>
+</ul>   
 
+</form>
 <script>
 function check()
 {
@@ -264,17 +267,17 @@ for(i = 0; i < a4.length; i++){
    }
 }
 
+var comments = document.getElementById('q5').value;
 var url = window.location.href;
 var id = url.split('#')[1]; 	
 var oldUrl = url.split('#')[0];
-console.log("Accuracy: "+accuracy+" Conciseness: "+conciseness+" Redundancy: "+redundancy+" Grammar "+ grammar);
 location.assign(oldUrl);
-updateFeedback(accuracy, conciseness, redundancy, grammar, id);
+updateFeedback(accuracy, conciseness, redundancy, grammar, id, comments);
 
 }
 </script>
 
-</form>
+
         
         <div class="modal-footer" align="center">
           <button type="button" align="center" onclick=check() class="btn btn-primary" data-dismiss="modal">Submit</button>

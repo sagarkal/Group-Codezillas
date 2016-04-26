@@ -160,36 +160,42 @@ function addAnswers(id, username, lang){
 	qid : id
     }, function(json) {
 
-	    for (i in json) {
-		$("#tableq" + id).append(
-		$('<tr/>').append($('<td />').attr('id',"votes" + id + "and"+ json[i].id))
-			.append($('<td/>').attr({
-				width : "60%"
-			}).append(json[i].answer)).attr({align : "left"}).append($('<td/>').append(
-					'<span class="label label-warning">'
-					+ 'Answered By' + '<a href="#" id='+json[i].username+'a' + json[i].id+'>'+	json[i].username+'</a>'
-					+ '</span>')))
-							 .append(
-							$('<tr/>').append($('<td/>')).append($('<td/>').attr(
-								    {
-										    width : "100%",
-											align : 'left'
-										    }). append($('<button/>').addClass("bb").addClass("right").addClass(
-							"btn btn-default btn-xs")
-							.attr({							
-							    id : json[i].username,
-							    type : "button",
-							    'data-toggle' : 'modal',
-								'data-target': '#myModal',
-							   //left : "50px"
-								onclick : "userIdForFeedback("+json[i].id+")"
-							}).append('Feedback').append('<br>'))));
-		addVotes("votes"+id+"and"+json[i].id, parseInt(json[i].upvotes) - parseInt(json[i].downvotes));
-		addReputation(json[i].username+'a' + json[i].id, lang);
+    	for (i in json) {
+    		$("#tableq" + id).append(
+    		$('<tr/>').append($('<td />').attr('id',"votes" + id + "and"+ json[i].id))
+    			.append($('<td/>').attr({
+    				width : "60%"
+    			}).append(json[i].answer)).attr({align : "left"}).append($('<td/>').append(
+    					'<span class="label label-warning">'
+    					+ 'Answered By' + '<a href="#" id='+json[i].username+'a' + json[i].id+'>'+	json[i].username+'</a>'
+    					+ '</span>')))
+    							 .append(
+    							$('<tr/>').append($('<td/>')).append($('<td/>').attr(
+    								    {
+    										    width : "100%",
+    											align : 'left'
+    										    }). append($('<button/>').addClass("bb").addClass("right").addClass(
+    							"btn btn-default btn-xs")
+    							.attr({							
+    							    id : json[i].username,
+    							    type : "button",
+    							    'data-toggle' : 'modal',
+    								'data-target': '#myModal',
+    							   //left : "50px"
+    								onclick : "userIdForFeedback("+json[i].id+")"
+    							}).append('Feedback').append('<br>'))));
+    		addVotes("votes"+id+"and"+json[i].id, parseInt(json[i].upvotes) - parseInt(json[i].downvotes));
+    		addReputation(json[i].username+'a' + json[i].id, lang);
+
+
 
 	    }
 
     });
+}
+
+function loadAnothersProfile(otherUsername){
+	window.location.replace("othersProfile.html?user=" + otherUsername);
 }
 
 function userIdForFeedback(id)
@@ -202,7 +208,7 @@ function userIdForFeedback(id)
 //}
 
 
-function updateFeedback(accuracy, conciseness, redundancy, grammar, id)
+function updateFeedback(accuracy, conciseness, redundancy, grammar, id, comments)
 {
 	 $.get("MainServlet", {
 			type : "feedback",
@@ -210,7 +216,8 @@ function updateFeedback(accuracy, conciseness, redundancy, grammar, id)
 			conciseness : conciseness,
 			redundancy : redundancy,
 			grammar : grammar,
-			id : id
+			id : id,
+			comments : comments
 		    });
 }
 
