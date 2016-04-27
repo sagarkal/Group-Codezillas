@@ -42,6 +42,9 @@ function loadHome()
 	window.location.replace("home.html?user=" + username);
 }
 
+function loadQuiz(quizPage) {
+	window.location.replace(quizPage + "?user=" + $('#myprofile').text());
+    }
 
 </script>
 
@@ -70,7 +73,6 @@ function loadHome()
 							<li><a onclick="loadQuiz('Python Quiz.html')">Python</a></li>
 							<li><a onclick="loadQuiz('Csharp Quiz.html')">C#</a></li>
 							<li><a onclick="loadQuiz('C++ Quiz.html')">C++</a></li>
-							<li><a onclick="loadLeader('leaderboard.html')">Leaderboard</a></li>
 						</ul></li>
 					<li><a onclick="accessProfile()" id="myprofile"></a></li>
 					<li><a href="login.html">Logout</a></li>

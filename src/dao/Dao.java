@@ -209,6 +209,10 @@ public class Dao {
 
 	public UserBean getReputation(String username) {
 		UserBean u = new UserBean();
+		username = username.trim();
+		username += "@asu.edu";
+		System.out.println("In GETREPUTATION DAO.....................");
+		System.out.println("Username: "+username);
 		try {
 			pStmt = con
 					.prepareStatement("select * from users where username = ?");
@@ -219,11 +223,15 @@ public class Dao {
 				u.setJava(rSet.getInt(2));
 				u.setCpp(rSet.getInt(3));
 				u.setPython(rSet.getInt(4));
+				System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"+rSet.getInt(5));
 				u.setCsharp(rSet.getInt(5));
 				u.setJavascript(rSet.getInt(6));
 				u.setQuiz(rSet.getString(7));
 			}
 			rSet.close();
+			
+		System.out.println("For username "+ u.getUsername() +" Java: "+ u.getJava()+" CPP: "+u.getCpp()+" Python: "+u.getPython()+
+				" C#: "+u.getCsharp()+" Javascript: "+u.getJavascript());
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

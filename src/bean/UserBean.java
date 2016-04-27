@@ -93,7 +93,7 @@ public class UserBean {
 	public long getCsharp() {
 		return csharp;
 	}
-	public void setCsharp(int chsarp) {
+	public void setCsharp(int csharp) {
 		this.csharp = csharp;
 	}
 	public String getQuiz() {

@@ -81,46 +81,52 @@ function appendQuestions(json) {
 					+ json[i].tags + '</span>').append(
 				'<br><br>').append(
 				'<span class="label label-warning">'
-					+ 'Asked by ' + '<a href="#" id='+json[i].username+'q' + json[i].id+ '>'+json[i].username+'</a>'
-					+ '</span>')));
+					+ 'Asked by ' + '<a href="#" id='+json[i].username+'question' + json[i].id+ '>'+json[i].username+'</a>'
+					+ '</span>')
+					));
+	//addReputation(json[i].username, json[i].tags);
 	addVotes(votesqid, json[i].upvotes - json[i].downvotes);
+	
 	addAnswers(json[i].id, json[i].username, json[i].tags);
-	console.log(i);
-	addReputation(json[i].username+'q' + json[i].id, json[i].tags);
+	addReputation(json[i].username+'question' + json[i].id, json[i].tags);	
     }
 }
 
 function addReputation(username, lang){
-    console.log("language " +lang);
+	var un;
+	if(username.indexOf("answer")>-1)
+		un = username.split("answer")[0];
+	else
+		un = username.split("question")[0];
     $.get("MainServlet", {
 	type : "getrep",
-	username : username
+	username : un
     }, function(json) {
-
+    var reputation;
 	switch(lang.toLowerCase()) {
 	case "java" :
-	    rep = json.java;
+		reputation = json.java;
 	    break;
 	case "javascript" :
-	    rep = json.javascript;
+		reputation = json.javascript;
 	    break;
 	case "python" :
-	    rep = json.python;
+		reputation = json.python;
 	    break;
 	case "csharp" :
-	    rep = json.csharp;
+		reputation = json.csharp;
 	    break;
 	case "cpp" :
-	    rep = json.cpp;
+		reputation = json.cpp;
 	    break;
 	}
-	console.log("IN GETREPUTATION: "+$('#'+username).parent().text());
-    $('#'+username).parent().append('<br><br><span class="label label-warning">' + lang + ': ' + rep + '</span>');
-	console.log("aaaaaaaaaaaaaaaaaaaaaaa");
-	console.log(json);
+    $('#'+username).parent().parent().append('<br><br><span class="label label-warning">' + lang + ': ' + reputation + '</span><br><br>');
     });
 }
 
+function returnReputation(reputation){
+	return reputation;
+}
 /* The below function updates reputation based on the score obtained in a quiz (1 correct answer = 1 reputation point */
 
 function updateReputation(language, pointsToAdd) {
@@ -153,8 +159,8 @@ function addAnswers(id, username, lang){
     			.append($('<td/>').attr({
     				width : "60%"
     			}).append(json[i].answer)).attr({align : "left"}).append($('<td/>').append(
-    					'<span class="label label-warning">'
-    					+ 'Answered By' + '<a href="#" id='+json[i].username+'a' + json[i].id+'>'+	json[i].username+'</a>'
+    					'<br><span class="label label-warning">'
+    					+ 'Answered By' + '<a href="#" id='+json[i].username+'answer' + json[i].id+'>'+	json[i].username+'</a>'
     					+ '</span>')))
     							 .append(
     							$('<tr/>').append($('<td/>')).append($('<td/>').attr(
@@ -172,7 +178,8 @@ function addAnswers(id, username, lang){
     								onclick : "userIdForFeedback("+json[i].id+")"
     							}).append('Feedback').append('<br>'))));
     		addVotes("votes"+id+"and"+json[i].id, parseInt(json[i].upvotes) - parseInt(json[i].downvotes));
-    		addReputation(json[i].username+'a' + json[i].id, lang);
+    		addReputation(json[i].username+'answer' + json[i].id, lang);
+//    		addReputation(json[i].username, lang);
 	    }
     });
 }
@@ -213,12 +220,12 @@ function postResponse(tag) {
 	    							onclick : "userIdForFeedback("+ansid+")"
 								}).append('Feedback').append('<br>'))));
 	addVotes("votes" +id+"and"+ ansid, 0);
-	addReputationForNewAnswer(username, $(tag).parent().attr('class'));
+//	addReputationForNewAnswer(username, $(tag).parent().attr('class'));
     });
 }
 
 function addReputationForNewAnswer(username, lang){
-    console.log("language " +lang);
+//    console.log("language " +lang);
     $.get("MainServlet", {
 	type : "getrep",
 	username : username
@@ -242,10 +249,7 @@ function addReputationForNewAnswer(username, lang){
 	    break;
 	}
 	var temp = $('#'+username).parent();
-	console.log("IN GETREPUTATION FOR POST ANSWER: "+$('#'+username).children());
     $('#'+username).parent().prevObject.append('<br><br><span class="label label-warning">' + lang + ': ' + rep + '</span>');
-	console.log("aaaaaaaaaaaaaaaaaaaaaaa");
-	console.log(json);
     });
 }
 
