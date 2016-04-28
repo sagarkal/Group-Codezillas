@@ -61,7 +61,7 @@ function appendQuestions(json) {
 		}).addClass("questions")).append($('<textarea/>').attr({
 		    id : "txtarea" + json[i].id,
 		    rows : "2",
-		    cols : "50",
+		    cols : "75",
 		    placeholder : "Type your response here.."
 		})).append(
 			$('<button/>').addClass(
@@ -75,7 +75,7 @@ function appendQuestions(json) {
 	$('#' + id).append(
 		$('<tr/>').append($('<td/>').addClass("bb").attr({
 		    id : votesqid,
-		})).append($('<td/>').addClass("bb").append('<h2>Q. ' + json[i].question + '</h2>')).append(
+		})).append($('<td/>').addClass("bb").append('<h3><b>Q. ' + json[i].question + '</b></h3>')).append(
 			$('<td/>').addClass("right").addClass("bb").append(
 				'<span class="label label-info">'
 					+ json[i].tags + '</span>').append(
@@ -84,9 +84,7 @@ function appendQuestions(json) {
 					+ 'Asked by ' + '<a href="#" id='+json[i].username+'question' + json[i].id+ '>'+json[i].username+'</a>'
 					+ '</span>')
 					));
-	//addReputation(json[i].username, json[i].tags);
 	addVotes(votesqid, json[i].upvotes - json[i].downvotes);
-	
 	addAnswers(json[i].id, json[i].username, json[i].tags);
 	addReputation(json[i].username+'question' + json[i].id, json[i].tags);	
     }
@@ -124,9 +122,6 @@ function addReputation(username, lang){
     });
 }
 
-function returnReputation(reputation){
-	return reputation;
-}
 /* The below function updates reputation based on the score obtained in a quiz (1 correct answer = 1 reputation point */
 
 function updateReputation(language, pointsToAdd) {
@@ -146,7 +141,6 @@ function updateReputation(language, pointsToAdd) {
 		    });
 }
 
-/* Function that fetches answers from the database */
 
 function addAnswers(id, username, lang){
     $.get("MainServlet", {
@@ -161,7 +155,8 @@ function addAnswers(id, username, lang){
     			}).append(json[i].answer)).attr({align : "left"}).append($('<td/>').append(
     					'<br><span class="label label-warning">'
     					+ 'Answered By' + '<a href="#" id='+json[i].username+'answer' + json[i].id+'>'+	json[i].username+'</a>'
-    					+ '</span>')))
+    					+ '</span>')
+    					))
     							 .append(
     							$('<tr/>').append($('<td/>')).append($('<td/>').attr(
     								    {
@@ -176,10 +171,9 @@ function addAnswers(id, username, lang){
     								'data-target': '#myModal',
     							   //left : "50px"
     								onclick : "userIdForFeedback("+json[i].id+")"
-    							}).append('Feedback').append('<br>'))));
+    							}).append('Give feedback').append('<br>'))));
     		addVotes("votes"+id+"and"+json[i].id, parseInt(json[i].upvotes) - parseInt(json[i].downvotes));
     		addReputation(json[i].username+'answer' + json[i].id, lang);
-//    		addReputation(json[i].username, lang);
 	    }
     });
 }
@@ -220,39 +214,9 @@ function postResponse(tag) {
 	    							onclick : "userIdForFeedback("+ansid+")"
 								}).append('Feedback').append('<br>'))));
 	addVotes("votes" +id+"and"+ ansid, 0);
-//	addReputationForNewAnswer(username, $(tag).parent().attr('class'));
+	addReputation(username+'answer' +ansid, $(tag).parent().attr('class'));
     });
 }
-
-function addReputationForNewAnswer(username, lang){
-//    console.log("language " +lang);
-    $.get("MainServlet", {
-	type : "getrep",
-	username : username
-    }, function(json) {
-
-	switch(lang.toLowerCase()) {
-	case "java" :
-	    rep = json.java;
-	    break;
-	case "javascript" :
-	    rep = json.javascript;
-	    break;
-	case "python" :
-	    rep = json.python;
-	    break;
-	case "csharp" :
-	    rep = json.csharp;
-	    break;
-	case "cpp" :
-	    rep = json.cpp;
-	    break;
-	}
-	var temp = $('#'+username).parent();
-    $('#'+username).parent().prevObject.append('<br><br><span class="label label-warning">' + lang + ': ' + rep + '</span>');
-    });
-}
-
 
 function loadAnothersProfile(otherUsername){
 	window.location.replace("othersProfile.html?user=" + otherUsername);

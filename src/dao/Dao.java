@@ -77,7 +77,6 @@ public class Dao {
 		username = username.trim();
 		UserBean u = new UserBean();
 		try {
-			System.out.println(username);
 			pStmt = con.prepareStatement("select accuracy, conciseness, redundancy, grammar from users where username=?");
 			pStmt.setString(1, username);
 			rSet = pStmt.executeQuery();
@@ -211,8 +210,6 @@ public class Dao {
 		UserBean u = new UserBean();
 		username = username.trim();
 		username += "@asu.edu";
-		System.out.println("In GETREPUTATION DAO.....................");
-		System.out.println("Username: "+username);
 		try {
 			pStmt = con
 					.prepareStatement("select * from users where username = ?");
@@ -223,15 +220,11 @@ public class Dao {
 				u.setJava(rSet.getInt(2));
 				u.setCpp(rSet.getInt(3));
 				u.setPython(rSet.getInt(4));
-				System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"+rSet.getInt(5));
 				u.setCsharp(rSet.getInt(5));
 				u.setJavascript(rSet.getInt(6));
 				u.setQuiz(rSet.getString(7));
 			}
 			rSet.close();
-			
-		System.out.println("For username "+ u.getUsername() +" Java: "+ u.getJava()+" CPP: "+u.getCpp()+" Python: "+u.getPython()+
-				" C#: "+u.getCsharp()+" Javascript: "+u.getJavascript());
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -253,18 +246,12 @@ public class Dao {
 				u.setPython(rSet.getInt(4));
 				u.setCsharp(rSet.getInt(5));
 				u.setJavascript(rSet.getInt(6));
-				//System.out.println("Username: "+u.getUsername()+" Java: "+u.getJava()+" CPP: "+u.getCpp()+" Python: "+
-				//u.getPython()+" CSharp: "+u.getCsharp()+" Javascript: "+u.getJavascript());
 				ul.add(u);
 			}
 		}catch (SQLException e) {
 			e.printStackTrace();
 		}
 		
-		for(UserBean u : ul){
-		System.out.println("Username: "+u.getUsername()+" Java: "+u.getJava()+" CPP: "+u.getCpp()+" Python: "+
-				u.getPython()+" CSharp: "+u.getCsharp()+" Javascript: "+u.getJavascript());
-		}
 		return ul;
 	}
 	
@@ -304,9 +291,6 @@ public class Dao {
 			if (rSet.next()) {
 				currentReputation =	rSet.getInt(1);
 			}
-
-			System.out.println(" In DAO updateReputation.....");
-			System.out.println("Current reputation is "+currentReputation);
 
 			if(currentReputation == 0)
 			{
@@ -435,7 +419,6 @@ public class Dao {
 	public ArrayList<CommentBean> getFeedbackComments(String username){
 		username = username.trim();
 		ArrayList<CommentBean> cl = new ArrayList<CommentBean>();
-		System.out.println("Entered getFeedbackComments DAO...............");
 		try{
 			pStmt = con.prepareStatement("select * from comments where username=?");
 			pStmt.setString(1, username);
@@ -446,7 +429,6 @@ public class Dao {
 				c.setAnswerid(rSet.getInt(1));
 				c.setUsername(rSet.getString(2));
 				c.setComments(rSet.getString(3));
-				System.out.println(c.getAnswerid()+ " "+c.getUsername()+" "+c.getComments());
 				cl.add(c);
 			}
 		}catch (SQLException e) {
