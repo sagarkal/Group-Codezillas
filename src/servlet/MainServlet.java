@@ -158,8 +158,12 @@ public class MainServlet extends HttpServlet {
 
 		if(type.equals("upvote")){
 			int ups = Integer.parseInt(request.getParameter("up"));
-			String id =  (String) request.getParameter("id");
-			dao.updateUpVote(id);
+			String idTemp =  (String) request.getParameter("id");
+			String id = idTemp.split("user")[0];
+			String user = idTemp.split("user")[1];
+			int ansId = Integer.parseInt(id.split("and")[1]);
+			System.out.println("IN UPVOTE MAIN SERVLET, id: "+id+" user:"+ user+"ansid: "+ansId);
+			dao.updateUpVote(id, user, ansId);
 		}
 
 		if(type.equals("downvote")){

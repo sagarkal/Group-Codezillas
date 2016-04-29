@@ -34,6 +34,8 @@ public class LoginServlet extends javax.servlet.http.HttpServlet implements
 		lBean.setPassword(password);
 		if(dao.userLogin(lBean))
 			response.sendRedirect("home.html?usernameg="+userId.split("@")[0]);
+		else
+			response.sendRedirect("login.html");
 	}
 
 }

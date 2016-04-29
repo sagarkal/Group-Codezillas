@@ -307,9 +307,10 @@ public class Dao {
 		return 0;
 	}
 
-	public void updateUpVote(String sid)
+	public void updateUpVote(String sid, String user, int ansid)
 	{
 		try {
+			System.out.println("IN UPVOTE DAO, id: "+sid+" user:"+ user+"ansid: "+ansid);
 			int id =0;
 			int up = 0;
 			if (sid.contains("and")){
@@ -334,7 +335,19 @@ public class Dao {
 			pStmt.setInt(1, up);
 			pStmt.setInt(2, id);
 			pStmt.executeUpdate();
-			rSet.close();
+			
+			pStmt = con.prepareStatement("select * from upvotes where ansid=? and userid=? ");
+			pStmt.setInt(1, ansid);
+			pStmt.setString(2, user);
+			rSet = pStmt.executeQuery();
+			if (!rSet.next())
+			{
+			pStmt = con.prepareStatement("insert into upvotes values(?,?)");
+			pStmt.setInt(1, ansid);
+			pStmt.setString(2, user);
+			pStmt.execute();			
+			}
+			rSet.close();	
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -405,12 +418,15 @@ public class Dao {
 			pStmt.setString(1, username);
 			pStmt.executeUpdate();
 			
-			pStmt = con.prepareStatement("insert into comments values(?,?,?)");
-			pStmt.setInt(1, id);
-			pStmt.setString(2, username);
-			pStmt.setString(3, comments);
-			pStmt.executeQuery();
-			rSet.close();
+			if(!comments.equals("")){
+				pStmt = con.prepareStatement("insert into comments values(?,?,?)");
+				pStmt.setInt(1, id);
+				pStmt.setString(2, username);
+				pStmt.setString(3, comments);
+				pStmt.executeQuery();
+				rSet.close();	
+			}
+			
 		}catch (SQLException e) {
 			e.printStackTrace();
 		}

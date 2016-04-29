@@ -8683,7 +8683,7 @@ nv.models.multiBarHorizontal = function() {
                         if (yerr === undefined)
                             return t;
                         if (!yerr.length)
-                            return t + '±' + valueFormat(Math.abs(yerr));
+                            return t + 'ï¿½' + valueFormat(Math.abs(yerr));
                         return t + '+' + valueFormat(Math.abs(yerr[1])) + '-' + valueFormat(Math.abs(yerr[0]));
                     });
                 bars.watchTransition(renderWatch, 'multibarhorizontal: bars')

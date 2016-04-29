@@ -159,7 +159,15 @@ a:hover { text-decoration: underline; }
   width: 750px;
   margin: 0 auto;
   padding-top: 30px;
-  padding-bottom: 45px;
+  padding-bottom: 10px;
+}
+
+#commentcontainer {
+  display: block;
+  width: 50%;
+  margin: 0 auto;
+  align: left;
+  
 }
 
 #content {
@@ -260,7 +268,7 @@ a:hover { text-decoration: underline; }
   font-weight: bold;
 }
 #friendslist li { line-height: 30px; }
-#friendslist li a {
+#commentcontainer div a {
   float: left;
   height: 30px;
   padding: 3px 6px;

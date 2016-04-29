@@ -28,8 +28,6 @@ function getNewQid(){
     return Math.max.apply(Math,a)+1;
 }
 
-
-
 function removeOld(){
     $("#questions").children().each(function( index ) {
 	if (index>0){
@@ -37,7 +35,6 @@ function removeOld(){
 	}
     });
 }
-
 
 /* Function to get User ID of the person who gave the answer */
 
@@ -118,7 +115,7 @@ function addReputation(username, lang){
 		reputation = json.cpp;
 	    break;
 	}
-    $('#'+username).parent().parent().append('<br><br><span class="label label-warning">' + lang + ': ' + reputation + '</span><br><br>');
+    $('#'+username).parent().parent().append('<br><br><span class="label label-warning">' + lang + ' reputation : ' + reputation + '</span><br><br>');
     });
 }
 
@@ -140,7 +137,6 @@ function updateReputation(language, pointsToAdd) {
 		    	}
 		    });
 }
-
 
 function addAnswers(id, username, lang){
     $.get("MainServlet", {
@@ -280,6 +276,8 @@ function addVotes(id, votes) {
 function updateVotes(tag) {
     var c = tag.className;
     var id1 = $(tag).parent().parent().parent().parent().parent().attr('id');
+    console.log("IN UPVOTES section, ID; "+id1);
+    id1 = id1+"user" +getUserId();
     var actualid;
     var type;
     var r = 0;
@@ -287,6 +285,7 @@ function updateVotes(tag) {
     if (c.includes('top')) {
 	r = parseInt($(tag).parent().parent().next().first().first().text()) + 1;
 	$(tag).parent().parent().next().children().text(r);
+	console.log("In UPVOTE section, r: "+r);
 	$.get("MainServlet", {
 		type : "upvote",
 		up : r,
