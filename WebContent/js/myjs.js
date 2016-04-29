@@ -290,6 +290,12 @@ function updateVotes(tag) {
 		type : "upvote",
 		up : r,
 		id : id1.split("votes")[1]
+	    }, function(response){
+	    	if(response === "0")
+	    		{
+	    		$(tag).parent().parent().next().children().text(r-1);
+	    		window.alert("You have already upvoted this item!");
+	    		}   		
 	    });
     } else {
 	r = parseInt($(tag).parent().parent().prev().first().first().text()) - 1;
@@ -298,7 +304,13 @@ function updateVotes(tag) {
 		type : "downvote",
 		down : r,
 		id : id1.split("votes")[1]
-	    });
+	    }, function(response){
+	    	if(response === "0")
+    		{
+	    	$(tag).parent().parent().prev().children().text(r+1);
+    		window.alert("You have already downvoted this item!");
+    		}   		
+    });
     }
 }
 

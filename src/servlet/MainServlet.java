@@ -159,19 +159,30 @@ public class MainServlet extends HttpServlet {
 		if(type.equals("upvote")){
 			int ups = Integer.parseInt(request.getParameter("up"));
 			String idTemp =  (String) request.getParameter("id");
-			String id = idTemp.split("user")[0];
 			String user = idTemp.split("user")[1];
-			int ansId = Integer.parseInt(id.split("and")[1]);
-			System.out.println("IN UPVOTE MAIN SERVLET, id: "+id+" user:"+ user+"ansid: "+ansId);
-			dao.updateUpVote(id, user, ansId);
+			String id = idTemp.split("user")[0];
+			//System.out.println("IN MAIN SERVLET UPVOTE: "+idTemp +" "+user);
+			boolean flag = dao.updateUpVote(id, user);
+			if(!flag)
+			{
+				response.setContentType("text/plain");
+			    response.setCharacterEncoding("UTF-8");
+			    response.getWriter().write(String.valueOf(0));
+			}
 		}
 
 		if(type.equals("downvote")){
-			AnswerBean a = new AnswerBean();
 			int downs = Integer.parseInt(request.getParameter("down"));
-			String id =  (String) request.getParameter("id");
-			a.setDownvotes(downs);
-			dao.updateDownVote(id);
+			String idTemp =  (String) request.getParameter("id");
+			String user = idTemp.split("user")[1];
+			String id = idTemp.split("user")[0];
+			boolean flag = dao.updateDownVote(id, user);
+			if(!flag)
+			{
+				response.setContentType("text/plain");
+			    response.setCharacterEncoding("UTF-8");
+			    response.getWriter().write(String.valueOf(0));
+			}
 		}
 
 		if(type.equals("feedback")){

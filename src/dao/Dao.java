@@ -307,85 +307,136 @@ public class Dao {
 		return 0;
 	}
 
-	public void updateUpVote(String sid, String user, int ansid)
+	public boolean updateUpVote(String sid, String user)
 	{
 		try {
-			System.out.println("IN UPVOTE DAO, id: "+sid+" user:"+ user+"ansid: "+ansid);
 			int id =0;
 			int up = 0;
+			System.out.println(" IN updateupvote DAO :" + sid );
 			if (sid.contains("and")){
 				id = Integer.parseInt(sid.split("and")[1]);
-				pStmt = con.prepareStatement("select upvotes from answers where id="+id);
+				pStmt = con.prepareStatement("select * from upvotes_answer where ansid=? and userid=? ");
+				pStmt.setInt(1, id);
+				pStmt.setString(2, user);
 				rSet = pStmt.executeQuery();
-				if (rSet.next()) {
-					up =	rSet.getInt(1) + 1;
-				}
-				pStmt = con.prepareStatement("update answers set UPVOTES=?  where id=?");
+				
+				if (!rSet.next())
+				{
+					pStmt = con.prepareStatement("insert into upvotes_answer values(?,?)");
+					pStmt.setInt(1, id);
+					pStmt.setString(2, user);
+					pStmt.execute();
+					
+					pStmt = con.prepareStatement("select upvotes from answers where id="+id);
+					rSet = pStmt.executeQuery();
+					if (rSet.next()) {
+						up =	rSet.getInt(1) + 1;
+					}
+					pStmt = con.prepareStatement("update answers set UPVOTES=?  where id=?");
+					pStmt.setInt(1, up);
+					pStmt.setInt(2, id);
+					pStmt.executeUpdate();	
+					rSet.close();
+					return true;
+				}	
+			}
 
-			} else {
+			else {				
 				id = Integer.parseInt(sid);
-				pStmt = con.prepareStatement("select upvotes from questions where id="+id);
+				pStmt = con.prepareStatement("select * from upvotes_question where qid=? and userid=? ");
+				pStmt.setInt(1, id);
+				pStmt.setString(2, user);
 				rSet = pStmt.executeQuery();
-				if (rSet.next()) {
-					up =	rSet.getInt(1) + 1;
+				
+				if (!rSet.next())
+				{
+					pStmt = con.prepareStatement("insert into upvotes_question values(?,?)");
+					pStmt.setInt(1, id);
+					pStmt.setString(2, user);
+					pStmt.execute();
+					pStmt = con.prepareStatement("select upvotes from questions where id="+id);
+					rSet = pStmt.executeQuery();
+					if (rSet.next()) {
+						up =	rSet.getInt(1) + 1;
+					}
+					pStmt = con.prepareStatement("update questions set UPVOTES=?  where id=?");
+					pStmt.setInt(1, up);
+					pStmt.setInt(2, id);
+					pStmt.executeUpdate();	
+					rSet.close();
+					return true;
 				}
-				pStmt = con.prepareStatement("update questions set UPVOTES=?  where id=?");
-			}
-
-			pStmt.setInt(1, up);
-			pStmt.setInt(2, id);
-			pStmt.executeUpdate();
-			
-			pStmt = con.prepareStatement("select * from upvotes where ansid=? and userid=? ");
-			pStmt.setInt(1, ansid);
-			pStmt.setString(2, user);
-			rSet = pStmt.executeQuery();
-			if (!rSet.next())
-			{
-			pStmt = con.prepareStatement("insert into upvotes values(?,?)");
-			pStmt.setInt(1, ansid);
-			pStmt.setString(2, user);
-			pStmt.execute();			
-			}
-			rSet.close();	
+			}			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		return false;
 	}
 
-	public void updateDownVote(String sid)
+	public boolean updateDownVote(String sid, String user)
 	{
 		try {
 			int id =0;
 			int down = 0;
 			if (sid.contains("and")){
 				id = Integer.parseInt(sid.split("and")[1]);
-				pStmt = con.prepareStatement("select downvotes from answers where id="+id);
+				pStmt = con.prepareStatement("select * from downvotes_answer where ansid=? and userid=? ");
+				pStmt.setInt(1, id);
+				pStmt.setString(2, user);
 				rSet = pStmt.executeQuery();
-				if (rSet.next()) {
-					down =	rSet.getInt(1) + 1;
+				
+				if (!rSet.next())
+				{
+					pStmt = con.prepareStatement("insert into downvotes_answer values(?,?)");
+					pStmt.setInt(1, id);
+					pStmt.setString(2, user);
+					pStmt.execute();
+					
+					pStmt = con.prepareStatement("select downvotes from answers where id="+id);
+					rSet = pStmt.executeQuery();
+					if (rSet.next()) {
+						down =	rSet.getInt(1) + 1;
+					}
+					pStmt = con.prepareStatement("update answers set DOWNVOTES=?  where id=?");
+					pStmt.setInt(2, id);
+					pStmt.setInt(1, down);
+					pStmt.executeUpdate();
+					rSet.close();
+					return true;
 				}
-				System.out.println(down);
-				pStmt = con.prepareStatement("update answers set DOWNVOTES=?  where id=?");
-
-			} else {
-				id = Integer.parseInt(sid);
-				pStmt = con.prepareStatement("select downvotes from questions where id="+id);
-				rSet = pStmt.executeQuery();
-				if (rSet.next()) {
-					down =	rSet.getInt(1) + 1;
-				}
-				System.out.println(down);
-				pStmt = con.prepareStatement("update questions set DOWNVOTES=?  where id=?");
+				
 			}
-
-			pStmt.setInt(2, id);
-			pStmt.setInt(1, down);
-			pStmt.executeUpdate();
-			rSet.close();
+			else {
+				id = Integer.parseInt(sid);
+				pStmt = con.prepareStatement("select * from downvotes_question where qid=? and userid=? ");
+				pStmt.setInt(1, id);
+				pStmt.setString(2, user);
+				rSet = pStmt.executeQuery();
+				
+				if (!rSet.next())
+				{
+					pStmt = con.prepareStatement("insert into downvotes_question values(?,?)");
+					pStmt.setInt(1, id);
+					pStmt.setString(2, user);
+					pStmt.execute();
+					
+					pStmt = con.prepareStatement("select downvotes from questions where id="+id);
+					rSet = pStmt.executeQuery();
+					if (rSet.next()) {
+						down =	rSet.getInt(1) + 1;
+					}
+					pStmt = con.prepareStatement("update questions set DOWNVOTES=?  where id=?");
+					pStmt.setInt(2, id);
+					pStmt.setInt(1, down);
+					pStmt.executeUpdate();
+					rSet.close();
+					return true;
+				}
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		return false;
 	}
 
 	public void updateFeedback(int accuracy, int conciseness, int redundancy, int grammar, int id, String comments)
