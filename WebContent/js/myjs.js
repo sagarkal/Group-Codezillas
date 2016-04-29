@@ -139,18 +139,20 @@ function updateReputation(language, pointsToAdd) {
 }
 
 function addAnswers(id, username, lang){
+	
     $.get("MainServlet", {
 	type : "getanswers",
 	qid : id
     }, function(json) {
     	for (i in json) {
+    		var hrefVal = "othersProfile.html?myuserid="+username+"&touserid="+json[i].username;
     		$("#tableq" + id).append(
     		$('<tr/>').append($('<td />').attr('id',"votes" + id + "and"+ json[i].id))
     			.append($('<td/>').attr({
     				width : "60%"
     			}).append(json[i].answer)).attr({align : "left"}).append($('<td/>').append(
     					'<br><span class="label label-warning">'
-    					+ 'Answered By' + '<a href="#" id='+json[i].username+'answer' + json[i].id+'>'+	json[i].username+'</a>'
+    					+ 'Answered By' + '<a href="' +hrefVal + '" id='+json[i].username+'answer' + json[i].id+'>'+	json[i].username+'</a>'
     					+ '</span>')
     					))
     							 .append(

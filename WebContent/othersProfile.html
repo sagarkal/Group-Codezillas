@@ -58,7 +58,7 @@
 function loadHome()
 {
 	var url = window.location.href;
-	var username = url.split("=")[1].split('#')[0];
+	var username = url.split("=")[1].split('&')[0];
 	window.location.replace("home.html?user=" + username);
 }
 
@@ -68,28 +68,29 @@ function loadQuiz(quizPage) {
     
 function setUser(){
 	var url = window.location.href;
-	var username = url.split("=")[1].split('#')[0];
-	$('#myprofile').append(username);
+	var username = url.split("touserid=")[1].split('#')[0];
+	console.log("username =", username);
+	//$('#myprofile').append(username);
 	hideComments();
 }
 
 function getUserName()
 {
 	var url = window.location.href;
-	var username = url.split("=")[1].split('#')[0];
+	var username = url.split("touserid=")[1].split('#')[0];
 	return username;
 }
 	
 function getEmail(){
 	var url = window.location.href;
-	var username = url.split("=")[1].split('#')[0];
+	var username = url.split("touserid=")[1].split('#')[0];
 	getUserFirstAndLastName();
 	return username+"@asu.edu";
 }
 
 function getUserFirstAndLastName(){
 	 var url = window.location.href;
-	 var username = url.split("=")[1].split("@")[0].split('#')[0];
+	 var username = url.split("touserid=")[1].split('#')[0];
 	 username+="@asu.edu";
 	 var fullName = "";
 		$.get("MainServlet", {
@@ -113,18 +114,6 @@ function getUserFirstAndLastName(){
 			<div class="collapse navbar-collapse"
 				id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav navbar-right">
-					<li class="dropdown"><a href="#" class="dropdown-toggle"
-						data-toggle="dropdown" role="button" aria-haspopup="true"
-						aria-expanded="false">Take Quiz <span class="caret"></span></a>
-						<ul class="dropdown-menu">
-							<li><a onclick="loadQuiz('Java Quiz.html')">Java</a></li>
-							<li><a onclick="loadQuiz('Javascript Quiz.html')">JavaScript</a></li>
-							<li><a onclick="loadQuiz('Python Quiz.html')">Python</a></li>
-							<li><a onclick="loadQuiz('Csharp Quiz.html')">C#</a></li>
-							<li><a onclick="loadQuiz('C++ Quiz.html')">C++</a></li>
-						</ul></li>
-					<li><a id="myprofile"></a></li>
-					<li><a href="login.html">Logout</a></li>
 				</ul>
 			</div>
 		</div>
@@ -139,7 +128,7 @@ function getUserFirstAndLastName(){
           <li><a href="#bio" class="sel">Bio</a></li>
           <li><a href="#reputation">Reputation</a></li>
           <li><a href="#feedback">Feedback</a></li>
-		  <!--   <li><a href="#textcomments">Text comments</a> -->
+		  <li><a href="#textcomments">Text comments</a> 
         </ul>
         <div class="container" id="comments" align="center">
       </nav>
@@ -168,7 +157,7 @@ function getUserFirstAndLastName(){
   <script>
   document.getElementById("comments").style.visibility = "hidden";
   var url = window.location.search;
-  var username= url.split('=')[1].split('#')[0];
+  var username = url.split("touserid=")[1].split('#')[0];
   username+="@asu.edu";
   $.get("MainServlet", {
 		type : "getrepforprofile",
@@ -203,7 +192,7 @@ Plotly.newPlot('myDiv', data);
 <script>
 document.getElementById("comments").style.visibility = "hidden";
 var url = window.location.search;
-var username= url.split('=')[1].split('#')[0];
+var username = url.split("touserid=")[1].split('#')[0];
 username+="@asu.edu";
 var accuracy;
 var grammar;
@@ -259,6 +248,41 @@ var redundancy;
 </script>
       </section>
 
+<section id="textcomments" class="hidden">
+
+<br />
+<div class="container" id="commentcontainer" style="width: 480px; height: 400px; align: left;">
+  <div class="row" >
+      <div class="panel panel-default">
+        <div class="panel-heading" >
+          <h4 >
+            Feedback comments on your answers 
+          </h4>
+        </div>
+        <table class="table table-fixed" id="tablec">
+        </table>
+</div>
+
+
+<script>
+document.getElementById("comments").style.visibility = "visible";
+var url = window.location.search;
+var username= url.split('=')[1].split('#')[0];
+username+="@asu.edu";
+
+$.get("MainServlet", {
+	type : "getFeedbackComments",
+	username : username
+    }, function(json){
+    	for (i in json){
+    		/* document.getElementById("comments").innerHTML = json[i]["comments"]; */
+    				$('#tablec').append($('<tr/>').append($('<td />').append(json[i]["comments"])));   	
+    		
+    	}
+    });
+</script>
+
+</section>
     </div><!-- @end #content -->
   </div><!-- @end #w -->
 <script type="text/javascript">
@@ -278,9 +302,9 @@ $(function(){
   });
 });
 </script>
-<!--  
-<section id="textcomments" class="hidden" onload=>
-<!-- 
+
+<section id="textcomments" class="hidden">
+
 <div class="container">
   <div class="row">
       <div class="panel panel-default">
@@ -290,12 +314,12 @@ $(function(){
           </h4>
         </div>
 </div>
--->
+
 
 <script>
 document.getElementById("comments").style.visibility = "visible";
 var url = window.location.search;
-var username= url.split('=')[1].split('#')[0];
+var username = url.split("touserid=")[1].split('#')[0];
 username+="@asu.edu";
 
 $.get("MainServlet", {
