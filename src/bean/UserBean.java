@@ -11,11 +11,11 @@ public class UserBean {
 	private int csharp;
 	private String quiz;
 	private String password;
-	private int accuracy;
-	private int conciseness;
-	private int redundancy;
-	private int grammar;
+	private int details;
+	private int unique;
+	private int motivation;
 	private String aboutme;
+	private int novice;
 	
 	public String getAboutme() {
 		return aboutme;
@@ -36,30 +36,32 @@ public class UserBean {
 		this.lastName = lastName;
 	}
 	
-	public int getAccuracy() {
-		return accuracy;
+	
+	public int getNovice() {
+		return novice;
 	}
-	public void setAccuracy(int accuracy) {
-		this.accuracy = accuracy;
+	public void setNovice(int novice) {
+		this.novice = novice;
 	}
-	public int getConciseness() {
-		return conciseness;
+	public int getDetails() {
+		return details;
 	}
-	public void setConciseness(int conciseness) {
-		this.conciseness = conciseness;
+	public void setDetails(int details) {
+		this.details = details;
 	}
-	public int getRedundancy() {
-		return redundancy;
+	public int getUnique() {
+		return unique;
 	}
-	public void setRedundancy(int redundancy) {
-		this.redundancy = redundancy;
+	public void setUnique(int unique) {
+		this.unique = unique;
 	}
-	public int getGrammar() {
-		return grammar;
+	public int getMotivation() {
+		return motivation;
 	}
-	public void setGrammar(int grammar) {
-		this.grammar = grammar;
+	public void setMotivation(int motivation) {
+		this.motivation = motivation;
 	}
+	
 	public String getUsername() {
 		return username;
 	}

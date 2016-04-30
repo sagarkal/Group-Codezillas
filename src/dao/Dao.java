@@ -81,14 +81,14 @@ public class Dao {
 		username = username.trim();
 		UserBean u = new UserBean();
 		try {
-			pStmt = con.prepareStatement("select accuracy, conciseness, redundancy, grammar from users where username=?");
+			pStmt = con.prepareStatement("select novice, details, uniqueness, motivation from users where username=?");
 			pStmt.setString(1, username);
 			rSet = pStmt.executeQuery();
 			if (rSet.next()) {
-				u.setAccuracy(rSet.getInt(1));
-				u.setConciseness(rSet.getInt(2));
-				u.setRedundancy(rSet.getInt(3));
-				u.setGrammar(rSet.getInt(4));
+				u.setNovice(rSet.getInt(1));
+				u.setDetails(rSet.getInt(2));
+				u.setUnique(rSet.getInt(3));
+				u.setMotivation(rSet.getInt(4));
 				ul.add(u);
 			}
 			rSet.close();

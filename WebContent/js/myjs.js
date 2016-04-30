@@ -278,8 +278,20 @@ function addVotes(id, votes) {
 function updateVotes(tag) {
     var c = tag.className;
     var id1 = $(tag).parent().parent().parent().parent().parent().attr('id');
-    console.log("IN UPVOTES section, TRACING TO USERNAME; "+$(tag).parent().parent().parent().parent().parent().next().next().children().next().next().next().children().attr('id'));
-    id1 = id1+"user" +getUserId();
+    var user, u;
+    console.log("PURE ID: "+id1);
+    if(!id1.includes("and"))
+    	{
+    	user = $(tag).parent().parent().parent().parent().parent().next().next().children().next().next().next().children().attr('id');
+    	u = user.split("question")[0];
+        console.log("IN UPVOTES section, TRACING TO USERNAME; "+u);
+    
+    	} else{
+    		u = $(tag).parent().parent().parent().parent().parent().next().next().children().next().children().text();
+    		console.log("ITS AN ANSWER! :"+ u);
+    	}
+    id1 = id1+"user" +u;
+    console.log("CONTINUING IN UPVOTES, ID: "+id1);
     var actualid;
     var type;
     var r = 0;

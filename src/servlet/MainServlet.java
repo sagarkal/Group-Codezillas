@@ -161,7 +161,7 @@ public class MainServlet extends HttpServlet {
 			String idTemp =  (String) request.getParameter("id");
 			String user = idTemp.split("user")[1];
 			String id = idTemp.split("user")[0];
-			//System.out.println("IN MAIN SERVLET UPVOTE: "+idTemp +" "+user);
+			System.out.println("IN MAIN SERVLET UPVOTE: "+idTemp +" "+user);
 			boolean flag = dao.updateUpVote(id, user);
 			if(!flag)
 			{
