@@ -186,10 +186,10 @@ public class MainServlet extends HttpServlet {
 		}
 
 		if(type.equals("feedback")){
-			int accuracy = Integer.parseInt(request.getParameter("accuracy"));
-			int conciseness = Integer.parseInt(request.getParameter("conciseness"));
-			int redundancy = Integer.parseInt(request.getParameter("redundancy"));
-			int grammar = Integer.parseInt(request.getParameter("grammar"));
+			int accuracy = Integer.parseInt(request.getParameter("novice"));
+			int conciseness = Integer.parseInt(request.getParameter("details"));
+			int redundancy = Integer.parseInt(request.getParameter("unique"));
+			int grammar = Integer.parseInt(request.getParameter("motivation"));
 			int id = Integer.parseInt(request.getParameter("id"));
 			String comments = (String) request.getParameter("comments");
 			dao.updateFeedback(accuracy, conciseness, redundancy, grammar, id, comments);

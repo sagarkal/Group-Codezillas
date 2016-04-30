@@ -225,14 +225,14 @@ function userIdForFeedback(id)
 	window.location.hash = id;
 }
 
-function updateFeedback(accuracy, conciseness, redundancy, grammar, id, comments)
+function updateFeedback(novice, details, unique, motivation, id, comments)
 {
 	 $.get("MainServlet", {
 			type : "feedback",
-			accuracy : accuracy,
-			conciseness : conciseness,
-			redundancy : redundancy,
-			grammar : grammar,
+			novice : novice,
+			details : details,
+			unique : unique,
+			motivation : motivation,
 			id : id,
 			comments : comments
 		    });
@@ -278,7 +278,7 @@ function addVotes(id, votes) {
 function updateVotes(tag) {
     var c = tag.className;
     var id1 = $(tag).parent().parent().parent().parent().parent().attr('id');
-    console.log("IN UPVOTES section, ID; "+id1);
+    console.log("IN UPVOTES section, TRACING TO USERNAME; "+$(tag).parent().parent().parent().parent().parent().next().next().children().next().next().next().children().attr('id'));
     id1 = id1+"user" +getUserId();
     var actualid;
     var type;

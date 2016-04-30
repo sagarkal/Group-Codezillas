@@ -47,6 +47,7 @@ public class Dao {
 				al.add(q);
 			}
 			rSet.close();
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -66,9 +67,12 @@ public class Dao {
 				u.setUsername(rSet.getString(3));
 				u.setAboutme(rSet.getString(4));
 			}
+			rSet.close();
+
 		}catch (SQLException e) {
 			e.printStackTrace();
 		}
+		
 		return u;
 	}
 
@@ -88,6 +92,7 @@ public class Dao {
 				ul.add(u);
 			}
 			rSet.close();
+
 		}catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -114,6 +119,7 @@ public class Dao {
 				al.add(a);
 			}
 			rSet.close();
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -140,6 +146,7 @@ public class Dao {
 			pStmt.setString(14, u.getLastName());
 			pStmt.setString(15, u.getAboutme());
 			pStmt.executeQuery();
+	
 		}catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -158,6 +165,7 @@ public class Dao {
 			}
 			}
 		rSet.close();
+
 		}catch (SQLException e) {
 		e.printStackTrace();
 		}
@@ -175,6 +183,7 @@ public class Dao {
 			pStmt.setString(5, a.getTags());
 			pStmt.setString(6, a.getUsername());
 			pStmt.executeUpdate();
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -200,6 +209,7 @@ public class Dao {
 			pStmt.setInt(6, (int) a.getQuestionId());
 			pStmt.executeUpdate();
 			rSet.close();
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -225,6 +235,7 @@ public class Dao {
 				u.setQuiz(rSet.getString(7));
 			}
 			rSet.close();
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -248,6 +259,8 @@ public class Dao {
 				u.setJavascript(rSet.getInt(6));
 				ul.add(u);
 			}
+			rSet.close();
+
 		}catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -273,6 +286,7 @@ public class Dao {
 				ul.add(u);
 			}
 			rSet.close();
+
 		}catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -306,12 +320,41 @@ public class Dao {
 		}
 		return 0;
 	}
+	
+	public void updateReputationFromOtherMeans(String username, String language, int pointsToAdd)
+	{
+		int currentReputation = 0;
+		try {
+			System.out.println("IN updateReputationFromOtherMeans: "+username+" "+language+" "+pointsToAdd);
+			username=username.trim();
+			username += "@asu.edu";
+			pStmt = con
+					.prepareStatement("select "+language+" from users where username = ?");
+			pStmt.setString(1, username);
+			rSet = pStmt.executeQuery();
+
+			if (rSet.next()) {
+				currentReputation =	rSet.getInt(1);	
+			}
+
+			pStmt = con
+					.prepareStatement("update users set "+language+"="+(currentReputation+pointsToAdd)+" where username = ?");
+			pStmt.setString(1, username);
+			pStmt.executeUpdate();
+
+			rSet.close();
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 
 	public boolean updateUpVote(String sid, String user)
 	{
 		try {
 			int id =0;
 			int up = 0;
+			int quesid = 0;
+			String language = "";
 			System.out.println(" IN updateupvote DAO :" + sid );
 			if (sid.contains("and")){
 				id = Integer.parseInt(sid.split("and")[1]);
@@ -335,8 +378,27 @@ public class Dao {
 					pStmt = con.prepareStatement("update answers set UPVOTES=?  where id=?");
 					pStmt.setInt(1, up);
 					pStmt.setInt(2, id);
-					pStmt.executeUpdate();	
+					pStmt.executeUpdate();
+					
+					pStmt = con.prepareStatement("select questionid from answers where id=?");
+					pStmt.setInt(1, id);
+					rSet = pStmt.executeQuery();
+					if (rSet.next()){
+						quesid = rSet.getInt(1);
+					}
+					
+					pStmt = con.prepareStatement("select tags from questions where id=?");
+					pStmt.setInt(1, quesid);
+					rSet = pStmt.executeQuery();
+					
+					if (rSet.next()){
+						language = rSet.getString(1);
+					}
+					
+					updateReputationFromOtherMeans(user, language, 1);
+					
 					rSet.close();
+
 					return true;
 				}	
 			}
@@ -363,7 +425,18 @@ public class Dao {
 					pStmt.setInt(1, up);
 					pStmt.setInt(2, id);
 					pStmt.executeUpdate();	
+					
+					pStmt = con.prepareStatement("select tags from questions where id=?");
+					pStmt.setInt(1, id);
+					rSet = pStmt.executeQuery();
+					
+					if (rSet.next()){
+						language = rSet.getString(1);
+					}
+					
+					updateReputationFromOtherMeans(user, language, 1);
 					rSet.close();
+
 					return true;
 				}
 			}			
@@ -378,6 +451,8 @@ public class Dao {
 		try {
 			int id =0;
 			int down = 0;
+			String language = "";
+			int quesid =0;
 			if (sid.contains("and")){
 				id = Integer.parseInt(sid.split("and")[1]);
 				pStmt = con.prepareStatement("select * from downvotes_answer where ansid=? and userid=? ");
@@ -401,6 +476,24 @@ public class Dao {
 					pStmt.setInt(2, id);
 					pStmt.setInt(1, down);
 					pStmt.executeUpdate();
+					
+					pStmt = con.prepareStatement("select questionid from answers where id=?");
+					pStmt.setInt(1, id);
+					rSet = pStmt.executeQuery();
+					if (rSet.next()){
+						quesid = rSet.getInt(1);
+					}
+					
+					pStmt = con.prepareStatement("select tags from questions where id=?");
+					pStmt.setInt(1, quesid);
+					rSet = pStmt.executeQuery();
+					
+					if (rSet.next()){
+						language = rSet.getString(1);
+					}
+					
+					updateReputationFromOtherMeans(user, language, -1);
+					
 					rSet.close();
 					return true;
 				}
@@ -429,7 +522,19 @@ public class Dao {
 					pStmt.setInt(2, id);
 					pStmt.setInt(1, down);
 					pStmt.executeUpdate();
+					
+					pStmt = con.prepareStatement("select tags from questions where id=?");
+					pStmt.setInt(1, id);
+					rSet = pStmt.executeQuery();
+					
+					if (rSet.next()){
+						language = rSet.getString(1);
+					}
+					
+					updateReputationFromOtherMeans(user, language, -1);
+
 					rSet.close();
+
 					return true;
 				}
 			}
@@ -439,10 +544,10 @@ public class Dao {
 		return false;
 	}
 
-	public void updateFeedback(int accuracy, int conciseness, int redundancy, int grammar, int id, String comments)
+	public void updateFeedback(int novice, int details, int unique, int motivation, int id, String comments)
 	{
 		String username = "";
-		int oldAccuracy = 0 , oldConciseness = 0, oldRedundancy = 0, oldGrammar = 0;
+		int oldNovice = 0 , oldDetails = 0, oldUnique = 0, oldMotivation = 0;
 		try{
 			pStmt = con.prepareStatement("select username from answers where id="+id);
 			rSet = pStmt.executeQuery();
@@ -453,19 +558,19 @@ public class Dao {
 			username=username.trim();
 			username += "@asu.edu";
 
-			pStmt = con.prepareStatement("select accuracy, conciseness, redundancy, grammar from users where username=?");
+			pStmt = con.prepareStatement("select novice, details, uniqueness, motivation from users where username=?");
 			pStmt.setString(1, username);
 			rSet = pStmt.executeQuery();
 
 			if (rSet.next()) {
-				oldAccuracy =	rSet.getInt(1);
-				oldConciseness = rSet.getInt(2);
-				oldRedundancy = rSet.getInt(3);
-				oldGrammar = rSet.getInt(4);
+				oldNovice =	rSet.getInt(1);
+				oldDetails = rSet.getInt(2);
+				oldUnique = rSet.getInt(3);
+				oldMotivation = rSet.getInt(4);
 			}
 
-			pStmt = con.prepareStatement("update users set accuracy="+(oldAccuracy+accuracy)+", conciseness="+(oldConciseness+conciseness)+", "
-					+ "redundancy="+(redundancy+oldRedundancy)+", grammar="+(oldGrammar+grammar)+"  where username=?");
+			pStmt = con.prepareStatement("update users set novice="+(oldNovice+novice)+", details="+(oldDetails+details)+", "
+					+ "uniqueness="+(unique+oldUnique)+", motivation="+(oldMotivation+motivation)+"  where username=?");
 			pStmt.setString(1, username);
 			pStmt.executeUpdate();
 			
@@ -475,9 +580,10 @@ public class Dao {
 				pStmt.setString(2, username);
 				pStmt.setString(3, comments);
 				pStmt.executeQuery();
-				rSet.close();	
+				rSet.close();
+				
 			}
-			
+
 		}catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -498,6 +604,7 @@ public class Dao {
 				c.setComments(rSet.getString(3));
 				cl.add(c);
 			}
+			rSet.close();
 		}catch (SQLException e) {
 			e.printStackTrace();
 		}

@@ -194,30 +194,30 @@ padding-left: 1cm;
 <script>
 function check()
 {
-var accuracy = 0, conciseness = 0, redundancy = 0, grammar = 0;
+var novice = 0, details = 0, unique = 0, motivation = 0;
 var a1=document.getElementsByName('q1');
 for(i = 0; i < a1.length; i++){
    if(a1[i].checked){
         switch(a1[i].value)
         {
         case 'a':
-        	accuracy = 1;
+        	novice = 1;
         	break;
         	
         case 'b':
-        	accuracy = 2;
+        	novice = 2;
         	break;
         	
         case 'c':
-        	accuracy = 3;
+        	novice = 3;
         	break;
         	
         case 'd':
-        	accuracy = 4;
+        	novice = 4;
         	break;
         	
         case 'e':
-        	accuracy = 5;
+        	novice = 5;
         	break;
         }
    }
@@ -229,23 +229,23 @@ for(i = 0; i < a2.length; i++){
         switch(a2[i].value)
         {
         case 'a':
-        	conciseness = 1;
+        	details = 1;
         	break;
         	
         case 'b':
-        	conciseness = 2;
+        	details = 2;
         	break;
         	
         case 'c':
-        	conciseness = 3;
+        	details = 3;
         	break;
         	
         case 'd':
-        	conciseness = 4;
+        	details = 4;
         	break;
         	
         case 'e':
-        	conciseness = 5;
+        	details = 5;
         	break;
         }
    }
@@ -257,23 +257,23 @@ for(i = 0; i < a3.length; i++){
         switch(a3[i].value)
         {
         case 'a':
-        	redundancy = 1;
+        	unique = 1;
         	break;
         	
         case 'b':
-        	redundancy = 2;
+        	unique = 2;
         	break;
         	
         case 'c':
-        	redundancy = 3;
+        	unique = 3;
         	break;
         	
         case 'd':
-        	redundancy = 4;
+        	unique = 4;
         	break;
         	
         case 'e':
-        	redundancy = 5;
+        	unique = 5;
         	break;
         }
    }
@@ -285,23 +285,23 @@ for(i = 0; i < a4.length; i++){
         switch(a4[i].value)
         {
         case 'a':
-        	grammar = 1;
+        	motivation = 1;
         	break;
         	
         case 'b':
-        	grammar = 2;
+        	motivation = 2;
         	break;
         	
         case 'c':
-        	grammar = 3;
+        	motivation = 3;
         	break;
         	
         case 'd':
-        	grammar = 4;
+        	motivation = 4;
         	break;
         	
         case 'e':
-        	grammar = 5;
+        	motivation = 5;
         	break;
         }
    }
@@ -312,7 +312,7 @@ var url = window.location.href;
 var id = url.split('#')[1]; 	
 var oldUrl = url.split('#')[0];
 location.assign(oldUrl);
-updateFeedback(accuracy, conciseness, redundancy, grammar, id, comments);
+updateFeedback(novice, details, unique, motivation, id, comments);
 
 }
 </script>

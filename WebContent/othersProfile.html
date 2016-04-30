@@ -204,20 +204,20 @@ var redundancy;
 	username : username
     }, function(json){
     	console.log(json[0]);
-    	accuracy=json[0]["accuracy"];
-    	grammar = json[0]["grammar"];
-    	consise = json[0]["conciseness"];
-    	redundancy = json[0]["redundancy"];
+    	accuracy=json[0]["novice"];
+    	grammar = json[0]["details"];
+    	consise = json[0]["unique"];
+    	redundancy = json[0]["motivation"];
     	
     	console.log(accuracy + " " + grammar + " " + consise + " ", redundancy);
     
  
  console.log("again:" + accuracy);
     var testdata = [
-        {key: "Redundancy", y: redundancy},
-        {key: "Grammar", y: grammar},
-        {key: "Conciseness", y: consise},
-        {key: "Accuracy", y: accuracy},
+        {key: "Explain to novice", y: novice},
+        {key: "Elaboration", y: details},
+        {key: "Unique contribution", y: unique},
+        {key: "Motivation factor", y: motivation},
      //   {key: "Five", y: 4},
      //   {key: "Six", y: 3},
      //   {key: "Seven", y: 0.5}
