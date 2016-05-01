@@ -311,7 +311,11 @@ function updateVotes(tag) {
 	    		{
 	    		$(tag).parent().parent().next().children().text(r-1);
 	    		window.alert("You have already upvoted this item!");
-	    		}   		
+	    		}
+	    	if(response === "2"){
+	    		$(tag).parent().parent().next().children().text(r-1);
+	    		window.alert("You need to have at least 5 reputation points in this technology to vote!");
+	    	}
 	    });
     } else {
 	r = parseInt($(tag).parent().parent().prev().first().first().text()) - 1;
@@ -325,7 +329,11 @@ function updateVotes(tag) {
     		{
 	    	$(tag).parent().parent().prev().children().text(r+1);
     		window.alert("You have already downvoted this item!");
-    		}   		
+    		} 
+	    	if(response === "2"){
+	    		$(tag).parent().parent().prev().children().text(r+1);
+	    		window.alert("You need to have at least 5 reputation points in this technology to vote!");
+	    	}
     });
     }
 }

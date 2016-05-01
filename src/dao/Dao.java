@@ -409,13 +409,15 @@ public class Dao {
 		}
 	}
 
-	public boolean updateUpVote(String sid, String user)
+	public int updateUpVote(String sid, String user)
 	{
 		try {
 			int id =0;
 			int up = 0;
 			int quesid = 0;
+			int reputation = 0;
 			String language = "";
+			String u = "";
 			if (sid.contains("and")){
 				id = Integer.parseInt(sid.split("and")[1]);
 				pStmt = con.prepareStatement("select * from upvotes_answer where ansid=? and userid=? ");
@@ -425,25 +427,6 @@ public class Dao {
 				
 				if (!rSet.next())
 				{
-					pStmt = con.prepareStatement("insert into upvotes_answer values(?,?)");
-					pStmt.setInt(1, id);
-					pStmt.setString(2, user);
-					pStmt.execute();
-//					pStmt.close();
-					
-					pStmt = con.prepareStatement("select upvotes from answers where id="+id);
-					rSet = pStmt.executeQuery();
-					if (rSet.next()) {
-						up =	rSet.getInt(1) + 1;
-					}
-//					pStmt.close();
-					
-					pStmt = con.prepareStatement("update answers set UPVOTES=?  where id=?");
-					pStmt.setInt(1, up);
-					pStmt.setInt(2, id);
-					pStmt.executeUpdate();
-//					pStmt.close();
-					
 					pStmt = con.prepareStatement("select questionid from answers where id=?");
 					pStmt.setInt(1, id);
 					rSet = pStmt.executeQuery();
@@ -451,8 +434,6 @@ public class Dao {
 						quesid = rSet.getInt(1);
 					}
 //					pStmt.close();
-				
-					
 					pStmt = con.prepareStatement("select tags from questions where id=?");
 					pStmt.setInt(1, quesid);
 					rSet = pStmt.executeQuery();
@@ -461,13 +442,39 @@ public class Dao {
 						language = rSet.getString(1);
 					}
 					
-					user = user+"@asu.edu";
-					updateReputationFromOtherMeans(user, language, 1.0);
+					u = user+"@asu.edu";
+					pStmt = con.prepareStatement("select "+language+" from users where username=?");
+					pStmt.setString(1, u);
+					rSet = pStmt.executeQuery();
 					
-					rSet.close();
-					pStmt.close();
-					return true;
+					if (rSet.next()){
+						reputation = rSet.getInt(1);
+					}
+					
+					if(reputation >= 5){
+						pStmt = con.prepareStatement("insert into upvotes_answer values(?,?)");
+						pStmt.setInt(1, id);
+						pStmt.setString(2, user);
+						pStmt.execute();
+						
+						pStmt = con.prepareStatement("select upvotes from answers where id="+id);
+						rSet = pStmt.executeQuery();
+						if (rSet.next()) {
+							up =	rSet.getInt(1) + 1;
+						}
+						
+						pStmt = con.prepareStatement("update answers set UPVOTES=?  where id=?");
+						pStmt.setInt(1, up);
+						pStmt.setInt(2, id);
+						pStmt.executeUpdate();
+						updateReputationFromOtherMeans(user, language, 1.0);
+						return 1;
+					}else{
+						return 2;
+					}
 				}	
+				rSet.close();
+				pStmt.close();
 			}
 
 			else {				
@@ -480,25 +487,6 @@ public class Dao {
 				
 				if (!rSet.next())
 				{
-					pStmt = con.prepareStatement("insert into upvotes_question values(?,?)");
-					pStmt.setInt(1, id);
-					pStmt.setString(2, user);
-					pStmt.execute();
-//					pStmt.close();
-					
-					pStmt = con.prepareStatement("select upvotes from questions where id="+id);
-					rSet = pStmt.executeQuery();
-					if (rSet.next()) {
-						up =	rSet.getInt(1) + 1;
-					}
-//					pStmt.close();
-					
-					pStmt = con.prepareStatement("update questions set UPVOTES=?  where id=?");
-					pStmt.setInt(1, up);
-					pStmt.setInt(2, id);
-					pStmt.executeUpdate();	
-//					pStmt.close();
-					
 					pStmt = con.prepareStatement("select tags from questions where id=?");
 					pStmt.setInt(1, id);
 					rSet = pStmt.executeQuery();
@@ -507,63 +495,72 @@ public class Dao {
 						language = rSet.getString(1);
 					}
 					
-					user = user+"@asu.edu";
-					updateReputationFromOtherMeans(user, language, 1.0);
-					rSet.close();
-					pStmt.close();
-					return true;
+					u = user+"@asu.edu";
+					pStmt = con.prepareStatement("select "+language+" from users where username=?");
+					pStmt.setString(1, u);
+					rSet = pStmt.executeQuery();
+					
+					if (rSet.next()){
+						reputation = rSet.getInt(1);
+					}
+					
+					if(reputation >= 5){
+						pStmt = con.prepareStatement("insert into upvotes_question values(?,?)");
+						pStmt.setInt(1, id);
+						pStmt.setString(2, user);
+						pStmt.execute();
+						
+						pStmt = con.prepareStatement("select upvotes from questions where id="+id);
+						rSet = pStmt.executeQuery();
+						if (rSet.next()) {
+							up =	rSet.getInt(1) + 1;
+						}
+
+						
+						pStmt = con.prepareStatement("update questions set UPVOTES=?  where id=?");
+						pStmt.setInt(1, up);
+						pStmt.setInt(2, id);
+						pStmt.executeUpdate();	
+
+						updateReputationFromOtherMeans(user, language, 1.0);
+						rSet.close();
+						pStmt.close();
+							return 1;
+					}else {
+						return 2;
+					}	
 				}
-			}			
-		} catch (SQLException e) {
+			}
+			} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return false;
+		return 0;
 	}
 
-	public boolean updateDownVote(String sid, String user)
+	public int updateDownVote(String sid, String user)
 	{
 		try {
 			int id =0;
 			int down = 0;
 			String language = "";
 			int quesid =0;
+			String u = "";
+			int reputation = 0;
 			if (sid.contains("and")){
 				id = Integer.parseInt(sid.split("and")[1]);
 				pStmt = con.prepareStatement("select * from downvotes_answer where ansid=? and userid=? ");
 				pStmt.setInt(1, id);
 				pStmt.setString(2, user);
 				rSet = pStmt.executeQuery();
-
 				
 				if (!rSet.next())
 				{
-					pStmt = con.prepareStatement("insert into downvotes_answer values(?,?)");
-					pStmt.setInt(1, id);
-					pStmt.setString(2, user);
-					pStmt.execute();
-//					pStmt.close();
-					
-					pStmt = con.prepareStatement("select downvotes from answers where id="+id);
-					rSet = pStmt.executeQuery();
-					if (rSet.next()) {
-						down =	rSet.getInt(1) + 1;
-					}
-//					pStmt.close();
-					
-					
-					pStmt = con.prepareStatement("update answers set DOWNVOTES=?  where id=?");
-					pStmt.setInt(2, id);
-					pStmt.setInt(1, down);
-					pStmt.executeUpdate();
-//					pStmt.close();
-					
 					pStmt = con.prepareStatement("select questionid from answers where id=?");
 					pStmt.setInt(1, id);
 					rSet = pStmt.executeQuery();
 					if (rSet.next()){
 						quesid = rSet.getInt(1);
 					}
-//					pStmt.close();
 					
 					pStmt = con.prepareStatement("select tags from questions where id=?");
 					pStmt.setInt(1, quesid);
@@ -573,11 +570,39 @@ public class Dao {
 						language = rSet.getString(1);
 					}
 					
-					user = user+"@asu.edu";
-					updateReputationFromOtherMeans(user, language, -1.0);
-					pStmt.close();
-					rSet.close();
-					return true;
+					u = user+"@asu.edu";
+					
+					pStmt = con.prepareStatement("select "+language+" from users where username=?");
+					pStmt.setString(1, u);
+					rSet = pStmt.executeQuery();
+					
+					if (rSet.next()){
+						reputation = rSet.getInt(1);
+					}
+					
+					if(reputation >= 5){
+						pStmt = con.prepareStatement("insert into downvotes_answer values(?,?)");
+						pStmt.setInt(1, id);
+						pStmt.setString(2, user);
+						pStmt.execute();
+						
+						pStmt = con.prepareStatement("select downvotes from answers where id="+id);
+						rSet = pStmt.executeQuery();
+						if (rSet.next()) {
+							down =	rSet.getInt(1) + 1;
+						}
+						rSet.close();
+						
+						pStmt = con.prepareStatement("update answers set DOWNVOTES=?  where id=?");
+						pStmt.setInt(2, id);
+						pStmt.setInt(1, down);
+						pStmt.executeUpdate();
+						updateReputationFromOtherMeans(user, language, -1.0);
+						pStmt.close();
+						return 1;
+					}else{
+						return 2;
+					}						
 				}
 				
 			}
@@ -590,24 +615,6 @@ public class Dao {
 				
 				if (!rSet.next())
 				{
-					pStmt = con.prepareStatement("insert into downvotes_question values(?,?)");
-					pStmt.setInt(1, id);
-					pStmt.setString(2, user);
-					pStmt.execute();
-//					pStmt.close();
-					
-					pStmt = con.prepareStatement("select downvotes from questions where id="+id);
-					rSet = pStmt.executeQuery();
-//					pStmt.close();
-					if (rSet.next()) {
-						down =	rSet.getInt(1) + 1;
-					}
-					pStmt = con.prepareStatement("update questions set DOWNVOTES=?  where id=?");
-					pStmt.setInt(2, id);
-					pStmt.setInt(1, down);
-					pStmt.executeUpdate();
-//					pStmt.close();
-					
 					pStmt = con.prepareStatement("select tags from questions where id=?");
 					pStmt.setInt(1, id);
 					rSet = pStmt.executeQuery();
@@ -616,18 +623,48 @@ public class Dao {
 						language = rSet.getString(1);
 					}
 					
-					user = user+"@asu.edu";
-					updateReputationFromOtherMeans(user, language, -1.0);
+					u = user+"@asu.edu";
+					
+					pStmt = con.prepareStatement("select "+language+" from users where username=?");
+					pStmt.setString(1, u);
+					rSet = pStmt.executeQuery();
+					
+					if (rSet.next()){
+						reputation = rSet.getInt(1);
+					}
+					
+					if(reputation >= 5) {
+						pStmt = con.prepareStatement("insert into downvotes_question values(?,?)");
+						pStmt.setInt(1, id);
+						pStmt.setString(2, user);
+						pStmt.execute();
+						
+						pStmt = con.prepareStatement("select downvotes from questions where id="+id);
+						rSet = pStmt.executeQuery();
 
-					rSet.close();
-					pStmt.close();
-					return true;
+						if (rSet.next()) {
+							down =	rSet.getInt(1) + 1;
+						}
+						pStmt = con.prepareStatement("update questions set DOWNVOTES=?  where id=?");
+						pStmt.setInt(2, id);
+						pStmt.setInt(1, down);
+						pStmt.executeUpdate();			
+						
+						updateReputationFromOtherMeans(user, language, -1.0);
+						rSet.close();
+						pStmt.close();
+						return 1;
+					}else{
+						rSet.close();
+						pStmt.close();
+						return 2;
+					}
 				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return false;
+		return 0;
 	}
 
 	public void updateFeedback(int novice, int details, int unique, int motivation, int id, String comments)

@@ -161,12 +161,12 @@ public class MainServlet extends HttpServlet {
 			String idTemp =  (String) request.getParameter("id");
 			String user = idTemp.split("user")[1];
 			String id = idTemp.split("user")[0];
-			boolean flag = dao.updateUpVote(id, user);
-			if(!flag)
+			int flag = dao.updateUpVote(id, user);
+			if(flag == 0 || flag == 2)
 			{
 				response.setContentType("text/plain");
 			    response.setCharacterEncoding("UTF-8");
-			    response.getWriter().write(String.valueOf(0));
+			    response.getWriter().write(String.valueOf(flag));
 			}
 		}
 
@@ -175,12 +175,12 @@ public class MainServlet extends HttpServlet {
 			String idTemp =  (String) request.getParameter("id");
 			String user = idTemp.split("user")[1];
 			String id = idTemp.split("user")[0];
-			boolean flag = dao.updateDownVote(id, user);
-			if(!flag)
+			int flag = dao.updateDownVote(id, user);
+			if(flag == 0 || flag == 2)
 			{
 				response.setContentType("text/plain");
 			    response.setCharacterEncoding("UTF-8");
-			    response.getWriter().write(String.valueOf(0));
+			    response.getWriter().write(String.valueOf(flag));
 			}
 		}
 
