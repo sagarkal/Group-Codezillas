@@ -243,13 +243,19 @@ public class Dao {
 		return u;
 	}
 
-	public ArrayList<UserBean> getReputationForTopFiveUsers()
+	public ArrayList<UserBean> getReputationForTopFiveUsers(String username)
 	{
+		ArrayList<UserBean> ml = new ArrayList<UserBean>();
+		username = username.trim();
+		username += "@asu.edu";
 		ArrayList<UserBean> ul = new ArrayList<UserBean>();
 		try {
 			pStmt = con
-					.prepareStatement("select username, java, cpp, python, csharp, javascript from users");
+					.prepareStatement("SELECT * FROM users ORDER BY QUIZ desc");		
 			rSet = pStmt.executeQuery();
+			
+			boolean flag = false;
+			
 			while (rSet.next()) {
 				UserBean u = new UserBean();
 				u.setUsername(rSet.getString(1));
@@ -259,15 +265,29 @@ public class Dao {
 				u.setCsharp(rSet.getInt(5));
 				u.setJavascript(rSet.getInt(6));
 				ul.add(u);
+				if(rSet.getString(1).equals(username)){
+					break;
+				}
 			}
 			rSet.close();
 			pStmt.close();
+			
+			
+
+			int i = 0;
+			int j = ul.size();
+			while(i<5 && j!=0)
+			{
+				ml.add(ul.get(j-1));
+				i++;
+				j--;
+			}
 			
 		}catch (SQLException e) {
 			e.printStackTrace();
 		}
 		
-		return ul;
+		return ml;
 	}
 	
 	public ArrayList<UserBean> getReputationForProfile(String username)
@@ -296,6 +316,35 @@ public class Dao {
 		return ul;
 	}
 
+	public void updateTotalReputationScore(String username){
+		UserBean u=new UserBean();
+		u.setUsername(username);
+		try {
+			pStmt = con
+					.prepareStatement("select java, cpp, python, csharp, javascript from users where username = ?");
+			pStmt.setString(1, username);
+			rSet = pStmt.executeQuery();
+			
+			if (rSet.next()){
+				u.setJava(rSet.getInt(1));
+				u.setCpp(rSet.getInt(2));
+				u.setPython(rSet.getInt(3));
+				u.setCsharp(rSet.getInt(4));
+				u.setJavascript(rSet.getInt(5));
+			}
+		int totalReputation = u.getJava() + u.getCpp() + u.getPython() + u.getCsharp() + u.getJavascript();
+		
+		pStmt = con
+				.prepareStatement("update users set quiz=? where username = ?");
+		pStmt.setInt(1, totalReputation);
+		pStmt.setString(2, username);
+		pStmt.executeUpdate();
+		pStmt.close();
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public int updateReputation(String username, String language, double pointsToAdd)
 	{
 		double currentReputation = 0.0;
@@ -316,6 +365,8 @@ public class Dao {
 					.prepareStatement("update users set "+language+"="+(currentReputation+pointsToAdd)+" where username = ?");
 			pStmt.setString(1, username);
 			pStmt.executeUpdate();
+			
+			updateTotalReputationScore(username);
 			return 1;
 			}
 			rSet.close();
@@ -351,8 +402,8 @@ public class Dao {
 			pStmt.setString(1, username);
 			pStmt.executeUpdate();
 
-			
-//			pStmt.close();
+			updateTotalReputationScore(username);
+			pStmt.close();
 		}catch (SQLException e) {
 			e.printStackTrace();
 		}

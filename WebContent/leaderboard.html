@@ -46,6 +46,12 @@ function loadQuiz(quizPage) {
 	window.location.replace(quizPage + "?user=" + $('#myprofile').text());
     }
 
+function getUserName()
+{
+	var url = window.location.href;
+	var username = url.split("=")[1].split('#')[0];
+	return username;
+}
 </script>
 
 <body onload="setUser()">
@@ -91,6 +97,7 @@ function loadQuiz(quizPage) {
 
 $.get("MainServlet", {
 	type : "getrepfortopfive",
+	username : getUserName()
     }, function(json){
     	var csvObject = "";
     	for(i in json){

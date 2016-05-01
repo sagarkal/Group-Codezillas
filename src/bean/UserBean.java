@@ -68,31 +68,31 @@ public class UserBean {
 	public void setUsername(String username) {
 		this.username = username;
 	}
-	public long getJava() {
+	public int getJava() {
 		return java;
 	}
 	public void setJava(int java) {
 		this.java = java;
 	}
-	public long getJavascript() {
+	public int getJavascript() {
 		return javascript;
 	}
 	public void setJavascript(int javascript) {
 		this.javascript = javascript;
 	}
-	public long getPython() {
+	public int getPython() {
 		return python;
 	}
 	public void setPython(int python) {
 		this.python = python;
 	}
-	public long getCpp() {
+	public int getCpp() {
 		return cpp;
 	}
 	public void setCpp(int cpp) {
 		this.cpp = cpp;
 	}
-	public long getCsharp() {
+	public int getCsharp() {
 		return csharp;
 	}
 	public void setCsharp(int csharp) {

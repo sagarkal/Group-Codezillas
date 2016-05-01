@@ -79,7 +79,8 @@ public class MainServlet extends HttpServlet {
 		
 		if(type.equals("getrepfortopfive")){
 			ArrayList<UserBean> ul = new ArrayList<UserBean>();
-			ul = dao.getReputationForTopFiveUsers();
+			String username = (String) request.getParameter("username");
+			ul = dao.getReputationForTopFiveUsers(username);
 			String json = new Gson().toJson(ul);
 		    response.setContentType("text/json");
 		    response.setCharacterEncoding("UTF-8");
