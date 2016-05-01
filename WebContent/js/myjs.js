@@ -138,6 +138,8 @@ function updateReputation(language, pointsToAdd) {
 		    });
 }
 
+
+
 function addAnswers(id, username, lang){
 	
     $.get("MainServlet", {

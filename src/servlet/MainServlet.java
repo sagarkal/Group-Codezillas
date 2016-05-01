@@ -81,7 +81,6 @@ public class MainServlet extends HttpServlet {
 			ArrayList<UserBean> ul = new ArrayList<UserBean>();
 			ul = dao.getReputationForTopFiveUsers();
 			String json = new Gson().toJson(ul);
-			System.out.println("IN MAIN SERVLET getrepfortopfive: "+json.toString());
 		    response.setContentType("text/json");
 		    response.setCharacterEncoding("UTF-8");
 		    response.getWriter().write(json);
@@ -109,7 +108,7 @@ public class MainServlet extends HttpServlet {
 		if(type.equals("updaterep")){
 			String username = (String) request.getParameter("username");
 			String language = (String) request.getParameter("language");
-			int pointsToAdd = Integer.parseInt(request.getParameter("pointsToAdd"));
+			double pointsToAdd = Double.parseDouble(request.getParameter("pointsToAdd"));
 			int updateSuccess = dao.updateReputation(username, language, pointsToAdd);
 			if(updateSuccess == 1)
 			{
@@ -161,7 +160,6 @@ public class MainServlet extends HttpServlet {
 			String idTemp =  (String) request.getParameter("id");
 			String user = idTemp.split("user")[1];
 			String id = idTemp.split("user")[0];
-			System.out.println("IN MAIN SERVLET UPVOTE: "+idTemp +" "+user);
 			boolean flag = dao.updateUpVote(id, user);
 			if(!flag)
 			{
@@ -186,13 +184,13 @@ public class MainServlet extends HttpServlet {
 		}
 
 		if(type.equals("feedback")){
-			int accuracy = Integer.parseInt(request.getParameter("novice"));
-			int conciseness = Integer.parseInt(request.getParameter("details"));
-			int redundancy = Integer.parseInt(request.getParameter("unique"));
-			int grammar = Integer.parseInt(request.getParameter("motivation"));
+			int novice = Integer.parseInt(request.getParameter("novice"));
+			int details = Integer.parseInt(request.getParameter("details"));
+			int unique = Integer.parseInt(request.getParameter("unique"));
+			int motivation = Integer.parseInt(request.getParameter("motivation"));
 			int id = Integer.parseInt(request.getParameter("id"));
 			String comments = (String) request.getParameter("comments");
-			dao.updateFeedback(accuracy, conciseness, redundancy, grammar, id, comments);
+			dao.updateFeedback(novice, details, unique, motivation, id, comments);
 		}
 	}
 
