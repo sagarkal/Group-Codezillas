@@ -1,3 +1,8 @@
+/* Author: Kulvir Gahlawat, Nitesh Dhanpal, Sagar Kalburgi and Abhishek Reddy
+ * Group 10 Codezillas
+ * Purpose: File that consists of Jquery functions that make AJAX calls to load content from database dynamically
+ */
+
 $(function() {
 	var url = window.location.href;
 	var username = url.split("=")[1].split('#')[0];

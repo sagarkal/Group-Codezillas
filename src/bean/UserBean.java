@@ -1,3 +1,8 @@
+/* Author: Kulvir Gahlawat
+ * Group 10 Codezillas
+ * Purpose: Bean class that contains the attributes of user table
+ */
+
 package bean;
 
 public class UserBean {

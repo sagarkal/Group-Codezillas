@@ -1,3 +1,8 @@
+/* Author: Sagar Kalburgi
+ * Group 10 Codezillas
+ * Purpose: Bean class that contains the attributes of comment table
+ */
+
 package bean;
 
 public class CommentBean {

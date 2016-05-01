@@ -1,3 +1,8 @@
+/* Author: Kulvir Gahlawat, Nitesh Dhanpal and Sagar Kalburgi
+ * Group 10 Codezillas
+ * Purpose: Servlet class that handles function calls between Jquery functions and Dao class
+ */
+
 package servlet;
 
 import java.io.IOException;

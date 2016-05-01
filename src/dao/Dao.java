@@ -1,3 +1,8 @@
+/* Authors: Kulvir Gahlawat, Nitesh Dhanpal and Sagar Kalburgi
+ * Group 10 Codezillas
+ * Purpose: Class that contains code that provides access to the underlying database
+ */
+
 package dao;
 
 import java.sql.Connection;

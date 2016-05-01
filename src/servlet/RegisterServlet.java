@@ -1,3 +1,9 @@
+/* Author: Kulvir Gahlawat, Nitesh Dhanpal and Sagar Kalburgi
+ * Group 10 Codezillas
+ * Purpose: Servlet class that handles registration of new users
+ * Reference: pastebin.com
+ */
+
 package servlet;
 
 import java.io.IOException;

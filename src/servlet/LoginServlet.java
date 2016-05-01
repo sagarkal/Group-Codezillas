@@ -1,3 +1,9 @@
+/* Author: Kulvir Gahlawat
+ * Group 10 Codezillas
+ * Purpose: Servlet class that handles user authentication functionality
+ * Reference: pastebin.com
+ */
+
 package servlet;
 
 import java.io.IOException;

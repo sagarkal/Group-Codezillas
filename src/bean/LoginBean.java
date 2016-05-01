@@ -1,4 +1,7 @@
-
+/* Author: Kulvir Gahlawat
+ * Group 10 Codezillas
+ * Purpose: Bean class that contains the attributes to handle login functionality
+ */
 
 package bean;
 
