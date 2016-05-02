@@ -14,6 +14,12 @@ $(function() {
     });
 });
 
+function getUserName()
+{
+	var url = window.location.href;
+	var username = url.split("=")[1].split('#')[0];
+	return username;
+}
 /* Jquery function to register new users */
 
 function register(){
@@ -53,6 +59,7 @@ function getUserId()
 
 function appendQuestions(json) {
     for (i in json) {
+    var hrefVal = "othersProfile.html?myuserid="+getUserId()+"&touserid="+json[i].username;
 	var id = 'tableq' + json[i].id;
 	var votesqid = 'votes' + json[i].id;
 	var cl = json[i].tags
@@ -83,7 +90,7 @@ function appendQuestions(json) {
 					+ json[i].tags + '</span>').append(
 				'<br><br>').append(
 				'<span class="label label-warning">'
-					+ 'Asked by ' + '<a href="#" id='+json[i].username+'question' + json[i].id+ '>'+json[i].username+'</a>'
+					+ 'Asked by ' + '<a href="' +hrefVal + '" id='+json[i].username+'question' + json[i].id+ '>'+json[i].username+'</a>'
 					+ '</span>')
 					));
 	addVotes(votesqid, json[i].upvotes - json[i].downvotes);
@@ -130,7 +137,7 @@ function addReputation(username, lang){
 function updateReputation(language, pointsToAdd) {
 	 $.get("MainServlet", {
 			type : "updaterep",
-			username : "skalburg@asu.edu",
+			username : getUserName(),
 			language: language,
 			pointsToAdd: pointsToAdd
 		    }, function(response)

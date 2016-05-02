@@ -352,6 +352,7 @@ public class Dao {
 	
 	public int updateReputation(String username, String language, double pointsToAdd)
 	{
+		username +="@asu.edu"; 
 		double currentReputation = 0.0;
 		try {
 			pStmt = con
@@ -363,7 +364,7 @@ public class Dao {
 			if (rSet.next()) {
 				currentReputation =	rSet.getDouble(1);
 			}
-
+			System.out.println("IN UPDATEREP DAO: "+currentReputation);
 			if(currentReputation == 0)
 			{
 			pStmt = con

@@ -116,6 +116,7 @@ public class MainServlet extends HttpServlet {
 			String language = (String) request.getParameter("language");
 			double pointsToAdd = Double.parseDouble(request.getParameter("pointsToAdd"));
 			int updateSuccess = dao.updateReputation(username, language, pointsToAdd);
+			System.out.println("IN UPDATEREP MAIN SERVLET: "+ username +" "+language+" "+pointsToAdd);
 			if(updateSuccess == 1)
 			{
 			response.setContentType("text/plain");
