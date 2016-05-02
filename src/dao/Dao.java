@@ -1,4 +1,4 @@
-/* Authors: Kulvir Gahlawat, Nitesh Dhanpal and Sagar Kalburgi
+/* Authors: Kulvir Gahlawat, Nitesh Dhanpal, Abhishek Reddy and Sagar Kalburgi
  * Group 10 Codezillas
  * Purpose: Class that contains code that provides access to the underlying database
  */
@@ -748,6 +748,7 @@ public class Dao {
 	
 	public ArrayList<CommentBean> getFeedbackComments(String username){
 		username = username.trim();
+		System.out.println("IN getFeedbackComments DAO, username: "+username);
 		ArrayList<CommentBean> cl = new ArrayList<CommentBean>();
 		try{
 			pStmt = con.prepareStatement("select * from comments where username=?");

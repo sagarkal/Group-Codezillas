@@ -1,4 +1,4 @@
-/* Author: Kulvir Gahlawat
+/* Author: Abhishek Reddy
  * Group 10 Codezillas
  * Purpose: Class that defines a new connection object to the underlying database
  */

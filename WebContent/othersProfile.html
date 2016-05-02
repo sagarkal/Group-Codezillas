@@ -200,25 +200,21 @@ document.getElementById("comments").style.visibility = "hidden";
 var url = window.location.search;
 var username = url.split("touserid=")[1].split('#')[0];
 username+="@asu.edu";
-var accuracy;
-var grammar;
-var consise;
-var redundancy;
+var novice;
+var details;
+var unique;
+var motivation;
 
  $.get("MainServlet", {
 	type : "getFeedback",
 	username : username
     }, function(json){
     	console.log(json[0]);
-    	accuracy=json[0]["novice"];
-    	grammar = json[0]["details"];
-    	consise = json[0]["unique"];
-    	redundancy = json[0]["motivation"];
-    	
-    	console.log(accuracy + " " + grammar + " " + consise + " ", redundancy);
-    
+    	novice=json[0]["novice"];
+    	details = json[0]["details"];
+    	unique = json[0]["unique"];
+    	motivation = json[0]["motivation"];
  
- console.log("again:" + accuracy);
     var testdata = [
         {key: "Explain to novice", y: novice},
         {key: "Elaboration", y: details},
@@ -254,6 +250,7 @@ var redundancy;
 </script>
       </section>
 
+
 <section id="textcomments" class="hidden">
 
 <br />
@@ -273,7 +270,7 @@ var redundancy;
 <script>
 document.getElementById("comments").style.visibility = "visible";
 var url = window.location.search;
-var username= url.split('=')[1].split('#')[0];
+var username= url.split("touserid=")[1].split('#')[0];
 username+="@asu.edu";
 
 $.get("MainServlet", {
@@ -288,9 +285,10 @@ $.get("MainServlet", {
     });
 </script>
 
+
 </section>
-    </div><!-- @end #content -->
-  </div><!-- @end #w -->
+
+   
 <script type="text/javascript">
 $(function(){
   $('#profiletabs ul li a').on('click', function(e){
@@ -308,7 +306,7 @@ $(function(){
   });
 });
 </script>
-
+<!--  
 <section id="textcomments" class="hidden">
 
 <div class="container">
@@ -341,6 +339,8 @@ $.get("MainServlet", {
 </script>
 
 </section>
-
+-->
+ </div><!-- @end #content -->
+  </div><!-- @end #w -->
 </body>
 </html>

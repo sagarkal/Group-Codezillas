@@ -124,6 +124,7 @@ function addReputation(username, lang){
     });
 }
 
+
 /* The below function updates reputation based on the score obtained in a quiz (1 correct answer = 1 reputation point */
 
 function updateReputation(language, pointsToAdd) {
@@ -146,13 +147,13 @@ function updateReputation(language, pointsToAdd) {
 
 
 function addAnswers(id, username, lang){
-	
+	//console.log("inside addAnswers myusername: ", username);
     $.get("MainServlet", {
 	type : "getanswers",
 	qid : id
     }, function(json) {
     	for (i in json) {
-    		var hrefVal = "othersProfile.html?myuserid="+username+"&touserid="+json[i].username;
+    		var hrefVal = "othersProfile.html?myuserid="+getUserId()+"&touserid="+json[i].username;
     		$("#tableq" + id).append(
     		$('<tr/>').append($('<td />').attr('id',"votes" + id + "and"+ json[i].id))
     			.append($('<td/>').attr({
@@ -199,7 +200,7 @@ function postResponse(tag) {
 			$('<tr/>').append($('<td/>').attr('id', "votes" +id+"and"+ ansid))
 				.append($('<td/>').attr({
 					width : "60%"
-				}).append(txt)).append($('<td/>').append(
+				}).append(txt)).attr({align : "left"}).append($('<td/>').append(
 						'<span class="label label-warning">'
 						+ 'Answered By' + '<a href="#" id='+username+'>'+username+'</a>'
 						
@@ -207,17 +208,17 @@ function postResponse(tag) {
 						.append(
 								$('<tr/>').append($('<td/>')).append($('<td/>').attr(
 									    {
-											    width : "0%",
+											    width : "100%",
 												align : 'left'
-											    }).append($('<button/>').addClass("right").addClass(
+											    }).append($('<button/>').addClass("bb").addClass("right").addClass(
 								"btn btn-default btn-xs")
 								.attr({
-								    id : "button" + ansid,
+								    id : username,
 								    type : "button",
 								    'data-toggle' : 'modal',
 	    							'data-target': '#myModal',
 	    							onclick : "userIdForFeedback("+ansid+")"
-								}).append('Feedback').append('<br>'))));
+								}).append('Give feedback').append('<br>'))));
 	addVotes("votes" +id+"and"+ ansid, 0);
 	addReputation(username+'answer' +ansid, $(tag).parent().attr('class'));
     });
