@@ -1,10 +1,15 @@
 .btn-post {
 	width: 15%
 }
+
 .right {
-	text-align:right
+	text-align: right
 }
-  .bb
-        {
-            border-bottom: solid 1px black;
-        }
+
+.bb {
+	border-bottom: solid 1px black;
+}
+
+#commentcontainer {
+	margin-left :15px !important
+}

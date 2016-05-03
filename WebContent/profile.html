@@ -20,7 +20,6 @@
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <script src="js/jquery-2.2.2.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
-  <script src="js/myjs.js"></script>
   
   <link href="https://cdn.rawgit.com/novus/nvd3/v1.8.1/build/nv.d3.css" rel="stylesheet" type="text/css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.2/d3.min.js" charset="utf-8"></script>
@@ -270,8 +269,8 @@ var redundancy;
  <section id="textcomments" class="hidden">
 
 <br />
-<div class="container" id="commentcontainer" style="width: 480px; height: 400px; align: left;">
-  <div class="row" >
+<div id="commentcontainer" style="width: 480px; height: 400px; align: left;">
+  <div>
       <div class="panel panel-default">
         <div class="panel-heading" >
           <h4 >
@@ -280,7 +279,7 @@ var redundancy;
         </div>
         <table class="table table-fixed" id="tablec">
         </table>
-</div>
+	  </div>
 
 
 <script>
@@ -301,12 +300,12 @@ $.get("MainServlet", {
     });
 </script>
 
-</section>
     </div><!-- @end #content -->
     
    
     
   </div><!-- @end #w -->
+</section>
 <script type="text/javascript">
 $(function(){
   $('#profiletabs ul li a').on('click', function(e){
