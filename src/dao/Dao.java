@@ -37,7 +37,7 @@ public class Dao {
 	public ArrayList<QuestionBean> getQuestions() {
 		ArrayList<QuestionBean> al = new ArrayList();
 		try {
-			pStmt = con.prepareStatement("select * from questions");
+			pStmt = con.prepareStatement("select * from questions order by id desc");
 			rSet = pStmt.executeQuery();
 			while (rSet.next()) {
 				QuestionBean q = new QuestionBean();

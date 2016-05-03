@@ -209,7 +209,7 @@ function postResponse(tag) {
 					width : "60%"
 				}).append(txt)).attr({align : "left"}).append($('<td/>').append(
 						'<span class="label label-warning">'
-						+ 'Answered By' + '<a href="#" id='+username+'>'+username+'</a>'
+						+ 'Answered By' + '<a href="#" id='+username+'answer' +ansid+'>'+username+'</a>'
 						
 						+ '</span>')))
 						.append(
@@ -227,6 +227,8 @@ function postResponse(tag) {
 	    							onclick : "userIdForFeedback("+ansid+")"
 								}).append('Give feedback').append('<br>'))));
 	addVotes("votes" +id+"and"+ ansid, 0);
+//	console.log("aaaaaaaaaaaaaaaaaaaa     "+$(tag).parent().attr('class'));
+	
 	addReputation(username+'answer' +ansid, $(tag).parent().attr('class'));
     });
 }

@@ -18,7 +18,6 @@
 
 function postQuestion1()
 {
-    alert($('#newTag').val());
 	$.get("MainServlet", {
 		type : "savequestion",
 		username : getUserId(),
@@ -61,143 +60,182 @@ function setUser(){
 </script>
 
 <body onload="setUser()">
-<form>
-	<nav class="navbar navbar-default">
-		<div class="container-fluid">
-			<div class="navbar-header">
-				<a class="navbar-brand" href="#" onclick="loadHome()">CodeZilla</a>
+	<form>
+		<nav class="navbar navbar-default">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<a class="navbar-brand" href="#" onclick="loadHome()">CodeZilla</a>
+				</div>
+				<div class="collapse navbar-collapse"
+					id="bs-example-navbar-collapse-1">
+					<ul class="nav navbar-nav">
+						<li><a onclick="onlyQuestions('.Java');">Java</a></li>
+						<li><a onclick="onlyQuestions('.JavaScript');">JavaScript</a></li>
+						<li><a onclick="onlyQuestions('.Python');">Python</a></li>
+						<li><a onclick="onlyQuestions('.Csharp');">C#</a></li>
+						<li><a onclick="onlyQuestions('.Cpp');">C++</a></li>
+					</ul>
+					<ul class="nav navbar-nav navbar-right">
+						<li class="dropdown"><a href="#" class="dropdown-toggle"
+							data-toggle="dropdown" role="button" aria-haspopup="true"
+							aria-expanded="false">Take Quiz <span class="caret"></span></a>
+							<ul class="dropdown-menu">
+								<li><a onclick="loadQuiz('Java Quiz.html')">Java</a></li>
+								<li><a onclick="loadQuiz('Javascript Quiz.html')">JavaScript</a></li>
+								<li><a onclick="loadQuiz('Python Quiz.html')">Python</a></li>
+								<li><a onclick="loadQuiz('Csharp Quiz.html')">C#</a></li>
+								<li><a onclick="loadQuiz('C++ Quiz.html')">C++</a></li>
+
+							</ul></li>
+						<li><a onclick="loadLeader('leaderboard.html')">Nearest
+								competitors</a></li>
+						<li><a onclick="accessProfile()" id="myprofile"></a></li>
+						<li><a href="login.html">Logout</a></li>
+					</ul>
+				</div>
 			</div>
-			<div class="collapse navbar-collapse"
-				id="bs-example-navbar-collapse-1">
-				<ul class="nav navbar-nav">
-					<li><a onclick="onlyQuestions('.Java');">Java</a></li>
-					<li><a onclick="onlyQuestions('.JavaScript');">JavaScript</a></li>
-					<li><a onclick="onlyQuestions('.Python');">Python</a></li>
-					<li><a onclick="onlyQuestions('.Csharp');">C#</a></li>
-					<li><a onclick="onlyQuestions('.Cpp');">C++</a></li>
-				</ul>
-				<ul class="nav navbar-nav navbar-right">
-					<li class="dropdown"><a href="#" class="dropdown-toggle"
-						data-toggle="dropdown" role="button" aria-haspopup="true"
-						aria-expanded="false">Take Quiz <span class="caret"></span></a>
-						<ul class="dropdown-menu">
-							<li><a onclick="loadQuiz('Java Quiz.html')">Java</a></li>
-							<li><a onclick="loadQuiz('Javascript Quiz.html')">JavaScript</a></li>
-							<li><a onclick="loadQuiz('Python Quiz.html')">Python</a></li>
-							<li><a onclick="loadQuiz('Csharp Quiz.html')">C#</a></li>
-							<li><a onclick="loadQuiz('C++ Quiz.html')">C++</a></li>
-							
-						</ul>
-						</li>
-					<li><a onclick="loadLeader('leaderboard.html')">Nearest competitors</a></li>	
-					<li><a onclick="accessProfile()" id="myprofile"></a></li>
-					<li><a href="login.html">Logout</a></li>
-				</ul>
-			</div>
+		</nav>
+
+		<div class="container" id="questions">
+			<table cellpadding="2" cellspacing="2">
+				<tr>
+					<td>
+						<h3>
+							<b>Post a new question here!</b>
+						</h3>
+					</td>
+				<tr>
+					<td><textarea id="postedQuestion" rows="2" cols="70"
+							placeholder="Type your question here.."></textarea></td>
+					<td><select id="newTag">
+							<option value="Java">Java</option>
+							<option value="JavaScript">JavaScript</option>
+							<option value="Python">Python</option>
+							<option value="Csharp">C#</option>
+							<option value="Cpp">C++</option>
+					</select></td>
+				</tr>
+
+				<tr>
+					<td>
+						<button class="btn btn-block btn-md btn-success btn-post"
+							id="postQuestion" type="button" onclick="postQuestion1()">Post</button>
+					</td>
+				</tr>
+			</table>
 		</div>
-	</nav>
 
-	<div class="container" id="questions">
-		<table cellpadding="2" cellspacing="2">
-		<h3><b>Post a new question here!</b></h3>
-			<tr>
-				<td><textarea id="postedQuestion" rows="2" cols="70"
-						placeholder="Type your question here.."></textarea></td>
-				<td><select id="newTag">
-						<option value="Java">Java</option>
-						<option value="JavaScript">JavaScript</option>
-						<option value="Python">Python</option>
-						<option value="Csharp">C#</option>
-						<option value="Cpp">C++</option>
-				</select></td>
-			</tr>
-		
-			<tr>
-				<td>
-					<button class="btn btn-block btn-md btn-success btn-post"
-						id="postQuestion" type="button" onclick="postQuestion1()">Post</button>
-				</td>
-			</tr>
-		</table>
-	</div>
 
-	<div class="container">
-   
-  <!-- Trigger the modal with a button -->
+		<!-- Trigger the modal with a button -->
 
- 
-  <!-- Modal -->
-  <div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog">
-    
-      <!-- Modal content-->
-      <div class="modal-content">
-  
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" onclick=onClose()>&times;</button>
-        </div>
- 
-        <style>
 
+		<!-- Modal -->
+		<div class="modal fade" id="myModal" role="dialog">
+			<div class="modal-dialog">
+
+				<!-- Modal content-->
+				<div class="modal-content">
+
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							onclick=onClose()>&times;</button>
+					</div>
+
+					<style>
 p.question {
-    padding-left: 1cm;
+	padding-left: 1cm;
 }
 
 p.radio {
-padding-left: 1cm;
+	padding-left: 1cm;
 }
-
 </style>
-        <form>
+					<form>
 
-<h2 align="center">Feedback form<span class="label label-default"></span></h2> <br />
-<p align="center">Please note: 1 indicates least rating and 5 indicates highest rating </p>
-<br/>
-<h5><p class="question">1. After reading this answer, are you confident of explaining it to a novice?</p>  </h5>  
-<ul class="answers">                   
-<input type="radio" name="q1" value="a" id="q1b"><label for="q1b">1</label> &nbsp; &nbsp; &nbsp; 
-<input type="radio" name="q1" value="b" id="q1b"><label for="q1b">2</label> &nbsp; &nbsp; &nbsp;         
-<input type="radio" name="q1" value="c" id="q1c"><label for="q1c">3</label> &nbsp; &nbsp; &nbsp;         
-<input type="radio" name="q1" value="d" id="q1d"><label for="q1d">4</label> &nbsp; &nbsp; &nbsp;
-<input type="radio" name="q1" value="e" id="q1e"><label for="q1e">5</label><br/>           
-</ul> 
+						<h2 align="center">
+							Feedback form<span class="label label-default"></span>
+						</h2>
+						<br />
+						<p align="center">Please note: 1 indicates least rating and 5
+							indicates highest rating</p>
+						<br />
+						<h5>
+							<p class="question">1. After reading this answer, are you
+								confident of explaining it to a novice?</p>
+						</h5>
+						<ul class="answers">
+							<input type="radio" name="q1" value="a" id="q1b">
+							<label for="q1b">1</label> &nbsp; &nbsp; &nbsp;
+							<input type="radio" name="q1" value="b" id="q1b">
+							<label for="q1b">2</label> &nbsp; &nbsp; &nbsp;
+							<input type="radio" name="q1" value="c" id="q1c">
+							<label for="q1c">3</label> &nbsp; &nbsp; &nbsp;
+							<input type="radio" name="q1" value="d" id="q1d">
+							<label for="q1d">4</label> &nbsp; &nbsp; &nbsp;
+							<input type="radio" name="q1" value="e" id="q1e">
+							<label for="q1e">5</label>
+							<br />
+						</ul>
 
-<p class="question">2. Does the answer provide sufficient details, instead of jumping to the solution?  </p>        
+						<p class="question">2. Does the answer provide sufficient
+							details, instead of jumping to the solution?</p>
 
-<ul class="answers">            
-<input type="radio" name="q2" value="a" id="q2a"><label for="q2a">1</label> &nbsp; &nbsp; &nbsp;        
-<input type="radio" name="q2" value="b" id="q2b"><label for="q2b">2</label> &nbsp; &nbsp; &nbsp;           
-<input type="radio" name="q2" value="c" id="q2c"><label for="q2c">3</label> &nbsp; &nbsp; &nbsp;          
-<input type="radio" name="q2" value="d" id="q2d"><label for="q2d">4</label> &nbsp; &nbsp; &nbsp; 
-<input type="radio" name="q2" value="e" id="q2e"><label for="q2e">5</label><br/>        
-</ul>   
+						<ul class="answers">
+							<input type="radio" name="q2" value="a" id="q2a">
+							<label for="q2a">1</label> &nbsp; &nbsp; &nbsp;
+							<input type="radio" name="q2" value="b" id="q2b">
+							<label for="q2b">2</label> &nbsp; &nbsp; &nbsp;
+							<input type="radio" name="q2" value="c" id="q2c">
+							<label for="q2c">3</label> &nbsp; &nbsp; &nbsp;
+							<input type="radio" name="q2" value="d" id="q2d">
+							<label for="q2d">4</label> &nbsp; &nbsp; &nbsp;
+							<input type="radio" name="q2" value="e" id="q2e">
+							<label for="q2e">5</label>
+							<br />
+						</ul>
 
-<p class="question">3. Does this answer contribute something unique to the question thread?</p>        
+						<p class="question">3. Does this answer contribute something
+							unique to the question thread?</p>
 
-<ul class="answers">            
-<input type="radio" name="q3" value="a" id="q3a"><label for="q3a">1</label> &nbsp; &nbsp; &nbsp;          
-<input type="radio" name="q3" value="b" id="q3b"><label for="q3b">2</label> &nbsp; &nbsp; &nbsp;           
-<input type="radio" name="q3" value="c" id="q3c"><label for="q3c">3</label> &nbsp; &nbsp; &nbsp;          
-<input type="radio" name="q3" value="d" id="q3d"><label for="q3d">4</label> &nbsp; &nbsp; &nbsp;
-<input type="radio" name="q3" value="e" id="q3e"><label for="q3e">5</label><br/>       
-</ul>  
+						<ul class="answers">
+							<input type="radio" name="q3" value="a" id="q3a">
+							<label for="q3a">1</label> &nbsp; &nbsp; &nbsp;
+							<input type="radio" name="q3" value="b" id="q3b">
+							<label for="q3b">2</label> &nbsp; &nbsp; &nbsp;
+							<input type="radio" name="q3" value="c" id="q3c">
+							<label for="q3c">3</label> &nbsp; &nbsp; &nbsp;
+							<input type="radio" name="q3" value="d" id="q3d">
+							<label for="q3d">4</label> &nbsp; &nbsp; &nbsp;
+							<input type="radio" name="q3" value="e" id="q3e">
+							<label for="q3e">5</label>
+							<br />
+						</ul>
 
-<p class="question">4. Does this answer motivate you to further read about the relevant topic?</p>        
+						<p class="question">4. Does this answer motivate you to
+							further read about the relevant topic?</p>
 
-<ul class="answers">           
-<input type="radio" name="q4" value="a" id="q4a"><label for="q4a">1</label> &nbsp; &nbsp; &nbsp;           
-<input type="radio" name="q4" value="b" id="q4b"><label for="q4b">2</label> &nbsp; &nbsp; &nbsp;           
-<input type="radio" name="q4" value="c" id="q4c"><label for="q4c">3</label> &nbsp; &nbsp; &nbsp;           
-<input type="radio" name="q4" value="d" id="q4d"><label for="q4d">4</label> &nbsp; &nbsp; &nbsp;    
-<input type="radio" name="q4" value="e" id="q4e"><label for="q4e">5</label><br/>  
-</ul>  
+						<ul class="answers">
+							<input type="radio" name="q4" value="a" id="q4a">
+							<label for="q4a">1</label> &nbsp; &nbsp; &nbsp;
+							<input type="radio" name="q4" value="b" id="q4b">
+							<label for="q4b">2</label> &nbsp; &nbsp; &nbsp;
+							<input type="radio" name="q4" value="c" id="q4c">
+							<label for="q4c">3</label> &nbsp; &nbsp; &nbsp;
+							<input type="radio" name="q4" value="d" id="q4d">
+							<label for="q4d">4</label> &nbsp; &nbsp; &nbsp;
+							<input type="radio" name="q4" value="e" id="q4e">
+							<label for="q4e">5</label>
+							<br />
+						</ul>
 
-<ul class="answers">
-<textarea name="q5" value="a" id="q5" rows="3" cols="70" placeholder="Enter specific comments if any..."></textarea><br/>
-</ul>   
+						<ul class="answers">
+							<textarea name="q5" value="a" id="q5" rows="3" cols="70"
+								placeholder="Enter specific comments if any..."></textarea>
+							<br />
+						</ul>
 
-</form>
-<script>
+					</form>
+					<script>
 function check()
 {
 var novice = 0, details = 0, unique = 0, motivation = 0;
@@ -321,16 +359,17 @@ location.assign(oldUrl);
 updateFeedback(novice, details, unique, motivation, id, comments);
 }
 </script>
-        
-        <div class="modal-footer" align="center">
-          <button type="button" align="center" onclick=check() class="btn btn-primary" data-dismiss="modal">Submit</button>
-        </div>
-      </div>
-      
-    </div>
-  </div>
-  
-</div>
+
+					<div class="modal-footer" align="center">
+						<button type="button" align="center" onclick=check()
+							class="btn btn-primary" data-dismiss="modal">Submit</button>
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+		</div>
 	</form>
 </body>
 </html>
