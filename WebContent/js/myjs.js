@@ -295,6 +295,7 @@ function addVotes(id, votes) {
 function updateVotes(tag) {
     var c = tag.className;
     var id1 = $(tag).parent().parent().parent().parent().parent().attr('id');
+    console.log("ID1 in Upvotes: "+id1);
     var user, u;
     console.log("PURE ID: "+id1);
     if(!id1.includes("and"))
@@ -307,7 +308,7 @@ function updateVotes(tag) {
     		u = $(tag).parent().parent().parent().parent().parent().next().next().children().next().children().text();
     		console.log("ITS AN ANSWER! :"+ u);
     	}
-    id1 = id1+"user" +u;
+    id1 = id1+"user" +u +"from"+getUserId();
     console.log("CONTINUING IN UPVOTES, ID: "+id1);
     var actualid;
     var type;

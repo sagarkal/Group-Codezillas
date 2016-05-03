@@ -424,11 +424,16 @@ public class Dao {
 			int reputation = 0;
 			String language = "";
 			String u = "";
+			String fromUser = user.split("from")[1];
+			String toUser = user.split("from")[0];
+			System.out.println("FromUser :"+fromUser + "toUser" + toUser);
+
 			if (sid.contains("and")){
+				System.out.println("Inside updateupVote sid:" + sid);
 				id = Integer.parseInt(sid.split("and")[1]);
 				pStmt = con.prepareStatement("select * from upvotes_answer where ansid=? and userid=? ");
 				pStmt.setInt(1, id);
-				pStmt.setString(2, user);
+				pStmt.setString(2, fromUser);
 				rSet = pStmt.executeQuery();
 				
 				if (!rSet.next())
@@ -448,7 +453,7 @@ public class Dao {
 						language = rSet.getString(1);
 					}
 					
-					u = user+"@asu.edu";
+					u = fromUser+"@asu.edu";
 					pStmt = con.prepareStatement("select "+language+" from users where username=?");
 					pStmt.setString(1, u);
 					rSet = pStmt.executeQuery();
@@ -460,7 +465,7 @@ public class Dao {
 					if(reputation >= 5){
 						pStmt = con.prepareStatement("insert into upvotes_answer values(?,?)");
 						pStmt.setInt(1, id);
-						pStmt.setString(2, user);
+						pStmt.setString(2, fromUser);
 						pStmt.execute();
 						
 						pStmt = con.prepareStatement("select upvotes from answers where id="+id);
@@ -473,7 +478,7 @@ public class Dao {
 						pStmt.setInt(1, up);
 						pStmt.setInt(2, id);
 						pStmt.executeUpdate();
-						updateReputationFromOtherMeans(user, language, 1.0);
+						updateReputationFromOtherMeans(toUser+"@asu.edu", language, 1.0);
 						return 1;
 					}else{
 						return 2;
@@ -483,11 +488,13 @@ public class Dao {
 				pStmt.close();
 			}
 
-			else {				
+			else {		
+				System.out.println("Inside updateupVote sid:" + sid);
+
 				id = Integer.parseInt(sid);
 				pStmt = con.prepareStatement("select * from upvotes_question where qid=? and userid=? ");
 				pStmt.setInt(1, id);
-				pStmt.setString(2, user);
+				pStmt.setString(2, fromUser);
 				rSet = pStmt.executeQuery();
 				
 				
@@ -501,7 +508,7 @@ public class Dao {
 						language = rSet.getString(1);
 					}
 					
-					u = user+"@asu.edu";
+					u = fromUser+"@asu.edu";
 					pStmt = con.prepareStatement("select "+language+" from users where username=?");
 					pStmt.setString(1, u);
 					rSet = pStmt.executeQuery();
@@ -513,7 +520,7 @@ public class Dao {
 					if(reputation >= 5){
 						pStmt = con.prepareStatement("insert into upvotes_question values(?,?)");
 						pStmt.setInt(1, id);
-						pStmt.setString(2, user);
+						pStmt.setString(2, fromUser);
 						pStmt.execute();
 						
 						pStmt = con.prepareStatement("select upvotes from questions where id="+id);
@@ -528,7 +535,7 @@ public class Dao {
 						pStmt.setInt(2, id);
 						pStmt.executeUpdate();	
 
-						updateReputationFromOtherMeans(user, language, 1.0);
+						updateReputationFromOtherMeans(toUser+"@asu.edu", language, 1.0);
 						rSet.close();
 						pStmt.close();
 							return 1;
@@ -552,11 +559,14 @@ public class Dao {
 			int quesid =0;
 			String u = "";
 			int reputation = 0;
+			String fromUser = user.split("from")[1];
+			String toUser = user.split("from")[0];
+			System.out.println("FromUser :"+fromUser + "toUser" + toUser);
 			if (sid.contains("and")){
 				id = Integer.parseInt(sid.split("and")[1]);
 				pStmt = con.prepareStatement("select * from downvotes_answer where ansid=? and userid=? ");
 				pStmt.setInt(1, id);
-				pStmt.setString(2, user);
+				pStmt.setString(2, fromUser);
 				rSet = pStmt.executeQuery();
 				
 				if (!rSet.next())
@@ -576,7 +586,7 @@ public class Dao {
 						language = rSet.getString(1);
 					}
 					
-					u = user+"@asu.edu";
+					u = fromUser+"@asu.edu";
 					
 					pStmt = con.prepareStatement("select "+language+" from users where username=?");
 					pStmt.setString(1, u);
@@ -589,7 +599,7 @@ public class Dao {
 					if(reputation >= 5){
 						pStmt = con.prepareStatement("insert into downvotes_answer values(?,?)");
 						pStmt.setInt(1, id);
-						pStmt.setString(2, user);
+						pStmt.setString(2, fromUser);
 						pStmt.execute();
 						
 						pStmt = con.prepareStatement("select downvotes from answers where id="+id);
@@ -603,7 +613,7 @@ public class Dao {
 						pStmt.setInt(2, id);
 						pStmt.setInt(1, down);
 						pStmt.executeUpdate();
-						updateReputationFromOtherMeans(user, language, -1.0);
+						updateReputationFromOtherMeans(toUser+"@asu.edu", language, -1.0);
 						pStmt.close();
 						return 1;
 					}else{
@@ -616,7 +626,7 @@ public class Dao {
 				id = Integer.parseInt(sid);
 				pStmt = con.prepareStatement("select * from downvotes_question where qid=? and userid=? ");
 				pStmt.setInt(1, id);
-				pStmt.setString(2, user);
+				pStmt.setString(2, fromUser);
 				rSet = pStmt.executeQuery();
 				
 				if (!rSet.next())
@@ -629,7 +639,7 @@ public class Dao {
 						language = rSet.getString(1);
 					}
 					
-					u = user+"@asu.edu";
+					u = fromUser+"@asu.edu";
 					
 					pStmt = con.prepareStatement("select "+language+" from users where username=?");
 					pStmt.setString(1, u);
@@ -642,7 +652,7 @@ public class Dao {
 					if(reputation >= 5) {
 						pStmt = con.prepareStatement("insert into downvotes_question values(?,?)");
 						pStmt.setInt(1, id);
-						pStmt.setString(2, user);
+						pStmt.setString(2, fromUser);
 						pStmt.execute();
 						
 						pStmt = con.prepareStatement("select downvotes from questions where id="+id);
@@ -656,7 +666,7 @@ public class Dao {
 						pStmt.setInt(1, down);
 						pStmt.executeUpdate();			
 						
-						updateReputationFromOtherMeans(user, language, -1.0);
+						updateReputationFromOtherMeans(toUser+"@asu.edu", language, -1.0);
 						rSet.close();
 						pStmt.close();
 						return 1;
